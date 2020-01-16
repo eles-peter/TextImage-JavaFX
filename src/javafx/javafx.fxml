@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<!--<GridPane fx:controller="javafx.Controller"-->
+<!--          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">-->
+<!--</GridPane>-->
+
+<SplitPane dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.Controller">
+  <items>
+    <AnchorPane id="sideBar" fx:id="sideBar" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="200.0" SplitPane.resizableWithParent="false" />
+      <StackPane prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <ImageView id="image" fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Pepa/Desktop/TextImage/ebanks.jpg" />
+               </image>
+            </ImageView>
+         </children></StackPane>
+  </items>
+</SplitPane>
