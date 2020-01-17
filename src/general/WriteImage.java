@@ -8,6 +8,7 @@ public class WriteImage {
 
     private WritableImage writableImage;
 
+    //TODO lehet, hogy bele kellene rakni a luminositybe...???
     public WriteImage(int[][] luminosityArray) {
         int width = luminosityArray[0].length;
         int height = luminosityArray.length;
@@ -26,6 +27,7 @@ public class WriteImage {
         }
     }
 
-//    ImageView imView = new ImageView(writableImage);
-
+    public WritableImage getWritableImage() {
+        return writableImage;
+    }
 }

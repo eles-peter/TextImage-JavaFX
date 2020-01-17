@@ -8,16 +8,26 @@
 <!--          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">-->
 <!--</GridPane>-->
 
-<SplitPane dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.Controller">
+<SplitPane dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.Controller">
   <items>
-    <AnchorPane id="sideBar" fx:id="sideBar" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="200.0" SplitPane.resizableWithParent="false" />
+    <AnchorPane id="sideBar" fx:id="sideBar" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="451.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
+         <children>
+            <Button id="buttonOpenFile" layoutX="68.0" layoutY="14.0" mnemonicParsing="false" onAction="#openFile" text="OpenFile" />
+            <Label id="fileName" fx:id="fileName" layoutX="16.0" layoutY="51.0" />
+            <TextField id="newWidth" fx:id="newWidth" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="77.0" onAction="#resizeImageWidth" prefHeight="26.0" prefWidth="96.0" />
+            <Label layoutX="14.0" layoutY="82.0" text="Width" />
+            <TextField id="newHeight" fx:id="newHeight" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="111.0" onAction="#resizeImageHeight" prefHeight="26.0" prefWidth="96.0" />
+            <Label layoutX="14.0" layoutY="116.0" text="Height" />
+            <RadioButton id="keepRatio" fx:id="keepRatio" layoutX="95.0" layoutY="148.0" mnemonicParsing="false" text="keepRatio" />
+            <Slider id="midTone" fx:id="midTone" blockIncrement="5.0" layoutX="25.0" layoutY="192.0" prefHeight="14.0" prefWidth="147.0" />
+            <Label id="midToneValue" fx:id="midToneValue" alignment="CENTER_RIGHT" layoutX="164.0" layoutY="219.0" textAlignment="RIGHT" />
+            <Label layoutX="25.0" layoutY="219.0" text="Midtone" />
+            <Separator layoutY="180.0" prefWidth="200.0" />
+            <TextField id="midToneText" fx:id="midToneText" layoutX="24.0" layoutY="241.0" onAction="#changeMidTone" prefHeight="26.0" prefWidth="63.0" promptText="50%" />
+         </children></AnchorPane>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="file:/C:/Users/Pepa/Desktop/TextImage/ebanks.jpg" />
-               </image>
-            </ImageView>
+            <ImageView id="imageView" fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
          </children></StackPane>
   </items>
 </SplitPane>

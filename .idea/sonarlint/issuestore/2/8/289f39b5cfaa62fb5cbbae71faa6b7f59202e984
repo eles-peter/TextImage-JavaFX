@@ -1,2 +1,16 @@
 
-Ysquid:S2094"BRemove this empty class, write its code or make it an "interface".(Øó´Ÿ
+isquid:UselessImportCheck">Remove this unused import 'javafx.beans.value.ChangeListener'.(¸÷Í8‘¹æÿú-
+{squid:S00116"WRename this field "MAXIMAGESIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï ÚÄşÿÿÿÿ8ÛÈ¥öú-
+Fsquid:S1148i"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8¶§øú-
+Fsquid:S11489"#Use a logger to log this exception.(œ‡„¢ıÿÿÿÿ8ÄüÆõú-
+€squid:S1450"]Remove the "actualFileName" field and declare it as a local variable in the relevant methods.(°õÑ½üÿÿÿÿ8Ğê”óú-
+Fsquid:S1148X"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8õ¡Œøú-
+Usquid:S11359"2Complete the task associated to this TODO comment.(œ‡„¢ıÿÿÿÿ8Ô×Èõú-
+jsquid:UselessImportCheck"?Remove this unused import 'javafx.beans.value.ObservableValue'.(´œ«Å8‘¹æÿú-
+Dsquid:S1170"!Make this final field static too.(ï ÚÄşÿÿÿÿ8ˆÕöú-
+ksquid:HiddenFieldCheckT"=Rename "newHeight" which hides the field declared at line 34.(ªƒ–¯üÿÿÿÿ8õ¡Œøú-
+ksquid:HiddenFieldChecka"=Rename "newHeight" which hides the field declared at line 34.(ªƒ–¯üÿÿÿÿ8ş†øú-
+jsquid:HiddenFieldCheckP"<Rename "newWidth" which hides the field declared at line 32.(ôı §ùÿÿÿÿ8õ¡Œøú-
+usquid:S001175"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üæ÷½ÿÿÿÿÿ8ÄüÆõú-
+Vsquid:S1135ƒ"2Complete the task associated to this TODO comment.(É±ƒ¤ÿÿÿÿÿ8­™“û-
+jsquid:HiddenFieldChecke"<Rename "newWidth" which hides the field declared at line 32.(ôı §ùÿÿÿÿ8èğøú-

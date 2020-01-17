@@ -26,6 +26,19 @@ public class Luminosity {
         this.sortedItemMap.put(luminosity, luminosity); // Lehet az egészet aktualizálni kell!!!
     }
 
+    public Luminosity clone() {
+        int width = luminosityMap[0].length;
+        int height = luminosityMap.length;
+        Luminosity result = new Luminosity(width, height);
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                int luminosity = luminosityMap[h][w];
+                result.addLuminosityValuesToMap(w, h, luminosity);
+            }
+        }
+        return result;
+    }
+
     public void actualizesSortedItemMap() {
         this.sortedItemMap.clear();
         for (int h = 0; h < luminosityMap.length; h++) {
@@ -76,53 +89,33 @@ public class Luminosity {
         return resultLuminosity;
     }
 
-    public void equalizeItemMap() {
-        double itemDistance = 255.0 / (sortedItemMap.size() - 1);
-        int i = 0;
-        for (Map.Entry<Integer, Integer> entry : sortedItemMap.entrySet()) {
-            int newValue = (int) Math.round(itemDistance * i);
-            entry.setValue(newValue);
-            i++;
+    public Luminosity resizeToNewKeepRatioBaseWidth(int outputWidth) {
+        double imageRatio = ((double) this.getHeight()) / this.getWidth();
+        int outputHeight = (int)Math.round(imageRatio * outputWidth);
+        return resizeToNew(outputWidth, outputHeight);
+    }
+
+    public Luminosity resizeToNewKeepRatioBaseHeight(int outputHeight) {
+        double imageRatio = ((double) this.getWidth()) / this.getHeight();
+        int outputWidth = (int)Math.round(imageRatio * outputHeight);
+        return resizeToNew(outputWidth, outputHeight);
+    }
+
+    public Luminosity createModifiedLuminosity(Modifier modifier) {
+        int width = luminosityMap[0].length;
+        int height = luminosityMap.length;
+        Luminosity result = new Luminosity(width, height);
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                int oldLuminosity = luminosityMap[h][w];
+                int newLuminosity =  modifier.get(oldLuminosity);
+                result.addLuminosityValuesToMap(w, h, newLuminosity);
+            }
         }
+        return result;
     }
 
-    public void changeItemMapRange(int newMinValue, int newMaxValue) {
-        int oldMinValue = sortedItemMap.get(sortedItemMap.firstKey());
-        int oldMaxValue = sortedItemMap.get(sortedItemMap.lastKey());
-        int oldLength = oldMaxValue - oldMinValue;
-        int newLength = newMaxValue - newMinValue;
-        double rate = (double)oldLength/newLength;
-        for (Map.Entry<Integer, Integer> entry : sortedItemMap.entrySet()) {
-            int oldValue = entry.getValue();
-            int newValue = (int) Math.round(((oldValue-oldMinValue) / rate) + newMinValue);
-            entry.setValue(newValue);
-        }
-    }
-
-    //TODO thinking of this a little bit more...
-    public void changeMidTone(int newMidToneInPercent) {
-        double newMidTone0_1 = (double)newMidToneInPercent /100;
-        double coefficient = Math.log10(newMidTone0_1) / Math.log10(0.25);
-        int valueMin = sortedItemMap.get(sortedItemMap.firstKey());
-        int valueMax = sortedItemMap.get(sortedItemMap.lastKey());
-        int valueRange = valueMax - valueMin;
-        for (Map.Entry<Integer, Integer> entry : sortedItemMap.entrySet()) {
-            int oldValue = entry.getValue();
-            double oldValue0_1 = convertToRangeFrom0To1(oldValue, valueMin, valueMax);
-            double newValue0_1 = Math.pow ((oldValue0_1 * oldValue0_1), coefficient);
-            int newValue = (int) (newValue0_1 * valueRange) + valueMin;
-            entry.setValue(newValue);
-        }
-        this.midTone = newMidToneInPercent;
-    }
-
-    //TODO thinking of this a little bit more...
-    public double convertToRangeFrom0To1(int value, int valueMin, int valueMax) {
-        int originalRangeLength = valueMax - valueMin;
-        return ((double)(value - valueMin)) / originalRangeLength;
-    }
-
-    public void applyItemMapToArray() {
+     public void applyItemMapToArray() {
         for (int h = 0; h < luminosityMap.length; h++) {
             for (int w = 0; w < luminosityMap[0].length; w++) {
                 int oldLuminosity = luminosityMap[h][w];
@@ -131,6 +124,17 @@ public class Luminosity {
             }
         }
         sortedItemMapValueToKey();
+    }
+
+    public void applyAnItemMapToArray(SortedMap<Integer, Integer> itemMap) {
+        for (int h = 0; h < luminosityMap.length; h++) {
+            for (int w = 0; w < luminosityMap[0].length; w++) {
+                int oldLuminosity = luminosityMap[h][w];
+                int newLuminosity = itemMap.get(oldLuminosity);
+                luminosityMap[h][w] = newLuminosity;
+            }
+        }
+        sortedItemMapValueToKey(); //TODO átgondolni az egészet!!!
     }
 
     public static double round (double value, int places){
@@ -165,6 +169,18 @@ public class Luminosity {
 
     public int[][] getLuminosityMap() {
         return this.luminosityMap;
+    }
+
+    public int getMidTone() {
+        return midTone;
+    }
+
+    public void setMidTone(int midTone) {
+        this.midTone = midTone;
+    }
+
+    public SortedMap<Integer, Integer> getSortedItemMap() {
+        return sortedItemMap;
     }
 
     public int getLuminosityValue(int coordWidth, int coordHeight) {

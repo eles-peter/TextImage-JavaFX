@@ -9,21 +9,17 @@ public class ReadImageFile {
 
     private BufferedImage image;
 
-    public ReadImageFile(String directoryPath, String fileName) {
+    public ReadImageFile(String directoryPath, String fileName) throws IOException {
         String fullFileName = directoryPath + "\\" + fileName;
-        try {
-            this.image = ImageIO.read(new File(fullFileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.image = ImageIO.read(new File(fullFileName));
     }
 
-    public ReadImageFile(String fullPathAndFileName) {
-        try {
-            this.image = ImageIO.read(new File(fullPathAndFileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public ReadImageFile(String fullPathAndFileName) throws IOException {
+        this.image = ImageIO.read(new File(fullPathAndFileName));
+    }
+
+    public ReadImageFile(File openFile) throws IOException {
+        this.image = ImageIO.read(openFile);
     }
 
     //TODO should test the speed...
