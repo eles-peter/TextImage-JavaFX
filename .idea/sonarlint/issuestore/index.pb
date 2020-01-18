@@ -21,3 +21,5 @@ I
 src/general/Modifier.java,3\d\3d0f16c49ce3d1e73023817e70b0ec243c5e9664
 O
 src/general/WriteImageFile.java,c\7\c74ba65e025a4793efb93c87612fa5ebef35f7fc
+D
+textimage-JAVAFX.iml,4\8\48b52f682ffebf05bd218220d42d5f032150038a

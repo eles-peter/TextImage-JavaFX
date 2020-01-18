@@ -1,25 +1,24 @@
 
- squid:S1186‹"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(´ôúº8——Ô§û-
-jsquid:HiddenFieldChecka"<Rename "newWidth" which hides the field declared at line 41.(ôý §ùÿÿÿÿ8õ¡Œøú-
-jsquid:HiddenFieldCheckv"<Rename "newWidth" which hides the field declared at line 41.(ôý §ùÿÿÿÿ8èðøú-
-{squid:S00116"WRename this field "MAXIMAGESIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï ÚÄþÿÿÿÿ8ÛÈ¥öú-
-]squid:UnusedPrivateMethod‹"0Remove this unused private "modifyImage" method.(´ôúº8——Ô§û-
-Jsquid:S1068!",Remove this unused "minValue" private field.(¯èÃÝ8‡Ì½§û-
-Fsquid:S1148D"#Use a logger to log this exception.(œ‡„¢ýÿÿÿÿ8ÄüÆõú-
-Fsquid:S1148z"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8¶§Žøú-
-Nsquid:S1068 "+Remove this unused "midTone" private field.(Ôÿ„ýüÿÿÿÿ8‡Ì½§û-
-Vsquid:S1135¦"2Complete the task associated to this TODO comment.(üšª»üÿÿÿÿ8ìß¡û-
-Usquid:S1135D"2Complete the task associated to this TODO comment.(œ‡„¢ýÿÿÿÿ8Ô×Èõú-
-Osquid:S1068"",Remove this unused "maxValue" private field.(­‘‹½ùÿÿÿÿ8‡Ì½§û-
-Dsquid:S1170"!Make this final field static too.(ï ÚÄþÿÿÿÿ8ˆÕžöú-
-ksquid:HiddenFieldChecke"=Rename "newHeight" which hides the field declared at line 43.(ªƒ–¯üÿÿÿÿ8õ¡Œøú-
-Psquid:S1135€"2Complete the task associated to this TODO comment.(°×®|8ÅÝ¡û-
-Psquid:S1135!"2Complete the task associated to this TODO comment.(¯èÃÝ8ÎÖ¿§û-
-ksquid:HiddenFieldCheckr"=Rename "newHeight" which hides the field declared at line 43.(ªƒ–¯üÿÿÿÿ8þ†øú-
-usquid:S00117@"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üæ÷½ÿÿÿÿÿ8ÄüÆõú-
-Fsquid:S1148i"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8õ¡Œøú-
-€squid:S1450"]Remove the "actualFileName" field and declare it as a local variable in the relevant methods.(°õÑ½üÿÿÿÿ8Ðê”óú-
-gsquid:UselessImportCheck"7Remove this unused import 'javafx.scene.shape.Ellipse'.(öàÛÏûÿÿÿÿ8¿‡Ç¬û-
-Usquid:S1135""2Complete the task associated to this TODO comment.(­‘‹½ùÿÿÿÿ8…’À§û-
-osquid:UselessImportCheck"?Remove this unused import 'org.controlsfx.control.RangeSlider'.(Â…Âµýÿÿÿÿ8ú®†«û-
-osquid:CommentedOutCodeLine°"<This block of commented-out lines of code should be removed.(–Œ¤¶ùÿÿÿÿ8é«ÿ¬û-
+lsquid:HiddenFieldCheck"=Rename "newHeight" which hides the field declared at line 40.(ªƒ–¯üÿÿÿÿ8‡ÿÄÅû-
+usquid:S00117D"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üæ÷½ÿÿÿÿÿ8‡ÿÄÅû-
+Usquid:S1135"2Complete the task associated to this TODO comment.(­‘‹½ùÿÿÿÿ8‡ÿÄÅû-
+Vsquid:S1135¶"2Complete the task associated to this TODO comment.(üšª»üÿÿÿÿ8‡ÿÄÅû-
+Gsquid:S1148•"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8‡ÿÄÅû-
+Psquid:S1135"2Complete the task associated to this TODO comment.(¯èÃÝ8‡ÿÄÅû-
+Psquid:S1135›"2Complete the task associated to this TODO comment.(°×®|8‡ÿÄÅû-
+Dsquid:S1170"!Make this final field static too.(ï ÚÄþÿÿÿÿ8‡ÿÄÅû-
+{squid:S00116"WRename this field "MIDTONESCALE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò®‹¬ùÿÿÿÿ8·ûÊû-
+Gsquid:S1148„"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8‡ÿÄÅû-
+lsquid:HiddenFieldCheck€"=Rename "newHeight" which hides the field declared at line 40.(ªƒ–¯üÿÿÿÿ8‡ÿÄÅû-
+Fsquid:S1148H"#Use a logger to log this exception.(œ‡„¢ýÿÿÿÿ8‡ÿÄÅû-
+Dsquid:S1170"!Make this final field static too.(Ò®‹¬ùÿÿÿÿ8·ûÊû-
+ksquid:HiddenFieldCheck‘"<Rename "newWidth" which hides the field declared at line 38.(ôý §ùÿÿÿÿ8‡ÿÄÅû-
+€squid:S1450"]Remove the "actualFileName" field and declare it as a local variable in the relevant methods.(°õÑ½üÿÿÿÿ8‡ÿÄÅû-
+Osquid:S1068",Remove this unused "maxValue" private field.(­‘‹½ùÿÿÿÿ8‡ÿÄÅû-
+]squid:UnusedPrivateMethodž"0Remove this unused private "modifyImage" method.(´ôúº8‡ÿÄÅû-
+isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(˜¶Œö8‹ãÅÅû-
+{squid:S00116"WRename this field "MAXIMAGESIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï ÚÄþÿÿÿÿ8‡ÿÄÅû-
+jsquid:HiddenFieldCheck|"<Rename "newWidth" which hides the field declared at line 38.(ôý §ùÿÿÿÿ8‡ÿÄÅû-
+Usquid:S1135H"2Complete the task associated to this TODO comment.(œ‡„¢ýÿÿÿÿ8‡ÿÄÅû-
+ squid:S1186ž"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(´ôúº8‡ÿÄÅû-
+Jsquid:S1068",Remove this unused "minValue" private field.(¯èÃÝ8‡ÿÄÅû-

@@ -23,10 +23,27 @@
              <Slider id="midToneSlider" fx:id="midToneSlider" blockIncrement="5.0" layoutX="25.0" layoutY="192.0" prefHeight="14.0" prefWidth="147.0" />
              <Label id="midToneValue" fx:id="midToneValue" alignment="CENTER_RIGHT" layoutX="164.0" layoutY="219.0" textAlignment="RIGHT" />
              <Label layoutX="25.0" layoutY="219.0" text="Midtone" />
-            <Rectangle id="thumb" fx:id="thumb" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" onMouseDragged="#moveThumb" stroke="BLACK" strokeType="INSIDE" translateX="20.0" translateY="250.0" width="15.0">
-               <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
-               </cursor></Rectangle>
+            <HBox id="singleSliderBox" fx:id="singleSliderBox" layoutX="7.0" layoutY="275.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="180.0">
+               <children>
+                  <Rectangle id="singleSliderTrail0" fx:id="singleSliderTrail0" fill="#c4c4c7" height="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0" />
+                  <Rectangle id="singleSliderThumb" fx:id="singleSliderThumb" height="15.0" onMouseDragged="#moveThumb" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Rectangle>
+                  <Rectangle id="singleSliderTrail1" fx:id="singleSliderTrail1" fill="#c4c4c7" height="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="150.0" />
+               </children>
+            </HBox>
+            <TextField id="singleSlideInput" fx:id="singleSlideInput" layoutY="311.0" onAction="#modifyMidToneSlider" />
+            <Group id="singleSlide" fx:id="singleSlide" layoutX="10.0" layoutY="350.0">
+               <children>
+                  <Rectangle id="singleSlideRail" fx:id="singleSlideRail" arcHeight="5.0" fill="#cccccc" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
+                  <Rectangle id="singleSlideButton" fx:id="singleSlideButton" arcHeight="5.0" height="15.0" layoutX="82.5" onMouseDragged="#dragSingleSlide" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Rectangle>
+               </children>
+            </Group>
 <!--             <RangeSlider id="rangeSlider" fx:id="rangeSlider" blockIncrement="5.0" highValue="50.0" lowValue="10.0" min="0.0" max="59.0" layoutX="25.0" layoutY="250.0" prefHeight="14.0" prefWidth="147.0" />-->
          </children></AnchorPane>
       <StackPane id="imagePane" prefHeight="150.0" prefWidth="200.0">

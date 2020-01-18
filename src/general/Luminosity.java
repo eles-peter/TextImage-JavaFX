@@ -6,19 +6,16 @@ public class Luminosity {
 
     private int[][] luminosityMap;
     private SortedMap<Integer, Integer> sortedItemMap; //TODO lehet, hogy az equaliz miatt tároni kellene az előfordulást is...
-    private int midTone; //TODO lehet, hogy ezt innen ki kell venni
 
     public Luminosity(int width, int height) {
         this.luminosityMap = new int[height][width];
         this.sortedItemMap = new TreeMap<>();
-        this.midTone = 50;
     }
 
     public Luminosity(int[][] luminosityMap) {
         this.luminosityMap = luminosityMap;
         this.sortedItemMap = new TreeMap<>();
         this.actualizesSortedItemMap();
-        this.midTone = 50;
     }
 
     public void addLuminosityValuesToMap(int wPosition, int hPosition, int luminosity) {
@@ -169,14 +166,6 @@ public class Luminosity {
 
     public int[][] getLuminosityMap() {
         return this.luminosityMap;
-    }
-
-    public int getMidTone() {
-        return midTone;
-    }
-
-    public void setMidTone(int midTone) {
-        this.midTone = midTone;
     }
 
     public SortedMap<Integer, Integer> getSortedItemMap() {

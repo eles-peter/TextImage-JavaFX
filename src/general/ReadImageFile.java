@@ -35,7 +35,7 @@ public class ReadImageFile {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 //                int luminosity = (int) Math.round(((double)(red + green + blue))/3);
-                int luminosity = (int) Math.round(0.299 * (double) red + 0.587 * (double) green + 0.114 * (double) blue);
+                int luminosity = (int) Math.round(0.299 * (double) red + 0.587 * (double) green + 0.114 * (double) blue); //TODO felülvizsgálni a képletet!!!
                 luminosityArray[h][w] = luminosity;
             }
         }

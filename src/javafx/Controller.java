@@ -1,18 +1,15 @@
 package javafx;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Ellipse;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-import impl.org.controlsfx.*;
-import org.controlsfx.control.RangeSlider;
+//import impl.org.controlsfx.*;
+//import org.controlsfx.control.RangeSlider;
 
 import general.*;
 
@@ -22,13 +19,14 @@ import java.io.IOException;
 public class Controller {
 
     private final int MAXIMAGESIZE = 1000;
+    private final int MIDTONESCALE = 100;
 
     private String actualFileName;
     private Luminosity sourceLuminosity;
     private Luminosity resizedLuminosity;
     private Luminosity modifiedLuminosity;
     private Modifier modifier = new Modifier();
-    private int midTone;
+    private int midTone = 50;
     private int minValue; //TODO kell ?
     private int maxValue; //TODO kell ?
 
@@ -48,11 +46,20 @@ public class Controller {
     @FXML
     private Label midToneValue;
     @FXML
-    private TextField midToneText;
+    private HBox singleSliderBox;
     @FXML
-    private Rectangle thumb;
+    private Rectangle singleSliderTrail0;
     @FXML
-    private SplitPane p;
+    private Rectangle singleSliderThumb;
+    @FXML
+    private Rectangle singleSliderTrail1;
+    @FXML
+    private TextField singleSlideInput;
+    @FXML
+    private Rectangle singleSlideRail;
+    @FXML
+    private Rectangle singleSlideButton;
+
     //</editor-fold>
 
     @FXML
@@ -86,11 +93,69 @@ public class Controller {
         actualizeImageAndView();
     }
 
+
+    @FXML
+    private void modifyMidToneSlider(ActionEvent action) {
+        setSingleSlide(Integer.parseInt(singleSlideInput.getText()), MIDTONESCALE);
+    }
+
     @FXML
     private void moveThumb(MouseEvent action) {
-        thumb.setTranslateX(action.getSceneX() - thumb.getWidth()/2);
-        thumb.setTranslateY(action.getSceneY() - thumb.getHeight()/2);
+        singleSliderThumb.setTranslateX(action.getSceneX() - singleSliderThumb.getWidth()/2);
     }
+
+    @FXML
+    private void setMidToneSlider(int newValue) {
+        double sliderLength = singleSliderBox.getWidth() - singleSliderThumb.getWidth();
+        double sliderUnit = sliderLength / MIDTONESCALE;
+        double newTrail0Length = newValue * sliderUnit;
+        if (newTrail0Length < singleSliderTrail0.getWidth()) {
+            singleSliderTrail0.setWidth(newTrail0Length);
+            singleSliderTrail1.setWidth(sliderLength-newTrail0Length);
+        } else {
+            singleSliderTrail1.setWidth(sliderLength-newTrail0Length);
+            singleSliderTrail0.setWidth(newTrail0Length);
+        }
+    }
+
+
+
+    @FXML
+    private void dragSingleSlide(MouseEvent action) {
+        double sliderLength = singleSlideRail.getWidth() - singleSlideButton.getWidth();
+        double newPosition = action.getSceneX() - singleSlideRail.getParent().getLayoutX();
+        if (newPosition < 0) newPosition = 0;
+        if (newPosition > sliderLength) newPosition = sliderLength;
+        singleSlideButton.setLayoutX(newPosition);
+
+        double sliderUnit = sliderLength / MIDTONESCALE;
+        int newValue = (int) (newPosition / sliderUnit);
+        midTone = newValue;
+        midToneValue.setText(midTone + "%");
+
+        modifier.getValuesFrom(resizedLuminosity.getSortedItemMap()); //TODO somewhere otherplace
+        modifier.changeMidTone(midTone);
+        modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
+        actualizeImageAndView();
+
+
+
+    }
+
+    @FXML
+    private void setSingleSlide(int newValue, int range) {
+        if (newValue > range) newValue = range;
+        if (newValue < 0) newValue = 0;
+        double sliderLength = singleSlideRail.getWidth() - singleSlideButton.getWidth();
+        double sliderUnit = sliderLength / range;
+        singleSlideButton.setLayoutX(newValue * sliderUnit);
+    }
+
+
+
+
+
+
 
     @FXML
     private void resizeImageWidth(ActionEvent action) {
@@ -128,14 +193,6 @@ public class Controller {
 
     //TODO write reset method!!!
 
-    @FXML
-    private void changeMidTone(ActionEvent action) {
-        int newMidTone = Integer.parseInt(this.midToneText.getText());
-        modifier.getValuesFrom(resizedLuminosity.getSortedItemMap());
-        modifier.changeMidTone(newMidTone);
-        modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
-        actualizeImageAndView();
-    }
 
     private void modifyImage() {
 
@@ -145,8 +202,9 @@ public class Controller {
     private void actualizeImageAndView() {
         newWidth.setText("" + modifiedLuminosity.getWidth());
         newHeight.setText("" + modifiedLuminosity.getHeight());
-        midToneSlider.setValue(modifiedLuminosity.getMidTone());
-        midToneValue.setText(modifiedLuminosity.getMidTone() + "%");
+        midToneSlider.setValue(midTone);
+        midToneValue.setText(midTone + "%");
+        setMidToneSlider(midTone);
 
         WriteImage writeImage = new WriteImage(modifiedLuminosity.getLuminosityMap());
         imageView.setImage(writeImage.getWritableImage());
@@ -157,12 +215,12 @@ public class Controller {
 
 
 
+
         midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            int newMidTone = newValue.intValue();
+            midTone = newValue.intValue();
             modifier.getValuesFrom(resizedLuminosity.getSortedItemMap()); //TODO somewhere otherplace
-            modifier.changeMidTone(newMidTone);
+            modifier.changeMidTone(midTone);
             modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
-            modifiedLuminosity.setMidTone(newMidTone);
             actualizeImageAndView();
         });
 
