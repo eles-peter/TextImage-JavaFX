@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<!--<GridPane fx:controller="javafx.Controller"-->
-<!--          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">-->
-<!--</GridPane>-->
+<!--<?import org.controlsfx.control.*?>-->
 
-<SplitPane dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.Controller">
+<SplitPane id="p" fx:id="p" dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.Controller">
   <items>
     <AnchorPane id="sideBar" fx:id="sideBar" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="451.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
          <children>
@@ -19,13 +19,17 @@
             <TextField id="newHeight" fx:id="newHeight" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="111.0" onAction="#resizeImageHeight" prefHeight="26.0" prefWidth="96.0" />
             <Label layoutX="14.0" layoutY="116.0" text="Height" />
             <RadioButton id="keepRatio" fx:id="keepRatio" layoutX="95.0" layoutY="148.0" mnemonicParsing="false" text="keepRatio" />
-            <Slider id="midTone" fx:id="midTone" blockIncrement="5.0" layoutX="25.0" layoutY="192.0" prefHeight="14.0" prefWidth="147.0" />
-            <Label id="midToneValue" fx:id="midToneValue" alignment="CENTER_RIGHT" layoutX="164.0" layoutY="219.0" textAlignment="RIGHT" />
-            <Label layoutX="25.0" layoutY="219.0" text="Midtone" />
-            <Separator layoutY="180.0" prefWidth="200.0" />
-            <TextField id="midToneText" fx:id="midToneText" layoutX="24.0" layoutY="241.0" onAction="#changeMidTone" prefHeight="26.0" prefWidth="63.0" promptText="50%" />
+             <Separator layoutY="180.0" prefWidth="200.0" />
+             <Slider id="midToneSlider" fx:id="midToneSlider" blockIncrement="5.0" layoutX="25.0" layoutY="192.0" prefHeight="14.0" prefWidth="147.0" />
+             <Label id="midToneValue" fx:id="midToneValue" alignment="CENTER_RIGHT" layoutX="164.0" layoutY="219.0" textAlignment="RIGHT" />
+             <Label layoutX="25.0" layoutY="219.0" text="Midtone" />
+            <Rectangle id="thumb" fx:id="thumb" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" onMouseDragged="#moveThumb" stroke="BLACK" strokeType="INSIDE" translateX="20.0" translateY="250.0" width="15.0">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor></Rectangle>
+<!--             <RangeSlider id="rangeSlider" fx:id="rangeSlider" blockIncrement="5.0" highValue="50.0" lowValue="10.0" min="0.0" max="59.0" layoutX="25.0" layoutY="250.0" prefHeight="14.0" prefWidth="147.0" />-->
          </children></AnchorPane>
-      <StackPane prefHeight="150.0" prefWidth="200.0">
+      <StackPane id="imagePane" prefHeight="150.0" prefWidth="200.0">
          <children>
             <ImageView id="imageView" fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
          </children></StackPane>

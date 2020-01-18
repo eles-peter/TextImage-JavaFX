@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/general/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/general/Modifier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/general/WriteImageFile.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Change Midtone slider is ready!!!">
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/8/289f39b5cfaa62fb5cbbae71faa6b7f59202e984" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/8/289f39b5cfaa62fb5cbbae71faa6b7f59202e984" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/textimage-JAVAFX/javafx/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/textimage-JAVAFX/javafx/Controller.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/textimage-JAVAFX/javafx/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/textimage-JAVAFX/javafx/javafx.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/general/Luminosity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Luminosity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/ReadImageFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/ReadImageFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/WriteImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/WriteImage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/javafx/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/javafx/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/javafx/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/javafx/javafx.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/textimage-JAVAFX.iml" beforeDir="false" afterPath="$PROJECT_DIR$/textimage-JAVAFX.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -96,10 +91,16 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="OverrideImplement.combined" value="false" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="last_opened_file_path" value="C:/Program Files/ContolsFX/controlsfx-11.0.1.jar!/" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -219,8 +220,19 @@
       <workItem from="1579167403843" duration="2647000" />
       <workItem from="1579170080327" duration="16355000" />
       <workItem from="1579205333395" duration="3546000" />
-      <workItem from="1579263127019" duration="11055000" />
+      <workItem from="1579263127019" duration="11248000" />
+      <workItem from="1579287148282" duration="6889000" />
+      <workItem from="1579295867158" duration="4254000" />
+      <workItem from="1579341892769" duration="4689000" />
     </task>
+    <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
+      <created>1579276600154</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579276600154</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,6 +254,8 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <MESSAGE value="Change Midtone slider is ready!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Midtone slider is ready!!!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

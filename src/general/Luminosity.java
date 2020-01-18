@@ -5,8 +5,8 @@ import java.util.*;
 public class Luminosity {
 
     private int[][] luminosityMap;
-    private SortedMap<Integer, Integer> sortedItemMap;
-    private int midTone;
+    private SortedMap<Integer, Integer> sortedItemMap; //TODO lehet, hogy az equaliz miatt tároni kellene az előfordulást is...
+    private int midTone; //TODO lehet, hogy ezt innen ki kell venni
 
     public Luminosity(int width, int height) {
         this.luminosityMap = new int[height][width];

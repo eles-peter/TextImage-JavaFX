@@ -1,17 +1,20 @@
 package javafx;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import impl.org.controlsfx.*;
+import org.controlsfx.control.RangeSlider;
 
 import general.*;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +28,12 @@ public class Controller {
     private Luminosity resizedLuminosity;
     private Luminosity modifiedLuminosity;
     private Modifier modifier = new Modifier();
+    private int midTone;
+    private int minValue; //TODO kell ?
+    private int maxValue; //TODO kell ?
 
-    @FXML
+    //<editor-fold defaultstate="collapsed" desc="FXML declarations">
+        @FXML
     private Label fileName;
     @FXML
     private ImageView imageView;
@@ -37,12 +44,16 @@ public class Controller {
     @FXML
     private RadioButton keepRatio;
     @FXML
-    private Slider midTone;
+    private Slider midToneSlider;
     @FXML
     private Label midToneValue;
     @FXML
     private TextField midToneText;
-
+    @FXML
+    private Rectangle thumb;
+    @FXML
+    private SplitPane p;
+    //</editor-fold>
 
     @FXML
     private void openFile(ActionEvent action) {
@@ -72,7 +83,13 @@ public class Controller {
 
         resizedLuminosity = sourceLuminosity.clone();
         modifiedLuminosity = resizedLuminosity.clone();
-        actualizeImage();
+        actualizeImageAndView();
+    }
+
+    @FXML
+    private void moveThumb(MouseEvent action) {
+        thumb.setTranslateX(action.getSceneX() - thumb.getWidth()/2);
+        thumb.setTranslateY(action.getSceneY() - thumb.getHeight()/2);
     }
 
     @FXML
@@ -89,7 +106,7 @@ public class Controller {
             e.printStackTrace();
         }
         modifiedLuminosity = resizedLuminosity.clone();
-        actualizeImage();
+        actualizeImageAndView();
     }
 
     @FXML
@@ -106,7 +123,7 @@ public class Controller {
             e.printStackTrace();
         }
         modifiedLuminosity = resizedLuminosity.clone();
-        actualizeImage();
+        actualizeImageAndView();
     }
 
     //TODO write reset method!!!
@@ -117,14 +134,18 @@ public class Controller {
         modifier.getValuesFrom(resizedLuminosity.getSortedItemMap());
         modifier.changeMidTone(newMidTone);
         modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
-        actualizeImage();
+        actualizeImageAndView();
+    }
+
+    private void modifyImage() {
+
     }
 
 
-    private void actualizeImage() {
+    private void actualizeImageAndView() {
         newWidth.setText("" + modifiedLuminosity.getWidth());
         newHeight.setText("" + modifiedLuminosity.getHeight());
-        midTone.setValue(modifiedLuminosity.getMidTone());
+        midToneSlider.setValue(modifiedLuminosity.getMidTone());
         midToneValue.setText(modifiedLuminosity.getMidTone() + "%");
 
         WriteImage writeImage = new WriteImage(modifiedLuminosity.getLuminosityMap());
@@ -132,16 +153,21 @@ public class Controller {
     }
 
     public void initialize() {
-        midTone.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+
+
+
+        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             int newMidTone = newValue.intValue();
             modifier.getValuesFrom(resizedLuminosity.getSortedItemMap()); //TODO somewhere otherplace
             modifier.changeMidTone(newMidTone);
             modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
             modifiedLuminosity.setMidTone(newMidTone);
-            actualizeImage();
+            actualizeImageAndView();
         });
 
 
     }
+
 
 }
