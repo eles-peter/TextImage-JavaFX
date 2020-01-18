@@ -5,16 +5,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 //import impl.org.controlsfx.*;
 //import org.controlsfx.control.RangeSlider;
 
-import general.*;
-
 import java.io.File;
 import java.io.IOException;
+
+import general.*;
 
 public class Controller {
 
@@ -42,24 +41,23 @@ public class Controller {
     @FXML
     private RadioButton keepRatio;
     @FXML
-    private Slider midToneSlider;
+    private Rectangle rangeSlideRail;
+    @FXML
+    private Rectangle rangeMinButton;
+    @FXML
+    private Rectangle rangeMaxButton;
+    @FXML
+    private Rectangle rangeSlideRange;
+    @FXML
+    private Rectangle midToneSlideRail;
+    @FXML
+    private Rectangle midToneSlideButton;
     @FXML
     private Label midToneValue;
     @FXML
-    private HBox singleSliderBox;
+    private Label rangeMinValue;
     @FXML
-    private Rectangle singleSliderTrail0;
-    @FXML
-    private Rectangle singleSliderThumb;
-    @FXML
-    private Rectangle singleSliderTrail1;
-    @FXML
-    private TextField singleSlideInput;
-    @FXML
-    private Rectangle singleSlideRail;
-    @FXML
-    private Rectangle singleSlideButton;
-
+    private Label rangeMaxValue;
     //</editor-fold>
 
     @FXML
@@ -90,77 +88,19 @@ public class Controller {
 
         resizedLuminosity = sourceLuminosity.clone();
         modifiedLuminosity = resizedLuminosity.clone();
+        minValue = modifiedLuminosity.getSortedItemMap().firstKey();
+        maxValue = modifiedLuminosity.getSortedItemMap().lastKey();
+        setRangeSlide(minValue, maxValue);
+        setMidToneSlide(50);
+
         actualizeImageAndView();
     }
-
-
-    @FXML
-    private void modifyMidToneSlider(ActionEvent action) {
-        setSingleSlide(Integer.parseInt(singleSlideInput.getText()), MIDTONESCALE);
-    }
-
-    @FXML
-    private void moveThumb(MouseEvent action) {
-        singleSliderThumb.setTranslateX(action.getSceneX() - singleSliderThumb.getWidth()/2);
-    }
-
-    @FXML
-    private void setMidToneSlider(int newValue) {
-        double sliderLength = singleSliderBox.getWidth() - singleSliderThumb.getWidth();
-        double sliderUnit = sliderLength / MIDTONESCALE;
-        double newTrail0Length = newValue * sliderUnit;
-        if (newTrail0Length < singleSliderTrail0.getWidth()) {
-            singleSliderTrail0.setWidth(newTrail0Length);
-            singleSliderTrail1.setWidth(sliderLength-newTrail0Length);
-        } else {
-            singleSliderTrail1.setWidth(sliderLength-newTrail0Length);
-            singleSliderTrail0.setWidth(newTrail0Length);
-        }
-    }
-
-
-
-    @FXML
-    private void dragSingleSlide(MouseEvent action) {
-        double sliderLength = singleSlideRail.getWidth() - singleSlideButton.getWidth();
-        double newPosition = action.getSceneX() - singleSlideRail.getParent().getLayoutX();
-        if (newPosition < 0) newPosition = 0;
-        if (newPosition > sliderLength) newPosition = sliderLength;
-        singleSlideButton.setLayoutX(newPosition);
-
-        double sliderUnit = sliderLength / MIDTONESCALE;
-        int newValue = (int) (newPosition / sliderUnit);
-        midTone = newValue;
-        midToneValue.setText(midTone + "%");
-
-        modifier.getValuesFrom(resizedLuminosity.getSortedItemMap()); //TODO somewhere otherplace
-        modifier.changeMidTone(midTone);
-        modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
-        actualizeImageAndView();
-
-
-
-    }
-
-    @FXML
-    private void setSingleSlide(int newValue, int range) {
-        if (newValue > range) newValue = range;
-        if (newValue < 0) newValue = 0;
-        double sliderLength = singleSlideRail.getWidth() - singleSlideButton.getWidth();
-        double sliderUnit = sliderLength / range;
-        singleSlideButton.setLayoutX(newValue * sliderUnit);
-    }
-
-
-
-
-
-
 
     @FXML
     private void resizeImageWidth(ActionEvent action) {
         try {
             int newWidth = Integer.parseInt(this.newWidth.getText());
+            if (newWidth > MAXIMAGESIZE) newWidth = MAXIMAGESIZE;
             if (keepRatio.isSelected()) {
                 resizedLuminosity = sourceLuminosity.resizeToNewKeepRatioBaseWidth(newWidth);
             } else {
@@ -178,6 +118,7 @@ public class Controller {
     private void resizeImageHeight(ActionEvent action) {
         try {
             int newHeight = Integer.parseInt(this.newHeight.getText());
+            if (newHeight > MAXIMAGESIZE) newHeight = MAXIMAGESIZE;
             if (keepRatio.isSelected()) {
                 resizedLuminosity = sourceLuminosity.resizeToNewKeepRatioBaseHeight(newHeight);
             } else {
@@ -191,6 +132,100 @@ public class Controller {
         actualizeImageAndView();
     }
 
+
+    @FXML
+    private void setRangeSlide(int newMinValue, int newMaxvalue) {
+        if (newMaxvalue > 255) newMaxvalue = 255;
+        if (newMinValue < 0) newMinValue = 0;
+        double sliderLength = rangeSlideRail.getWidth() - rangeMinButton.getWidth() - rangeMaxButton.getWidth();
+        double sliderUnit = sliderLength / 255;
+        double newMinX = newMinValue * sliderUnit;
+        rangeMinButton.setLayoutX(newMinX);
+        rangeSlideRange.setLayoutX(newMinX + rangeMinButton.getWidth());
+        double newRangeLength = (newMaxvalue - newMinValue) * sliderUnit;
+        rangeSlideRange.setWidth(newRangeLength);
+        rangeMaxButton.setLayoutX(newMinX + rangeMinButton.getWidth() + newRangeLength);
+        minValue = newMinValue;
+        maxValue = newMaxvalue;
+    }
+
+    @FXML
+    private void dragRangeSlideMin(MouseEvent action) {
+        double sliderLength = rangeSlideRail.getWidth() - rangeMinButton.getWidth() - rangeMaxButton.getWidth();
+        double sliderUnit = sliderLength / 255;
+        double newMinX = action.getSceneX() - rangeSlideRail.getParent().getLayoutX();
+
+        if (newMinX > rangeMaxButton.getLayoutX() - rangeMinButton.getWidth()) newMinX = rangeMaxButton.getLayoutX() - rangeMinButton.getWidth();
+        if (newMinX < 0) newMinX = 0;
+        int newMinValue = (int) (newMinX / sliderUnit);
+        this.minValue = newMinValue;
+
+        rangeMinButton.setLayoutX(newMinX);
+        rangeSlideRange.setLayoutX(newMinX + rangeMinButton.getWidth());
+        double newRangeLength = rangeMaxButton.getLayoutX() - newMinX - rangeMinButton.getWidth();
+        rangeSlideRange.setWidth(newRangeLength);
+
+        rangeMinValue.setText("" + this.minValue);
+    }
+
+    @FXML
+    private void dragRangeSlideMax(MouseEvent action) {
+        double sliderLength = rangeSlideRail.getWidth() - rangeMinButton.getWidth() - rangeMaxButton.getWidth();
+        double sliderUnit = sliderLength / 255;
+        double newMaxX = action.getSceneX() - rangeSlideRail.getParent().getLayoutX() - rangeMinButton.getWidth();
+
+        if (newMaxX < rangeMinButton.getLayoutX()) newMaxX = rangeMinButton.getLayoutX() ;
+        if (newMaxX > sliderLength) newMaxX = sliderLength;
+        int newMaxValue = (int) (newMaxX / sliderUnit);
+        this.maxValue = newMaxValue;
+
+        rangeMaxButton.setLayoutX(newMaxX + rangeMinButton.getWidth());
+        double newRangeLength = newMaxX - rangeMinButton.getLayoutX();
+        rangeSlideRange.setWidth(newRangeLength);
+
+        rangeMaxValue.setText("" + maxValue);
+    }
+
+
+
+
+
+    @FXML
+    private void dragMidToneSlide(MouseEvent action) {
+        double sliderLength = midToneSlideRail.getWidth() - midToneSlideButton.getWidth();
+        double newPosition = action.getSceneX() - midToneSlideRail.getParent().getLayoutX();
+        if (newPosition < 0) newPosition = 0;
+        if (newPosition > sliderLength) newPosition = sliderLength;
+        midToneSlideButton.setLayoutX(newPosition);
+
+        double sliderUnit = sliderLength / MIDTONESCALE;
+        int newValue = (int) (newPosition / sliderUnit);
+        midTone = newValue;
+        midToneValue.setText(midTone + "%");
+
+        modifier.getValuesFrom(resizedLuminosity.getSortedItemMap()); //TODO somewhere otherplace
+        modifier.changeMidTone(midTone);
+        modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
+        actualizeImageAndView();
+    }
+
+    @FXML
+    private void setMidToneSlide(int newValue) {
+        if (newValue > MIDTONESCALE) newValue = MIDTONESCALE;
+        if (newValue < 0) newValue = 0;
+        double sliderLength = midToneSlideRail.getWidth() - midToneSlideButton.getWidth();
+        double sliderUnit = sliderLength / MIDTONESCALE;
+        midToneSlideButton.setLayoutX(newValue * sliderUnit);
+        midTone = newValue;
+        midToneValue.setText(midTone + "%");
+    }
+
+
+
+
+
+
+
     //TODO write reset method!!!
 
 
@@ -202,30 +237,22 @@ public class Controller {
     private void actualizeImageAndView() {
         newWidth.setText("" + modifiedLuminosity.getWidth());
         newHeight.setText("" + modifiedLuminosity.getHeight());
-        midToneSlider.setValue(midTone);
-        midToneValue.setText(midTone + "%");
-        setMidToneSlider(midTone);
 
+        midToneValue.setText(midTone + "%");
         WriteImage writeImage = new WriteImage(modifiedLuminosity.getLuminosityMap());
         imageView.setImage(writeImage.getWritableImage());
     }
 
     public void initialize() {
 
-
-
-
-
-        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            midTone = newValue.intValue();
-            modifier.getValuesFrom(resizedLuminosity.getSortedItemMap()); //TODO somewhere otherplace
-            modifier.changeMidTone(midTone);
-            modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
-            actualizeImageAndView();
-        });
-
+//        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+//            midTone = newValue.intValue();
+//            modifier.getValuesFrom(resizedLuminosity.getSortedItemMap()); //TODO somewhere otherplace
+//            modifier.changeMidTone(midTone);
+//            modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
+//            actualizeImageAndView();
+//        });
 
     }
-
 
 }

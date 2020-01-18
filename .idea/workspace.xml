@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Draging Thumb(rectangle) in JAVAFX ok!">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/8/289f39b5cfaa62fb5cbbae71faa6b7f59202e984" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/8/289f39b5cfaa62fb5cbbae71faa6b7f59202e984" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Before I deleted FXslider">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/textimage-JAVAFX/javafx/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/textimage-JAVAFX/javafx/Controller.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/textimage-JAVAFX/javafx/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/textimage-JAVAFX/javafx/javafx.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/Luminosity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Luminosity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/ReadImageFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/ReadImageFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/javafx/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/javafx/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/javafx/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/javafx/javafx.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/textimage-JAVAFX.iml" beforeDir="false" afterPath="$PROJECT_DIR$/textimage-JAVAFX.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -233,7 +228,7 @@
       <workItem from="1579295867158" duration="4254000" />
       <workItem from="1579341892769" duration="4821000" />
       <workItem from="1579351147962" duration="6496000" />
-      <workItem from="1579374097996" duration="4440000" />
+      <workItem from="1579374097996" duration="14050000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -249,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579350779082</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Before I deleted FXslider">
+      <created>1579379209989</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1579379209989</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,6 +275,7 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <MESSAGE value="Change Midtone slider is ready!!!" />
     <MESSAGE value="Draging Thumb(rectangle) in JAVAFX ok!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Draging Thumb(rectangle) in JAVAFX ok!" />
+    <MESSAGE value="Before I deleted FXslider" />
+    <option name="LAST_COMMIT_MESSAGE" value="Before I deleted FXslider" />
   </component>
 </project>
