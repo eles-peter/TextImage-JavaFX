@@ -2,11 +2,15 @@ package javafx;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -27,9 +31,12 @@ public class Controller {
     private int midTone = 50;
     private int minValue;
     private int maxValue;
+    private boolean keepRatio;
     private boolean equalize;
 
     //<editor-fold defaultstate="collapsed" desc="FXML declarations">
+    @FXML
+    private AnchorPane modifiersPane;
     @FXML
     private Label fileName;
     @FXML
@@ -39,7 +46,9 @@ public class Controller {
     @FXML
     private TextField newHeight;
     @FXML
-    private RadioButton keepRatio;
+    private Group keepRatioButton;
+//    @FXML
+//    private RadioButton keepRatio;
     @FXML
     private Rectangle equalizeBackground;
     @FXML
@@ -91,6 +100,9 @@ public class Controller {
         modifiedLuminosity = resizedLuminosity.clone();
         minValue = modifiedLuminosity.getSortedItemMap().firstKey();
         maxValue = modifiedLuminosity.getSortedItemMap().lastKey();
+        modifiersPane.setDisable(false);
+        modifiersPane.setOpacity(1);
+
         setRangeSlide(minValue, maxValue);
         setMidToneSlide(50);
         setEqualizeFalse();
@@ -101,11 +113,26 @@ public class Controller {
 //*******************KÉP ÁTMÉRETEZÉS************************************
 
     @FXML
+    private void clickedKeepRatioButton(MouseEvent action) {
+        if (keepRatio) {
+            keepRatio = false;
+            for (Node child : keepRatioButton.getChildren()) {
+                ((Shape) child).setFill(Color.rgb(210, 210, 210));
+            }
+        } else {
+            keepRatio = true;
+            for (Node child : keepRatioButton.getChildren()) {
+                ((Shape) child).setFill(Color.SKYBLUE);
+            }
+        }
+    }
+
+    @FXML
     private void resizeImageWidth(ActionEvent action) {
         try {
             int newWidth = Integer.parseInt(this.newWidth.getText());
             if (newWidth > MAXIMAGESIZE) newWidth = MAXIMAGESIZE;
-            if (keepRatio.isSelected()) {
+            if (keepRatio) {
                 resizedLuminosity = sourceLuminosity.resizeToNewKeepRatioBaseWidth(newWidth);
             } else {
                 int newHeight = Integer.parseInt(this.newHeight.getText());
@@ -124,7 +151,7 @@ public class Controller {
         try {
             int newHeight = Integer.parseInt(this.newHeight.getText());
             if (newHeight > MAXIMAGESIZE) newHeight = MAXIMAGESIZE;
-            if (keepRatio.isSelected()) {
+            if (keepRatio) {
                 resizedLuminosity = sourceLuminosity.resizeToNewKeepRatioBaseHeight(newHeight);
             } else {
                 int newWidth = Integer.parseInt(this.newWidth.getText());
@@ -167,6 +194,8 @@ public class Controller {
 
 // ****************RANGE MŰVELETEK**************************
 
+    //TODO write click on rail method!!!
+
     @FXML
     private void setRangeSlide(int newMinValue, int newMaxvalue) {
         if (newMaxvalue > 255) newMaxvalue = 255;
@@ -176,6 +205,7 @@ public class Controller {
         double newMinX = newMinValue * sliderUnit;
         rangeMinButton.setLayoutX(newMinX);
         rangeSlideRange.setLayoutX(newMinX + rangeMinButton.getWidth());
+        rangeSlideRange.setFill(Color.SKYBLUE);
         double newRangeLength = (newMaxvalue - newMinValue) * sliderUnit;
         rangeSlideRange.setWidth(newRangeLength);
         rangeMaxButton.setLayoutX(newMinX + rangeMinButton.getWidth() + newRangeLength);
@@ -223,6 +253,8 @@ public class Controller {
     }
 
 //*********************MIDTONE MŰVELETEK************************************
+
+    //TODO write click on rail method!!!
 
     @FXML
     private void setMidToneSlide(int newValue) {
@@ -294,6 +326,7 @@ public class Controller {
     }
 
     public void initialize() {
+
 
 //        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 //            midTone = newValue.intValue();
