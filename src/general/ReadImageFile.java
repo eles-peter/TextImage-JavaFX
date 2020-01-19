@@ -30,7 +30,7 @@ public class ReadImageFile {
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 int pixel = image.getRGB(w, h);
-                int alpha = (pixel >> 24) & 0xff; //TODO deletable?
+                int alpha = (pixel >> 24) & 0xff; //TODO deletable? vagy figyelembe vétele.... kettészedni a methodot...
                 int red = (pixel >> 16) & 0xff;
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;

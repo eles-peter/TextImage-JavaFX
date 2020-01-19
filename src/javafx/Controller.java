@@ -5,10 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-//import impl.org.controlsfx.*;
-//import org.controlsfx.control.RangeSlider;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,11 +25,12 @@ public class Controller {
     private Luminosity modifiedLuminosity;
     private Modifier modifier = new Modifier();
     private int midTone = 50;
-    private int minValue; //TODO kell ?
-    private int maxValue; //TODO kell ?
+    private int minValue;
+    private int maxValue;
+    private boolean equalize;
 
     //<editor-fold defaultstate="collapsed" desc="FXML declarations">
-        @FXML
+    @FXML
     private Label fileName;
     @FXML
     private ImageView imageView;
@@ -40,6 +40,10 @@ public class Controller {
     private TextField newHeight;
     @FXML
     private RadioButton keepRatio;
+    @FXML
+    private Rectangle equalizeBackground;
+    @FXML
+    private Rectangle equalizeButton;
     @FXML
     private Rectangle rangeSlideRail;
     @FXML
@@ -54,10 +58,6 @@ public class Controller {
     private Rectangle midToneSlideButton;
     @FXML
     private Label midToneValue;
-    @FXML
-    private Label rangeMinValue;
-    @FXML
-    private Label rangeMaxValue;
     //</editor-fold>
 
     @FXML
@@ -74,10 +74,11 @@ public class Controller {
             e.printStackTrace(); //TODO implement POPUP window with error message
             return;
         }
+        //TODO alpha csatorna figyelembevétele???
         sourceLuminosity = new Luminosity(RGBImage.convertToLuminosityArray());
+
         int sourceHeight = sourceLuminosity.getHeight();
         int sourceWidth = sourceLuminosity.getWidth();
-
         if (sourceHeight > sourceWidth && sourceHeight > MAXIMAGESIZE) {
             Luminosity tempLuminosity = sourceLuminosity.resizeToNewKeepRatioBaseHeight(MAXIMAGESIZE);
             sourceLuminosity = tempLuminosity;
@@ -92,9 +93,12 @@ public class Controller {
         maxValue = modifiedLuminosity.getSortedItemMap().lastKey();
         setRangeSlide(minValue, maxValue);
         setMidToneSlide(50);
+        setEqualizeFalse();
 
         actualizeImageAndView();
     }
+
+//*******************KÉP ÁTMÉRETEZÉS************************************
 
     @FXML
     private void resizeImageWidth(ActionEvent action) {
@@ -110,7 +114,8 @@ public class Controller {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        modifiedLuminosity = resizedLuminosity.clone();
+
+        modifyImage();
         actualizeImageAndView();
     }
 
@@ -128,10 +133,39 @@ public class Controller {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        modifiedLuminosity = resizedLuminosity.clone();
+
+        modifyImage();
         actualizeImageAndView();
     }
 
+//************************EQUALIZE**************************************
+
+    @FXML
+    private void clickedEqualizeButton(MouseEvent action) {
+        if (equalize) {
+            equalize = false;
+            equalizeButton.setLayoutX(0);
+            equalizeBackground.setFill(Color.rgb(210, 210, 210));
+
+        } else {
+            equalize = true;
+            equalizeButton.setLayoutX(equalizeBackground.getWidth() - equalizeButton.getWidth());
+            equalizeBackground.setFill(Color.SKYBLUE);
+            setRangeSlide(0,255);
+            setMidToneSlide(50);
+        }
+        modifyImage();
+        actualizeImageAndView();
+    }
+
+    @FXML
+    private void setEqualizeFalse() {
+        equalize = false;
+        equalizeButton.setLayoutX(0);
+        equalizeBackground.setFill(Color.rgb(210, 210, 210));
+    }
+
+// ****************RANGE MŰVELETEK**************************
 
     @FXML
     private void setRangeSlide(int newMinValue, int newMaxvalue) {
@@ -165,7 +199,8 @@ public class Controller {
         double newRangeLength = rangeMaxButton.getLayoutX() - newMinX - rangeMinButton.getWidth();
         rangeSlideRange.setWidth(newRangeLength);
 
-        rangeMinValue.setText("" + this.minValue);
+        modifyImage();
+        actualizeImageAndView();
     }
 
     @FXML
@@ -183,12 +218,22 @@ public class Controller {
         double newRangeLength = newMaxX - rangeMinButton.getLayoutX();
         rangeSlideRange.setWidth(newRangeLength);
 
-        rangeMaxValue.setText("" + maxValue);
+        modifyImage();
+        actualizeImageAndView();
     }
 
+//*********************MIDTONE MŰVELETEK************************************
 
-
-
+    @FXML
+    private void setMidToneSlide(int newValue) {
+        if (newValue > MIDTONESCALE) newValue = MIDTONESCALE;
+        if (newValue < 0) newValue = 0;
+        double sliderLength = midToneSlideRail.getWidth() - midToneSlideButton.getWidth();
+        double sliderUnit = sliderLength / MIDTONESCALE;
+        midToneSlideButton.setLayoutX(newValue * sliderUnit);
+        this.midTone = newValue;
+        midToneValue.setText(this.midTone + "%");
+    }
 
     @FXML
     private void dragMidToneSlide(MouseEvent action) {
@@ -200,44 +245,49 @@ public class Controller {
 
         double sliderUnit = sliderLength / MIDTONESCALE;
         int newValue = (int) (newPosition / sliderUnit);
-        midTone = newValue;
-        midToneValue.setText(midTone + "%");
+        this.midTone = newValue;
+        midToneValue.setText(this.midTone + "%");
 
-        modifier.getValuesFrom(resizedLuminosity.getSortedItemMap()); //TODO somewhere otherplace
-        modifier.changeMidTone(midTone);
-        modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
+        modifyImage();
         actualizeImageAndView();
     }
 
-    @FXML
-    private void setMidToneSlide(int newValue) {
-        if (newValue > MIDTONESCALE) newValue = MIDTONESCALE;
-        if (newValue < 0) newValue = 0;
-        double sliderLength = midToneSlideRail.getWidth() - midToneSlideButton.getWidth();
-        double sliderUnit = sliderLength / MIDTONESCALE;
-        midToneSlideButton.setLayoutX(newValue * sliderUnit);
-        midTone = newValue;
-        midToneValue.setText(midTone + "%");
-    }
-
-
-
-
-
-
-
-    //TODO write reset method!!!
-
+//********************MODIFY - VÉGREHAJTÁS, RESET******************
 
     private void modifyImage() {
-
+        modifier.getValuesFrom(resizedLuminosity.getSortedItemMap());
+        if (equalize) {
+            modifier.equalize();
+        }
+        if (resizedLuminosity.getSortedItemMap().firstKey() != this.minValue ||
+                resizedLuminosity.getSortedItemMap().lastKey() != this.maxValue) {
+            modifier.changeRange(this.minValue, this.maxValue);
+        }
+        if (this.midTone != 50) {
+            modifier.changeMidTone(this.midTone);
+        }
+        modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
     }
 
+    @FXML
+    private void resetModifiersButton(ActionEvent action) {
+        resetModifiers();
+    }
+
+
+    private void resetModifiers() {
+        setEqualizeFalse();
+        setMidToneSlide(50);
+        int resetedMinValue = resizedLuminosity.getSortedItemMap().firstKey();
+        int resetedMaxValue = resizedLuminosity.getSortedItemMap().lastKey();
+        setRangeSlide(resetedMinValue, resetedMaxValue);
+        modifyImage();
+        actualizeImageAndView();
+    }
 
     private void actualizeImageAndView() {
         newWidth.setText("" + modifiedLuminosity.getWidth());
         newHeight.setText("" + modifiedLuminosity.getHeight());
-
         midToneValue.setText(midTone + "%");
         WriteImage writeImage = new WriteImage(modifiedLuminosity.getLuminosityMap());
         imageView.setImage(writeImage.getWritableImage());

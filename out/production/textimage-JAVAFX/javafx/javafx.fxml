@@ -6,34 +6,44 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<!--<?import org.controlsfx.control.*?>-->
-
 <SplitPane id="p" fx:id="p" dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.Controller">
   <items>
     <AnchorPane id="sideBar" fx:id="sideBar" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="451.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
          <children>
             <Button id="buttonOpenFile" layoutX="68.0" layoutY="14.0" mnemonicParsing="false" onAction="#openFile" style="-fx-background-radius: 0;" text="OpenFile" />
             <Label id="fileName" fx:id="fileName" layoutX="16.0" layoutY="51.0" />
-            <TextField id="newWidth" fx:id="newWidth" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="77.0" onAction="#resizeImageWidth" prefHeight="26.0" prefWidth="96.0" style="-fx-background-radius: 0;" />
-            <Label layoutX="14.0" layoutY="82.0" text="Width" />
-            <TextField id="newHeight" fx:id="newHeight" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="111.0" onAction="#resizeImageHeight" prefHeight="26.0" prefWidth="96.0" style="-fx-background-radius: 0;" />
-            <Label layoutX="14.0" layoutY="116.0" text="Height" />
+            <TextField id="newWidth" fx:id="newWidth" alignment="CENTER_RIGHT" layoutX="70.0" layoutY="77.0" onAction="#resizeImageWidth" prefHeight="26.0" prefWidth="60.0" style="-fx-background-radius: 0;" />
+            <Label layoutX="14.0" layoutY="82.0" text="Columns" />
+            <TextField id="newHeight" fx:id="newHeight" alignment="CENTER_RIGHT" layoutX="70.0" layoutY="111.0" onAction="#resizeImageHeight" prefHeight="26.0" prefWidth="60.0" style="-fx-background-radius: 0;" />
+            <Label layoutX="14.0" layoutY="116.0" text="Rows" />
             <RadioButton id="keepRatio" fx:id="keepRatio" layoutX="95.0" layoutY="148.0" mnemonicParsing="false" text="keepRatio" />
              <Separator layoutY="180.0" prefWidth="200.0" />
-            <Group id="midToneSlide" fx:id="midToneSlide" layoutX="10.0" layoutY="200.0">
+            <Group id="equalizeGroup" fx:id="equalizeGroup" layoutX="10.0" layoutY="198.0" onMouseClicked="#clickedEqualizeButton">
                <children>
-                  <Rectangle id="midToneSlideRail" fx:id="midToneSlideRail" arcHeight="5.0" fill="#cccccc" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
+                  <Rectangle id="equalizeBackground" fx:id="equalizeBackground" arcHeight="5.0" fill="#d2d2d2" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="30.0" />
+                  <Rectangle id="equalizeButton" fx:id="equalizeButton" arcHeight="5.0" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Rectangle>
+               </children>
+            </Group>
+            <Label layoutX="10.0" layoutY="217.0" text="Equalize" />
+            <Group id="midToneSlide" fx:id="midToneSlide" layoutX="10.0" layoutY="238.0">
+               <children>
+                  <Rectangle id="midToneSlideRail" fx:id="midToneSlideRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
                   <Rectangle id="midToneSlideButton" fx:id="midToneSlideButton" arcHeight="5.0" height="15.0" layoutX="82.5" onMouseDragged="#dragMidToneSlide" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Rectangle>
+                     </cursor>
+                  </Rectangle>
                </children>
             </Group>
-             <Label id="midToneValue" fx:id="midToneValue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="190.0" layoutY="219.0" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" />
-             <Label layoutX="10.0" layoutY="219.0" text="Midtone" />
-            <Group id="rangeSlide" fx:id="rangeSlide" layoutX="10.0" layoutY="240.0">
+             <Label id="midToneValue" fx:id="midToneValue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="190.0" layoutY="257.0" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" />
+             <Label layoutX="10.0" layoutY="257.0" text="Midtone" />
+            <Group id="rangeSlide" fx:id="rangeSlide" layoutX="10.0" layoutY="278.0">
                <children>
-                  <Rectangle id="rangeSlideRail" fx:id="rangeSlideRail" arcHeight="5.0" fill="#cccccc" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
+                  <Rectangle id="rangeSlideRail" fx:id="rangeSlideRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
                   <Rectangle id="rangeMinButton" fx:id="rangeMinButton" arcHeight="5.0" height="15.0" onMouseDragged="#dragRangeSlideMin" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -47,11 +57,9 @@
                   <Rectangle id="rangeSlideRange" fx:id="rangeSlideRange" arcHeight="5.0" fill="SKYBLUE" height="15.0" layoutX="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="150.0" />
                </children>
             </Group>
-            <Label id="midToneValue" fx:id="midToneValue1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="190.0" layoutY="259.0" text="Light" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" />
-            <Label layoutX="10.0" layoutY="259.0" text="Dark" />
-            <Label fx:id="rangeMinValue" layoutX="16.0" layoutY="284.0" text="minvalue" />
-            <Label fx:id="rangeMaxValue" layoutX="149.0" layoutY="284.0" text="maxvalue" />
-<!--             <RangeSlider id="rangeSlider" fx:id="rangeSlider" blockIncrement="5.0" highValue="50.0" lowValue="10.0" min="0.0" max="59.0" layoutX="25.0" layoutY="250.0" prefHeight="14.0" prefWidth="147.0" />-->
+            <Label id="midToneValue" fx:id="midToneValue1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="162.8000030517578" layoutY="297.0" text="Light" textAlignment="RIGHT" />
+            <Label layoutX="10.0" layoutY="297.0" text="Dark" />
+            <Button id="buttonOpenFile" layoutX="50.0" layoutY="330.0" mnemonicParsing="false" onAction="#resetModifiersButton" style="-fx-background-radius: 0;" text="Reset Modifiers" textAlignment="CENTER" />
          </children></AnchorPane>
       <StackPane id="imagePane" prefHeight="150.0" prefWidth="200.0">
          <children>
