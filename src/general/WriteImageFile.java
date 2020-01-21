@@ -36,18 +36,4 @@ public class WriteImageFile {
         System.out.println("File is written");
     }
 
-    public void writeToImage(String directoryPath, String fileName) {
-        String fullFileName = directoryPath + "\\" + fileName;
-        try {
-            ImageIO.write(image, "jpg", new File(fullFileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("File is written");
-    }
-
-
-
-
-
 }

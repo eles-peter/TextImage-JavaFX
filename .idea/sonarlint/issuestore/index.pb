@@ -1,10 +1,4 @@
 
-F
-src/javafx/javafx.fxml,8\4\8421f2875487155d3e1ea6a599afcadbe08940cb
-J
-src/javafx/Controller.java,2\8\289f39b5cfaa62fb5cbbae71faa6b7f59202e984
-D
-src/javafx/Main.java,a\8\a8ca2f9451ffc97494f34ac5d54485cf0b3700e1
 K
 src/general/WriteImage.java,9\6\96dfbf2d9e1ff05bed6ae37a63ec4ccd9b58056f
 N
@@ -13,8 +7,6 @@ K
 src/general/Luminosity.java,2\7\277e20f294dd1b5729439459d846431f581a467e
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
-b
-2out/production/textimage-JAVAFX/javafx/javafx.fxml,6\c\6c0dfc310180ef57ccea6df430a307d90bbc2a8f
 E
 src/general/Main.java,1\5\15086bfb02a58321c5bc00cb9532f453d95df340
 I
@@ -23,3 +15,13 @@ O
 src/general/WriteImageFile.java,c\7\c74ba65e025a4793efb93c87612fa5ebef35f7fc
 D
 textimage-JAVAFX.iml,4\8\48b52f682ffebf05bd218220d42d5f032150038a
+K
+src/UserInterface/Main.java,8\c\8c15c8c425048dbd5ff67ea46e05f1030960760b
+[
++src/UserInterface/ErrorPopupController.java,9\f\9f1d5ef1d21a8901914d115d01c373dc452af247
+M
+src/UserInterface/javafx.fxml,7\4\74e67972242d1c3c201a4af7b6df2c97425ebe30
+Q
+!src/UserInterface/Controller.java,d\f\df60342331356d63adafd2470a0b838c17ae83e5
+Q
+!src/UserInterface/errorpopup.fxml,5\0\50df5c0599e1312564861cf5dc4e2c75e3c0f1da

@@ -1,19 +1,0 @@
-
-{squid:S00116"WRename this field "MIDTONESCALE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò®‹¬ùÿÿÿÿ8·ûÊû-
-Psquid:S1135M"2Complete the task associated to this TODO comment.(¶ÀıË8ÚÇ•Øû-
-ksquid:HiddenFieldCheck‚"<Rename "newWidth" which hides the field declared at line 37.(ôı §ùÿÿÿÿ8„ü¶Úû-
-jsquid:CommentedOutCodeLineª"<This block of commented-out lines of code should be removed.(Àï©Ó8ïÁîÒû-
-ksquid:HiddenFieldChecko"=Rename "newHeight" which hides the field declared at line 39.(ªƒ–¯üÿÿÿÿ8ïÁîÒû-
-Fsquid:S1148s"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ïÁîÒû-
-jsquid:HiddenFieldCheckj"<Rename "newWidth" which hides the field declared at line 37.(ôı §ùÿÿÿÿ8ïÁîÒû-
-Dsquid:S1170"!Make this final field static too.(Ò®‹¬ùÿÿÿÿ8·ûÊû-
-Dsquid:S1170"!Make this final field static too.(ï ÚÄşÿÿÿÿ8‡ÿÄÅû-
-Fsquid:S1148J"#Use a logger to log this exception.(œ‡„¢ıÿÿÿÿ8ïÁîÒû-
-Gsquid:S1148†"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8„ü¶Úû-
-Usquid:S1135J"2Complete the task associated to this TODO comment.(œ‡„¢ıÿÿÿÿ8ïÁîÒû-
-Vsquid:S1135¬"2Complete the task associated to this TODO comment.(€¼½üÿÿÿÿ8ïÁîÒû-
-usquid:S00117F"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üæ÷½ÿÿÿÿÿ8ïÁîÒû-
-€squid:S1450"]Remove the "actualFileName" field and declare it as a local variable in the relevant methods.(°õÑ½üÿÿÿÿ8‡ÿÄÅû-
-{squid:S00116"WRename this field "MAXIMAGESIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï ÚÄşÿÿÿÿ8‡ÿÄÅû-
-osquid:CommentedOutCodeLine­"<This block of commented-out lines of code should be removed.(Ñ’Ò»ùÿÿÿÿ8ïÁîÒû-
-ksquid:HiddenFieldCheck}"=Rename "newHeight" which hides the field declared at line 39.(ªƒ–¯üÿÿÿÿ8„ü¶Úû-
