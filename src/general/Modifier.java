@@ -53,6 +53,16 @@ public class Modifier {
         sortedItemMap = tempMap;
     }
 
+    public void offset(int offset) {
+        for (Map.Entry<Integer, Integer> entry : sortedItemMap.entrySet()) {
+            int oldValue = entry.getValue();
+            int newValue = oldValue + offset;
+            if (newValue > 255) newValue = 255;
+            if (newValue < 0) newValue = 0;
+            entry.setValue(newValue);
+        }
+    }
+
     public void equalize() {
         double itemDistance = 255.0 / (sortedItemMap.size() - 1);
         int i = 0;
