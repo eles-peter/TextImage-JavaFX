@@ -17,11 +17,9 @@ D
 textimage-JAVAFX.iml,4\8\48b52f682ffebf05bd218220d42d5f032150038a
 K
 src/UserInterface/Main.java,8\c\8c15c8c425048dbd5ff67ea46e05f1030960760b
-[
-+src/UserInterface/ErrorPopupController.java,9\f\9f1d5ef1d21a8901914d115d01c373dc452af247
 M
 src/UserInterface/javafx.fxml,7\4\74e67972242d1c3c201a4af7b6df2c97425ebe30
 Q
 !src/UserInterface/Controller.java,d\f\df60342331356d63adafd2470a0b838c17ae83e5
-Q
-!src/UserInterface/errorpopup.fxml,5\0\50df5c0599e1312564861cf5dc4e2c75e3c0f1da
+L
+src/UserInterface/Utils.java,4\f\4fe6cf460d515b8ead28740f27160c8173af2ea5
