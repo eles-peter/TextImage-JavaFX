@@ -1,4 +1,4 @@
-package UserInterface;
+package userInterface;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,12 +12,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import general.*;
-import UserInterface.utils.*;
+import userInterface.utils.*;
 
 
 public class Controller {
@@ -30,13 +33,14 @@ public class Controller {
     private Luminosity modifiedLuminosity;
     private Modifier modifier = new Modifier();
     private int midTone = 50;
-    private int minValue;
-    private int maxValue;
+    private intRange range = new intRange(0,255);
     private int offset = 0;
     private boolean keepRatio;
     private boolean equalize;
 
     //<editor-fold defaultstate="collapsed" desc="FXML declarations">
+
+    private Stage primaryStage;
     @FXML
     private SplitPane mainPane;
     @FXML
@@ -79,33 +83,33 @@ public class Controller {
 
     private SingleSlider midToneSlider;
     private SingleSlider offsetSlider;
+    private RangeSlider rangeSlider;
 
     @FXML
     private void openFile(ActionEvent action) {
         File selectedFile = null;
+        ReadImageFile rgbimage = new ReadImageFile();
         FileChooser fileChooser = new FileChooser();
-//        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Image Files", AppConstants.SUPPORTED_IMAGE_EXTENSION);
-//        fileChooser.getExtensionFilters().add(extensionFilter);
+        configureFileChooser(fileChooser);
+        primaryStage = (Stage) mainPane.getScene().getWindow();
+        selectedFile = fileChooser.showOpenDialog(primaryStage);
+        if (selectedFile == null) return;
 
-        //TODO filechooser file extension filter image
-        selectedFile = fileChooser.showOpenDialog(null);
-
-        ReadImageFile rgbimage = null;
         try {
             rgbimage = new ReadImageFile(selectedFile);
             //TODO alpha csatorna figyelembevétele???
-
-            //TODO flichooser window cancel handling
-
-
             sourceLuminosity = new Luminosity(rgbimage.convertToLuminosityArray());
         } catch (IOException e) {
             alertMessage("Something went wrong, maybe try again!");
         } catch (Exception e) {
             alertMessage("These aren't droids you're looking for!");
         }
-
         rgbimage = null; // Törlés a memóriából....
+        actualFileName = selectedFile.getName();
+        fileName.setText("Actual file: " + actualFileName);
+
+
+        //TODO kiírás initializáló methodusba....
 
         int sourceHeight = sourceLuminosity.getHeight();
         int sourceWidth = sourceLuminosity.getWidth();
@@ -117,22 +121,24 @@ public class Controller {
 
         resizedLuminosity = sourceLuminosity.clone();
         modifiedLuminosity = resizedLuminosity.clone();
-        minValue = modifiedLuminosity.getSortedItemMap().firstKey();
-        maxValue = modifiedLuminosity.getSortedItemMap().lastKey();
+
         modifiersPane.setDisable(false);
         modifiersPane.setOpacity(1);
 
-        actualFileName = selectedFile.getName();
-        fileName.setText("Actual file: " + actualFileName);
-
-        setRangeSlide(minValue, maxValue);
-        int newValue= midToneSlider.setSliderValue(50);
-        //TODO nem kell ide offset beállítás? Az egészet helyettesíteni reset modifier-el....????
-        System.out.println(newValue);
-        this.midTone = newValue;
-        setEqualizeFalse();
+        setSizeLabelsToActualValue();
+        setModifiersToInitialValue();
+        setRangeToActualValue();
         actualizeImageAndView();
+    }
 
+    private static void configureFileChooser(final FileChooser fileChooser) {
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        ReadImageFile rgbimage = new ReadImageFile();
+        List<String> formatNames = new ArrayList<>();
+        for (String formatName : rgbimage.getFormatNames()) {
+            formatNames.add("*." + formatName);
+        }
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All Images", formatNames));
     }
 
 //*******************KÉP ÁTMÉRETEZÉS************************************
@@ -166,7 +172,7 @@ public class Controller {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
+        setSizeLabelsToActualValue();
         modifyImage();
         actualizeImageAndView();
     }
@@ -185,7 +191,7 @@ public class Controller {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
+        setSizeLabelsToActualValue();
         modifyImage();
         actualizeImageAndView();
     }
@@ -220,8 +226,6 @@ public class Controller {
 
 // ****************RANGE MŰVELETEK**************************
 
-    //TODO write click on rail method!!!
-
     @FXML
     private void setRangeSlide(int newMinValue, int newMaxvalue) {
         if (newMaxvalue > 255) newMaxvalue = 255;
@@ -235,8 +239,7 @@ public class Controller {
         double newRangeLength = (newMaxvalue - newMinValue) * sliderUnit;
         rangeSliderRange.setWidth(newRangeLength);
         rangeMaxButton.setLayoutX(newMinX + rangeMinButton.getWidth() + newRangeLength);
-        minValue = newMinValue;
-        maxValue = newMaxvalue;
+        this.range.set(newMinValue, newMaxvalue);
     }
 
     @FXML
@@ -245,12 +248,11 @@ public class Controller {
         double sliderUnit = sliderLength / 255;
         double newMinX = action.getSceneX() - rangeSliderRail.getParent().getLayoutX() - rangeMinButton.getWidth() / 2;
 
-
-
         if (newMinX > rangeMaxButton.getLayoutX() - rangeMinButton.getWidth())
             newMinX = rangeMaxButton.getLayoutX() - rangeMinButton.getWidth();
         if (newMinX < 0) newMinX = 0;
-        this.minValue = (int) (newMinX / sliderUnit);
+        int newMinValue = (int) (newMinX / sliderUnit);
+        this.range.setMin(newMinValue);
 
         rangeMinButton.setLayoutX(newMinX);
         rangeSliderRange.setLayoutX(newMinX + rangeMinButton.getWidth());
@@ -269,7 +271,8 @@ public class Controller {
 
         if (newMaxX < rangeMinButton.getLayoutX()) newMaxX = rangeMinButton.getLayoutX();
         if (newMaxX > sliderLength) newMaxX = sliderLength;
-        this.maxValue = (int) (newMaxX / sliderUnit);
+        int newMaxValue = (int) (newMaxX / sliderUnit);
+        this.range.setMax(newMaxValue);
 
         rangeMaxButton.setLayoutX(newMaxX + rangeMinButton.getWidth());
         double newRangeLength = newMaxX - rangeMinButton.getLayoutX();
@@ -305,7 +308,6 @@ public class Controller {
     @FXML
     private void clickOrDragOffsetSlider(MouseEvent mouseEvent) {
         this.offset = offsetSlider.clickOrDrag(mouseEvent);
-        //        TODO módosítani a range-t!
         modifyImage();
         actualizeImageAndView();
     }
@@ -317,48 +319,52 @@ public class Controller {
         if (equalize) {
             modifier.equalize();
         }
-        if (resizedLuminosity.getSortedItemMap().firstKey() != this.minValue ||
-                resizedLuminosity.getSortedItemMap().lastKey() != this.maxValue) {
-            modifier.changeRange(this.minValue, this.maxValue);
+        if (resizedLuminosity.getSortedItemMap().firstKey() != this.range.min() ||
+                resizedLuminosity.getSortedItemMap().lastKey() != this.range.max()) {
+            modifier.changeRange(this.range.min(), this.range.max());
         }
         if (this.midTone != 50) {
             modifier.changeMidTone(this.midTone);
         }
         if (this.offset != 0) {
             modifier.offset(this.offset);
-            //TODO modositíni a ranget!!!
         }
         modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
+        setRangeSlide(modifier.getFirstValue(), modifier.getLastValue()); //TODO nem tudom mi a fasz baj van....
     }
 
     @FXML
-    private void resetModifiersButton(ActionEvent action) {
-        resetModifiers();
-    }
-
-
     private void resetModifiers() {
-        setEqualizeFalse();
-        this.midTone = midToneSlider.setSliderValue(50);
-        this.offset = offsetSlider.setSliderValue(0);
-        int resetedMinValue = resizedLuminosity.getSortedItemMap().firstKey();
-        int resetedMaxValue = resizedLuminosity.getSortedItemMap().lastKey();
-        setRangeSlide(resetedMinValue, resetedMaxValue);
-        modifyImage(); // eTODO ez minek vam itt? // helyette lecserélni a modifiert, resizera...
+        modifiedLuminosity = resizedLuminosity.clone();
+        setModifiersToInitialValue();
+        setRangeToActualValue();
         actualizeImageAndView();
     }
 
-    private void actualizeImageAndView() {
+    private void setSizeLabelsToActualValue() {
+        newWidth.setText("" + resizedLuminosity.getWidth());
+        newHeight.setText("" + resizedLuminosity.getHeight());
+    }
 
-        newWidth.setText("" + modifiedLuminosity.getWidth());
-        newHeight.setText("" + modifiedLuminosity.getHeight());
-        //TODO modositíni a ranget!!!
+    private void setModifiersToInitialValue() {
+        setEqualizeFalse();
+        this.midTone = midToneSlider.setSliderValue(50);
+        this.offset = offsetSlider.setSliderValue(0);
+        actualizeImageAndView();
+    }
+
+    private void setRangeToActualValue() {
+        int newMinValue = modifiedLuminosity.getSortedItemMap().firstKey();
+        int newMaxValue = modifiedLuminosity.getSortedItemMap().lastKey();
+        setRangeSlide(newMinValue, newMaxValue); ///
+    }
+
+    private void actualizeImageAndView() {
         WriteImage writeImage = new WriteImage(modifiedLuminosity.getLuminosityMap());
         imageView.setImage(writeImage.getWritableImage());
     }
 
 //********************ERROR POPUP WINDOW******************
-
 
     public void alertMessage(String errorMessage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -367,11 +373,13 @@ public class Controller {
         alert.setContentText(errorMessage);
         alert.show();
     }
-
+//******************** INICIALIZÁLÁS ***********************************
 
     public void initialize() {
         midToneSlider = new SingleSlider(0, 100, midToneSliderRail, midToneSliderButton, midToneValue, "%");
         offsetSlider = new SingleSlider(-255, 255, offsetSliderRail, offsetSliderButton, offsetValue, "");
+        rangeSlider = new RangeSlider(0,255, rangeMinButton, rangeMaxButton, rangeSliderRail, rangeSliderRange);
+
 
 
 //        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {

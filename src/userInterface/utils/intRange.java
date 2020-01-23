@@ -1,4 +1,4 @@
-package UserInterface.utils;
+package userInterface.utils;
 
 public class intRange {
     private int minValue;
@@ -25,11 +25,16 @@ public class intRange {
         return maxValue;
     }
 
-    public void setMinValue(int minValue) {
+    public void setMin(int minValue) {
         this.minValue = minValue;
     }
 
-    public void setMaxValue(int maxValue) {
+    public void setMax(int maxValue) {
         this.maxValue = maxValue;
+    }
+
+    public void set(int newMinValue, int newMaxValue) {
+        this.minValue = newMinValue;
+        this.maxValue = newMaxValue;
     }
 }

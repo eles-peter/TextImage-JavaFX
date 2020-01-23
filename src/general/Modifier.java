@@ -35,6 +35,14 @@ public class Modifier {
         return sortedItemMap.get(key);
     }
 
+    public Integer getFirstValue() {
+        return sortedItemMap.get(sortedItemMap.firstKey());
+    }
+
+    public Integer getLastValue() {
+        return sortedItemMap.get(sortedItemMap.lastKey());
+    }
+
     public void clear() {
         this.sortedItemMap.clear();
     }

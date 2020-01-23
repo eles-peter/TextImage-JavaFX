@@ -4,10 +4,15 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class ReadImageFile {
 
     private BufferedImage image;
+
+    public ReadImageFile() {
+    }
 
     public ReadImageFile(String directoryPath, String fileName) throws IOException {
         String fullFileName = directoryPath + "\\" + fileName;
@@ -21,6 +26,11 @@ public class ReadImageFile {
     public ReadImageFile(File openFile) throws IOException {
         this.image = ImageIO.read(openFile);
     }
+
+    public List<String> getFormatNames() {
+        String[] result= ImageIO.getReaderFormatNames();
+        return  Arrays.asList(result);
+     }
 
     //TODO should test the speed...
     public int[][] convertToLuminosityArray() {

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<SplitPane id="mainPane" fx:id="mainPane" dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserInterface.Controller">
+<SplitPane id="mainPane" fx:id="mainPane" dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userInterface.Controller">
     <items>
         <GridPane maxWidth="200.0" minWidth="200.0" prefWidth="200.0">
             <columnConstraints>
@@ -85,7 +85,7 @@
                         </Group>
                         <Label id="midToneValue" fx:id="midToneValue1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="162.8000030517578" layoutY="189.0" text="Light" textAlignment="RIGHT" />
                         <Label layoutX="10.0" layoutY="189.0" text="Dark" />
-                        <Button id="buttonOpenFile" layoutX="10.0" layoutY="255.0" mnemonicParsing="false" onAction="#resetModifiersButton" style="-fx-background-radius: 0;" text="Reset Modifiers" textAlignment="CENTER" />
+                        <Button id="buttonOpenFile" layoutX="10.0" layoutY="255.0" mnemonicParsing="false" onAction="#resetModifiers" style="-fx-background-radius: 0;" text="Reset Modifiers" textAlignment="CENTER" />
                   <Group id="midToneSlide" fx:id="midToneSlide1" layoutX="10.0" layoutY="210.0">
                      <children>
                         <Rectangle id="offsetSlideRail" fx:id="offsetSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOrDragOffsetSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />

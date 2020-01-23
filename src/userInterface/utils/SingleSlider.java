@@ -1,4 +1,4 @@
-package UserInterface.utils;
+package userInterface.utils;
 
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
