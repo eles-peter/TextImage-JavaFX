@@ -24,6 +24,11 @@ public class RangeSlider {
         this.rangeSliderRange = rangeSliderRange;
     }
 
+    public intRange setRangeSlider(int newMinValue, int newMaxvalue) {
+        intRange newRangeValue = new intRange(newMinValue, newMaxvalue);
+        return setRangeSlider(newRangeValue);
+    }
+
     public intRange setRangeSlider(intRange newRangeValue) {
         if (newRangeValue.max() > rangeSliderMax) newRangeValue.setMax(rangeSliderMax);
         if (newRangeValue.min() < rangeSliderMin) newRangeValue.setMin(rangeSliderMin);

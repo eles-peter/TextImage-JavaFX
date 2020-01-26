@@ -197,19 +197,15 @@ public class Controller {
     }
 
 //************************EQUALIZE**************************************
-
     @FXML
     private void clickedEqualizeButton(MouseEvent action) {
         if (equalize) {
-            equalize = false;
-            equalizeButton.setLayoutX(0);
-            equalizeBackground.setFill(Color.rgb(210, 210, 210));
-
+            setEqualizeFalse();
         } else {
             equalize = true;
             equalizeButton.setLayoutX(equalizeBackground.getWidth() - equalizeButton.getWidth());
             equalizeBackground.setFill(Color.SKYBLUE);
-            setRangeSlide(0, 255);
+            range = rangeSlider.setRangeSlider(0, 255);
             this.midTone = midToneSlider.setSliderValue(50);
             this.offset = offsetSlider.setSliderValue(0);
         }
@@ -225,75 +221,25 @@ public class Controller {
     }
 
 // ****************RANGE MŰVELETEK**************************
-
     @FXML
-    private void setRangeSlide(int newMinValue, int newMaxvalue) {
-        if (newMaxvalue > 255) newMaxvalue = 255;
-        if (newMinValue < 0) newMinValue = 0;
-        double sliderLength = rangeSliderRail.getWidth() - rangeMinButton.getWidth() - rangeMaxButton.getWidth();
-        double sliderUnit = sliderLength / 255;
-        double newMinX = newMinValue * sliderUnit;
-        rangeMinButton.setLayoutX(newMinX);
-        rangeSliderRange.setLayoutX(newMinX + rangeMinButton.getWidth());
-        rangeSliderRange.setFill(Color.SKYBLUE);
-        double newRangeLength = (newMaxvalue - newMinValue) * sliderUnit;
-        rangeSliderRange.setWidth(newRangeLength);
-        rangeMaxButton.setLayoutX(newMinX + rangeMinButton.getWidth() + newRangeLength);
-        this.range.set(newMinValue, newMaxvalue);
-    }
-
-    @FXML
-    private void dragRangeSlideMin(MouseEvent action) {
-        double sliderLength = rangeSliderRail.getWidth() - rangeMinButton.getWidth() - rangeMaxButton.getWidth();
-        double sliderUnit = sliderLength / 255;
-        double newMinX = action.getSceneX() - rangeSliderRail.getParent().getLayoutX() - rangeMinButton.getWidth() / 2;
-
-        if (newMinX > rangeMaxButton.getLayoutX() - rangeMinButton.getWidth())
-            newMinX = rangeMaxButton.getLayoutX() - rangeMinButton.getWidth();
-        if (newMinX < 0) newMinX = 0;
-        int newMinValue = (int) (newMinX / sliderUnit);
-        this.range.setMin(newMinValue);
-
-        rangeMinButton.setLayoutX(newMinX);
-        rangeSliderRange.setLayoutX(newMinX + rangeMinButton.getWidth());
-        double newRangeLength = rangeMaxButton.getLayoutX() - newMinX - rangeMinButton.getWidth();
-        rangeSliderRange.setWidth(newRangeLength);
-
+    private void dragRangeSliderMin(MouseEvent action) {
+        this.range = rangeSlider.dragRangeSlideMin(action);
         modifyImage();
         actualizeImageAndView();
     }
 
     @FXML
-    private void dragRangeSlideMax(MouseEvent action) {
-        double sliderLength = rangeSliderRail.getWidth() - rangeMinButton.getWidth() - rangeMaxButton.getWidth();
-        double sliderUnit = sliderLength / 255;
-        double newMaxX = action.getSceneX() - rangeSliderRail.getParent().getLayoutX() - rangeMinButton.getWidth() - rangeMaxButton.getWidth() / 2;
-
-        if (newMaxX < rangeMinButton.getLayoutX()) newMaxX = rangeMinButton.getLayoutX();
-        if (newMaxX > sliderLength) newMaxX = sliderLength;
-        int newMaxValue = (int) (newMaxX / sliderUnit);
-        this.range.setMax(newMaxValue);
-
-        rangeMaxButton.setLayoutX(newMaxX + rangeMinButton.getWidth());
-        double newRangeLength = newMaxX - rangeMinButton.getLayoutX();
-        rangeSliderRange.setWidth(newRangeLength);
-
+    private void dragRangeSliderMax(MouseEvent action) {
+        this.range = rangeSlider.dragRangeSlideMax(action);
         modifyImage();
         actualizeImageAndView();
     }
 
     @FXML
-    private void clickOrDragRangeSlide(MouseEvent action) {
-        double clickLayoutX = action.getSceneX() - rangeSliderRail.getParent().getLayoutX();
-        double minButtonCenterLayoutX = rangeMinButton.getLayoutX() - rangeMinButton.getWidth() / 2;
-        double maxButtonCenterLayoutX = rangeMaxButton.getLayoutX() - rangeMaxButton.getWidth() / 2;
-        double distanceFromMinButton = Math.abs(clickLayoutX - minButtonCenterLayoutX);
-        double distanceFromMaxButton = Math.abs(clickLayoutX - maxButtonCenterLayoutX);
-        if (distanceFromMaxButton < distanceFromMinButton) {
-            dragRangeSlideMax(action);
-        } else {
-            dragRangeSlideMin(action);
-        }
+    private void clickOrDragRangeSlider(MouseEvent action) {
+        this.range = rangeSlider.clickOrDragRangeSlide(action);
+        modifyImage();
+        actualizeImageAndView();
     }
 
 //******************** MIDTONE MŰVELET ***********************************
@@ -308,6 +254,11 @@ public class Controller {
     @FXML
     private void clickOrDragOffsetSlider(MouseEvent mouseEvent) {
         this.offset = offsetSlider.clickOrDrag(mouseEvent);
+        int newMinValue = resizedLuminosity.getSortedItemMap().firstKey() + offset;
+//        if (newMinValue < 0) newMinValue = 0;
+//        int newMaxValue = resizedLuminosity.getSortedItemMap().lastKey() + offset;
+//        if (newMaxValue > 255) newMaxValue = 255;
+//        range.set(newMinValue, newMaxValue);
         modifyImage();
         actualizeImageAndView();
     }
@@ -319,18 +270,19 @@ public class Controller {
         if (equalize) {
             modifier.equalize();
         }
-        if (resizedLuminosity.getSortedItemMap().firstKey() != this.range.min() ||
-                resizedLuminosity.getSortedItemMap().lastKey() != this.range.max()) {
+        if (this.offset != 0) {
+            modifier.offset(this.offset);
+        }
+        if (modifier.getFirstValue() != this.range.min() ||
+                modifier.getLastValue() != this.range.max()) {
             modifier.changeRange(this.range.min(), this.range.max());
         }
         if (this.midTone != 50) {
             modifier.changeMidTone(this.midTone);
         }
-        if (this.offset != 0) {
-            modifier.offset(this.offset);
-        }
         modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
-        setRangeSlide(modifier.getFirstValue(), modifier.getLastValue()); //TODO nem tudom mi a fasz baj van....
+        setRangeToActualValue();
+//        rangeSlider.setRangeSlider(modifier.getFirstValue(), modifier.getLastValue()); //TODO nem tudom mi a fasz baj van....
     }
 
     @FXML
@@ -356,7 +308,8 @@ public class Controller {
     private void setRangeToActualValue() {
         int newMinValue = modifiedLuminosity.getSortedItemMap().firstKey();
         int newMaxValue = modifiedLuminosity.getSortedItemMap().lastKey();
-        setRangeSlide(newMinValue, newMaxValue); ///
+        this.range.set(newMinValue, newMaxValue);
+        rangeSlider.setRangeSlider(newMinValue, newMaxValue); // TODO lehet, hogy itt a baj....
     }
 
     private void actualizeImageAndView() {

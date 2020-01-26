@@ -94,6 +94,10 @@ public class Modifier {
         }
     }
 
+    public void offsetAndChangeRange(int offset, int newMinValue, int newMaxValue) {
+        //TODO something????
+    }
+
     //TODO thinking of this a little bit more...
     public void changeMidTone(int newMidToneInPercent) {
         double newMidTone0_1 = (double)newMidToneInPercent /100;
@@ -121,6 +125,5 @@ public class Modifier {
             System.out.println(entry.getKey() + "->" + entry.getValue());
         }
     }
-
 
 }

@@ -69,18 +69,18 @@
                         <Label layoutX="10.0" layoutY="149.0" text="Midtone" />
                         <Group id="rangeSlide" fx:id="rangeSlide" layoutX="10.0" layoutY="170.0">
                             <children>
-                                <Rectangle id="rangeSlideRail" fx:id="rangeSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOrDragRangeSlide" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
-                                <Rectangle id="rangeMinButton" fx:id="rangeMinButton" arcHeight="5.0" height="15.0" onMouseDragged="#clickOrDragRangeSlide" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                                <Rectangle id="rangeSlideRail" fx:id="rangeSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOrDragRangeSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
+                                <Rectangle id="rangeMinButton" fx:id="rangeMinButton" arcHeight="5.0" height="15.0" onMouseDragged="#dragRangeSliderMin" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Rectangle>
-                                <Rectangle id="rangeMaxButton" fx:id="rangeMaxButton" arcHeight="5.0" height="15.0" layoutX="165.0" onMouseDragged="#clickOrDragRangeSlide" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                                <Rectangle id="rangeMaxButton" fx:id="rangeMaxButton" arcHeight="5.0" height="15.0" layoutX="165.0" onMouseDragged="#dragRangeSliderMax" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Rectangle>
-                                <Rectangle id="rangeSlideRange" fx:id="rangeSliderRange" arcHeight="5.0" fill="#d2d2d2" height="15.0" layoutX="15.0" onMouseClicked="#clickOrDragRangeSlide" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="150.0" />
+                                <Rectangle id="rangeSlideRange" fx:id="rangeSliderRange" arcHeight="5.0" fill="#d2d2d2" height="15.0" layoutX="15.0" onMouseClicked="#clickOrDragRangeSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="150.0" />
                             </children>
                         </Group>
                         <Label id="midToneValue" fx:id="midToneValue1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="162.8000030517578" layoutY="189.0" text="Light" textAlignment="RIGHT" />

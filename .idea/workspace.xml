@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="single slider class ready - refactoring under contraction....">
-      <change afterPath="$PROJECT_DIR$/src/userInterface/utils/RangeSlider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="refractoring összeomlás - még range slider beépítés előtt...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface/TemporaryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/TemporaryUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/javafx.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface/utils/SingleSlider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/utils/SingleSlider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface/utils/intRange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/utils/intRange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/general/Modifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Modifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/ReadImageFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/ReadImageFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userInterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userInterface/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/javafx.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userInterface/utils/RangeSlider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userInterface/utils/RangeSlider.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -290,7 +283,9 @@
       <workItem from="1579680795393" duration="19640000" />
       <workItem from="1579717767186" duration="10536000" />
       <workItem from="1579768329260" duration="1598000" />
-      <workItem from="1579780876281" duration="7947000" />
+      <workItem from="1579780876281" duration="9310000" />
+      <workItem from="1579865602847" duration="665000" />
+      <workItem from="1580053653908" duration="5734000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -355,7 +350,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579711835000</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="refractoring összeomlás - még range slider beépítés előtt...">
+      <created>1579789060913</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1579789060913</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -386,6 +388,7 @@
     <MESSAGE value="alert DialogPane ready" />
     <MESSAGE value="offset method and UI ready" />
     <MESSAGE value="single slider class ready - refactoring under contraction...." />
-    <option name="LAST_COMMIT_MESSAGE" value="single slider class ready - refactoring under contraction...." />
+    <MESSAGE value="refractoring összeomlás - még range slider beépítés előtt..." />
+    <option name="LAST_COMMIT_MESSAGE" value="refractoring összeomlás - még range slider beépítés előtt..." />
   </component>
 </project>
