@@ -1,4 +1,4 @@
-package userInterface.utils;
+package userinterface.utils;
 
 import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
@@ -13,7 +13,7 @@ public class RangeSlider {
     private Rectangle rangeSliderMaxButton;
     private Rectangle rangeSliderRail;
     private Rectangle rangeSliderRange;
-    private intRange rangeValue;
+    private IntRange rangeValue;
 
     public RangeSlider(int rangeSliderMin, int rangeSliderMax, Rectangle rangeSliderMinButton, Rectangle rangeSliderMaxButton, Rectangle rangeSliderRail, Rectangle rangeSliderRange) {
         this.rangeSliderMin = rangeSliderMin;
@@ -24,12 +24,12 @@ public class RangeSlider {
         this.rangeSliderRange = rangeSliderRange;
     }
 
-    public intRange setRangeSlider(int newMinValue, int newMaxvalue) {
-        intRange newRangeValue = new intRange(newMinValue, newMaxvalue);
+    public IntRange setRangeSlider(int newMinValue, int newMaxvalue) {
+        IntRange newRangeValue = new IntRange(newMinValue, newMaxvalue);
         return setRangeSlider(newRangeValue);
     }
 
-    public intRange setRangeSlider(intRange newRangeValue) {
+    public IntRange setRangeSlider(IntRange newRangeValue) {
         if (newRangeValue.max() > rangeSliderMax) newRangeValue.setMax(rangeSliderMax);
         if (newRangeValue.min() < rangeSliderMin) newRangeValue.setMin(rangeSliderMin);
         double sliderLength = rangeSliderRail.getWidth() - rangeSliderMinButton.getWidth() - rangeSliderMaxButton.getWidth();
@@ -44,7 +44,7 @@ public class RangeSlider {
         return this.rangeValue = newRangeValue;
     }
 
-    public intRange dragRangeSlideMin(MouseEvent action) {
+    public IntRange dragRangeSlideMin(MouseEvent action) {
         double sliderLength = rangeSliderRail.getWidth() - rangeSliderMinButton.getWidth() - rangeSliderMaxButton.getWidth();
         double sliderUnit = sliderLength / 255;
         Bounds boundsInScene = rangeSliderRail.localToScene(rangeSliderRail.getBoundsInLocal());
@@ -65,7 +65,7 @@ public class RangeSlider {
         return rangeValue;
     }
 
-    public intRange dragRangeSlideMax(MouseEvent action) {
+    public IntRange dragRangeSlideMax(MouseEvent action) {
         double sliderLength = rangeSliderRail.getWidth() - rangeSliderMinButton.getWidth() - rangeSliderMaxButton.getWidth();
         double sliderUnit = sliderLength / 255;
         Bounds boundsInScene = rangeSliderRail.localToScene(rangeSliderRail.getBoundsInLocal());
@@ -83,7 +83,7 @@ public class RangeSlider {
         return rangeValue;
     }
 
-    public intRange clickOrDragRangeSlide(MouseEvent action) {
+    public IntRange clickOrDragRangeSlide(MouseEvent action) {
         Bounds boundsInScene = rangeSliderRail.localToScene(rangeSliderRail.getBoundsInLocal());
         double rangeSliderRailSceneX = boundsInScene.getMinX();
         double clickLayoutX = action.getSceneX() - rangeSliderRailSceneX;
@@ -91,7 +91,7 @@ public class RangeSlider {
         double maxButtonCenterLayoutX = rangeSliderMaxButton.getLayoutX() - rangeSliderMaxButton.getWidth() / 2;
         double distanceFromMinButton = Math.abs(clickLayoutX - minButtonCenterLayoutX);
         double distanceFromMaxButton = Math.abs(clickLayoutX - maxButtonCenterLayoutX);
-        intRange newRangeValue;
+        IntRange newRangeValue;
         if (distanceFromMaxButton < distanceFromMinButton) {
             newRangeValue = dragRangeSlideMax(action);
         } else {

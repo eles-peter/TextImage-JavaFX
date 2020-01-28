@@ -86,15 +86,67 @@ public class Luminosity {
         return resultLuminosity;
     }
 
+    public Luminosity resizeToNew(int outputWidth, int outputHeight, int maxValue) {
+        if (outputWidth > maxValue){
+            outputWidth = maxValue;
+            throw new IllegalArgumentException();
+        }
+        if (outputHeight > maxValue) {
+            outputHeight = maxValue;
+            throw new IllegalArgumentException();
+        }
+        return resizeToNew(outputWidth, outputHeight);
+    }
+
+    public Luminosity resizeToNewMaxSize(int maxValue) {
+        Luminosity result;
+        if (this.getHeight() > this.getWidth() && this.getHeight() > maxValue) {
+            result = this.resizeToNewKeepRatioBaseHeight(maxValue);
+        } else if (this.getWidth() > this.getHeight() && this.getWidth() > maxValue) {
+            result = this.resizeToNewKeepRatioBaseWidth(maxValue);
+        } else {
+            result = this.clone();
+        }
+        return result;
+    }
+
     public Luminosity resizeToNewKeepRatioBaseWidth(int outputWidth) {
         double imageRatio = ((double) this.getHeight()) / this.getWidth();
         int outputHeight = (int)Math.round(imageRatio * outputWidth);
         return resizeToNew(outputWidth, outputHeight);
     }
 
+    public Luminosity resizeToNewKeepRatioBaseWidth(int outputWidth, double baseRatio, int maxValue) {
+        if (outputWidth > maxValue) {
+//            outputWidth = maxValue;
+            throw new IllegalArgumentException();
+        }
+        int outputHeight = (int)Math.round( outputWidth / baseRatio);
+        if (outputHeight > maxValue) {
+//            outputHeight = maxValue;
+//            outputWidth = (int) Math.round(outputHeight * baseRatio);
+            throw new IllegalArgumentException();
+        }
+        return resizeToNew(outputWidth, outputHeight);
+    }
+
     public Luminosity resizeToNewKeepRatioBaseHeight(int outputHeight) {
         double imageRatio = ((double) this.getWidth()) / this.getHeight();
         int outputWidth = (int)Math.round(imageRatio * outputHeight);
+        return resizeToNew(outputWidth, outputHeight);
+    }
+
+    public Luminosity resizeToNewKeepRatioBaseHeight(int outputHeight, double baseRatio, int maxValue) {
+        if (outputHeight > maxValue) {
+//            outputHeight = maxValue;
+            throw new IllegalArgumentException();
+        }
+        int outputWidth = (int)Math.round(outputHeight * baseRatio);
+        if (outputWidth > maxValue) {
+//            outputWidth = maxValue;
+//            outputHeight = (int) Math.round(outputWidth / baseRatio);
+            throw new IllegalArgumentException();
+        }
         return resizeToNew(outputWidth, outputHeight);
     }
 

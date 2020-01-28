@@ -1,4 +1,4 @@
-package userInterface;
+package userinterface;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

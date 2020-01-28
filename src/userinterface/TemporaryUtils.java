@@ -1,4 +1,4 @@
-package userInterface;
+package userinterface;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
