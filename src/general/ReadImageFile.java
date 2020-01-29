@@ -32,7 +32,7 @@ public class ReadImageFile {
         return  Arrays.asList(result);
      }
 
-    //TODO should test the speed...
+
     public int[][] convertToLuminosityArray() {
         int height = image.getHeight();
         int width = image.getWidth();
