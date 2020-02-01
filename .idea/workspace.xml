@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="refactoring almost done, reset image size button ready....">
-      <change afterPath="$PROJECT_DIR$/src/general/Lum.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="mielőtt nekiálltam szétcseszni a referncia listával...">
+      <change afterPath="$PROJECT_DIR$/src/general/LumMap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/general/LumMapInitializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/general/Lum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Lum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/general/Luminosity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Luminosity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/general/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/general/Modifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Modifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/general/ReadImageFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/ReadImageFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/TemporaryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/TemporaryUtils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,6 +113,11 @@
     <property name="recentsLimit" value="5" />
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="general" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -119,7 +130,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main (1)">
+  <component name="RunManager" selected="Application.Main (2)">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -134,20 +145,6 @@
     </configuration>
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="general.Main" />
-      <module name="textimage-JAVAFX" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="general.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -178,6 +175,20 @@
       </extension>
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="general.Main" />
+      <module name="textimage-JAVAFX" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="general.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -263,8 +274,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main (2)" />
+        <item itemvalue="Application.Main (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -307,7 +318,13 @@
       <workItem from="1580205969289" duration="9864000" />
       <workItem from="1580241041278" duration="5120000" />
       <workItem from="1580246227255" duration="1574000" />
-      <workItem from="1580283805559" duration="7004000" />
+      <workItem from="1580283805559" duration="15321000" />
+      <workItem from="1580321187212" duration="7707000" />
+      <workItem from="1580413392236" duration="7874000" />
+      <workItem from="1580455570316" duration="287000" />
+      <workItem from="1580455901431" duration="91000" />
+      <workItem from="1580456175510" duration="1426000" />
+      <workItem from="1580582661770" duration="6108000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -393,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580247378548</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="mielőtt nekiálltam szétcseszni a referncia listával...">
+      <created>1580306576898</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1580306576898</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,6 +461,7 @@
     <MESSAGE value="refractoring összeomlás - még range slider beépítés előtt..." />
     <MESSAGE value="offset vs. rangeslider conflict solution accepted..." />
     <MESSAGE value="refactoring almost done, reset image size button ready...." />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring almost done, reset image size button ready...." />
+    <MESSAGE value="mielőtt nekiálltam szétcseszni a referncia listával..." />
+    <option name="LAST_COMMIT_MESSAGE" value="mielőtt nekiálltam szétcseszni a referncia listával..." />
   </component>
 </project>

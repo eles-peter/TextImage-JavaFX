@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 public class TemporaryUtils {
 
 
-
-
     @FXML
     public void popupErrorWindow(String newErrorMessage) {
         final Stage errorMessageStage = new Stage();

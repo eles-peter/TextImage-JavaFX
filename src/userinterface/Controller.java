@@ -23,7 +23,7 @@ import userinterface.utils.RadioButton;
 public class Controller {
 
     private static final int MAXIMAGESIZE = 1000;
-    private static final int UNDOLISTMAXSIZE = 10;
+    private static final int UNDOLISTMAXSIZE = 20;
 
     private String actualFileName;
     private Luminosity sourceLuminosity;
@@ -379,11 +379,11 @@ public class Controller {
 
     @FXML
     private void resetModifiers() {
+        addActionToUndoList();
         modifiedLuminosity = resizedLuminosity.clone();
         setModifiersToInitialValue();
         setRangeToActualValue();
         actualizeImageAndView();
-        undoButton.setDisable(true);
         resetModifiersButton.setDisable(true);
     }
 

@@ -61,3 +61,7 @@ U
 .src/userinterface/utils/StaticRadioButton.java,5\0\505731c7db7fa303965523925baa4d7fbf272e58
 U
 %src/userinterface/TemporaryUtils.java,3\3\332c62650c9687fa2df81a2c2d16d565f178f055
+D
+src/general/Lum.java,a\5\a5a501ed18707edf74908ead103f7b67dcf84a5a
+G
+src/general/LumMap.java,1\8\18a6e39a9fbe0578349c25b1dbf549eeee3226ca

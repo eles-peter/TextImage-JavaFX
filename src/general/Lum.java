@@ -18,7 +18,6 @@ public class Lum implements Comparable<Lum> {
         this.value = value;
     }
 
-    //TODO check the method
     @Override
     public int compareTo(Lum otherLum) {
         return Integer.compare(this.value, otherLum.getValue());
@@ -39,8 +38,6 @@ public class Lum implements Comparable<Lum> {
 
     @Override
     public String toString() {
-        return "Lum{" +
-                "value=" + value +
-                '}';
+        return String.valueOf(this.value);
     }
 }
