@@ -1,7 +1,6 @@
 package userinterface;
 
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -26,11 +25,10 @@ public class Controller {
     private static final int UNDOLISTMAXSIZE = 20;
 
     private String actualFileName;
-    private Luminosity sourceLuminosity;
-    private Luminosity resizedLuminosity;
-    private Luminosity modifiedLuminosity;
+    private LumMap sourceLumMap;
+    private LumMap resizedLumMap;
+    private LumMap modifiedLumMap;
     private boolean keepRatio;
-    private Modifier modifier = new Modifier();
     private boolean equalize;
     private int midTone = 50;
     private IntRange range = new IntRange(0, 255);
@@ -161,7 +159,7 @@ public class Controller {
         try {
             rgbimage = new ReadImageFile(selectedFile);
             //TODO alpha csatorna figyelembevétele???
-            sourceLuminosity = new Luminosity(rgbimage.convertToLuminosityArray());
+            sourceLumMap = rgbimage.convertToLumMap();
         } catch (IOException e) {
             alertMessage("Something went wrong, maybe try again!");
         } catch (Exception e) {
@@ -171,9 +169,9 @@ public class Controller {
         actualFileName = selectedFile.getName();
         fileName.setText("Actual file: " + actualFileName);
 
-        sourceLuminosity = sourceLuminosity.resizeToNewMaxSize(MAXIMAGESIZE);
-        resizedLuminosity = sourceLuminosity.clone();
-        modifiedLuminosity = resizedLuminosity.clone();
+        sourceLumMap = sourceLumMap.resizeToNewMaxSize(MAXIMAGESIZE);
+        resizedLumMap = sourceLumMap.clone();
+        modifiedLumMap = resizedLumMap.clone();
 
         modifiersPane.setDisable(false);
         modifiersPane.setOpacity(1);
@@ -208,10 +206,10 @@ public class Controller {
         try {
             int actualNewWidth = Integer.parseInt(this.newWidth.getText());
             int actualHeight = Integer.parseInt(this.newHeight.getText());
-            double baseRatio = (double)resizedLuminosity.getWidth() / resizedLuminosity.getHeight();
+            double baseRatio = (double) resizedLumMap.getWidth() / resizedLumMap.getHeight();
             try {
-                if (keepRatio) resizedLuminosity = sourceLuminosity.resizeToNewKeepRatioBaseWidth(actualNewWidth, baseRatio, MAXIMAGESIZE);
-                else resizedLuminosity = sourceLuminosity.resizeToNew(actualNewWidth, actualHeight, MAXIMAGESIZE);
+                if (keepRatio) resizedLumMap = sourceLumMap.resizeToNewKeepRatioBaseWidth(actualNewWidth, baseRatio, MAXIMAGESIZE);
+                else resizedLumMap = sourceLumMap.resizeToNew(actualNewWidth, actualHeight, MAXIMAGESIZE);
                 resetSizeButton.setDisable(false);
             } catch (IllegalArgumentException e) {
                 alertMessage("The maximum values of the rows and columns are " + MAXIMAGESIZE + "!");
@@ -219,6 +217,7 @@ public class Controller {
         } catch (NumberFormatException e) {
             alertMessage("Please gimme numbers!");
         }
+        modifiedLumMap = resizedLumMap.clone();
         setSizeLabelsToActualValue();
         modifyImageAndView();
     }
@@ -228,10 +227,10 @@ public class Controller {
         try {
             int actualNewHeight = Integer.parseInt(this.newHeight.getText());
             int actualNewWidth = Integer.parseInt(this.newWidth.getText());
-            double baseRatio = (double)resizedLuminosity.getWidth() / resizedLuminosity.getHeight();
+            double baseRatio = (double) resizedLumMap.getWidth() / resizedLumMap.getHeight();
             try {
-                if (keepRatio) resizedLuminosity = sourceLuminosity.resizeToNewKeepRatioBaseHeight(actualNewHeight, baseRatio, MAXIMAGESIZE);
-                else resizedLuminosity = sourceLuminosity.resizeToNew(actualNewWidth, actualNewHeight, MAXIMAGESIZE);
+                if (keepRatio) resizedLumMap = sourceLumMap.resizeToNewKeepRatioBaseHeight(actualNewHeight, baseRatio, MAXIMAGESIZE);
+                else resizedLumMap = sourceLumMap.resizeToNew(actualNewWidth, actualNewHeight, MAXIMAGESIZE);
                 resetSizeButton.setDisable(false);
             } catch (IllegalArgumentException e) {
                 alertMessage("The maximum values of the rows and columns are " + MAXIMAGESIZE + "!");
@@ -239,13 +238,15 @@ public class Controller {
         } catch (NumberFormatException e) {
             alertMessage("Please gimme numbers!");
         }
+        modifiedLumMap = resizedLumMap.clone();
         setSizeLabelsToActualValue();
         modifyImageAndView();
     }
 
     @FXML
     private void resetImageSize() {
-        resizedLuminosity = sourceLuminosity.clone();
+        resizedLumMap = sourceLumMap.clone();
+        modifiedLumMap = resizedLumMap.clone();
         resetSizeButton.setDisable(true);
         setSizeLabelsToActualValue();
         modifyImageAndView();
@@ -346,7 +347,7 @@ public class Controller {
         this.offset = offsetSlider.setSliderValue(lastValues.getOffset());
         modifyImageAndView();
         if (undoList.isEmpty()) undoButton.setDisable(true);
-        if (range.equals(new IntRange(resizedLuminosity.getSortedItemMap().firstKey(), resizedLuminosity.getSortedItemMap().lastKey())) &&
+        if (range.equals(new IntRange(resizedLumMap.getFirstValue(), resizedLumMap.getLastValue())) &&
                 !equalize &&
                 midTone == 50 &&
                 offset == 0) {
@@ -358,21 +359,21 @@ public class Controller {
 
     // ******************** MODIFY - VÉGREHAJTÁS, RESET ******************
     private void modifyImageAndView() {
-        modifier.getValuesFrom(resizedLuminosity.getSortedItemMap());
+        modifiedLumMap.setSortedItemsValuesTo(resizedLumMap.getSortedItems());
+
         if (equalize) {
-            modifier.equalize();
+           modifiedLumMap.equalize();
         }
         if (this.offset != 0) {
-            modifier.offset(this.offset);
+            modifiedLumMap.offset(this.offset);
         }
-        if (modifier.getFirstValue() != this.range.min() ||
-                modifier.getLastValue() != this.range.max()) {
-            modifier.changeRange(this.range.min(), this.range.max());
+        if (modifiedLumMap.getFirstValue() != this.range.min() ||
+                modifiedLumMap.getLastValue() != this.range.max()) {
+            modifiedLumMap.changeRange(this.range.min(), this.range.max());
         }
         if (this.midTone != 50) {
-            modifier.changeMidTone(this.midTone);
+            modifiedLumMap.changeMidTone(this.midTone);
         }
-        modifiedLuminosity = resizedLuminosity.createModifiedLuminosity(modifier);
         setRangeToActualValue();
         actualizeImageAndView();
     }
@@ -380,7 +381,7 @@ public class Controller {
     @FXML
     private void resetModifiers() {
         addActionToUndoList();
-        modifiedLuminosity = resizedLuminosity.clone();
+        modifiedLumMap.setSortedItemsValuesTo(resizedLumMap.getSortedItems());
         setModifiersToInitialValue();
         setRangeToActualValue();
         actualizeImageAndView();
@@ -388,8 +389,8 @@ public class Controller {
     }
 
     private void setSizeLabelsToActualValue() {
-        newWidth.setText("" + resizedLuminosity.getWidth());
-        newHeight.setText("" + resizedLuminosity.getHeight());
+        newWidth.setText("" + resizedLumMap.getWidth());
+        newHeight.setText("" + resizedLumMap.getHeight());
     }
 
     private void setModifiersToInitialValue() {
@@ -400,14 +401,14 @@ public class Controller {
     }
 
     private void setRangeToActualValue() {
-        int newMinValue = modifiedLuminosity.getSortedItemMap().firstKey();
-        int newMaxValue = modifiedLuminosity.getSortedItemMap().lastKey();
+        int newMinValue = modifiedLumMap.getFirstValue();
+        int newMaxValue = modifiedLumMap.getLastValue();
         this.range.set(newMinValue, newMaxValue);
         rangeSlider.setRangeSlider(newMinValue, newMaxValue);
     }
 
     private void actualizeImageAndView() {
-        WriteImage writeImage = new WriteImage(modifiedLuminosity.getLuminosityMap());
+        WriteImage writeImage = new WriteImage(modifiedLumMap);
         imageView.setImage(writeImage.getWritableImage());
     }
 

@@ -7,15 +7,16 @@ import java.io.IOException;
 
 public class WriteImageFile {
 
-    BufferedImage image;
+    private BufferedImage image;
 
-    public void createFromLuminosityArray(int[][] luminosityArray) {
-        int width = luminosityArray[0].length;
-        int height = luminosityArray.length;
+    public void createFromLumMap(LumMap lumMap) {
+        int width = lumMap.getWidth();
+        int height = lumMap.getHeight();
         image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
-                int luminosity = luminosityArray[h][w];
+                Lum actualLum = lumMap.getLumArray()[h][w];
+                int luminosity = actualLum.getValue();
                 int red = luminosity;
                 int green = luminosity;
                 int blue = luminosity;

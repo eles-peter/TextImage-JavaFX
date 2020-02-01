@@ -14,26 +14,6 @@ public class Main {
 
         long startTime = System.nanoTime();
 
-        Luminosity luminosity;
-        for (int i = 0; i < 100; i++) {
-            luminosity = new Luminosity(readImageFile.convertToLuminosityArray());
-            luminosity = null;
-        }
-
-//        LumMap lumMapBase;
-//        for (int i = 0; i < 100; i++) {
-//            lumMapBase = readImageFile.convertToLumMap();
-//            lumMapBase = null;
-//        }
-
-//        LumMap lumMap;
-//        for (int i = 0; i < 100; i++) {
-//            lumMap = readImageFile.convertToLumMapWithInitializer();
-//            lumMap = null;
-//        }
-
-
-
 
 
 //        for (int i = 0; i < 100; i++) {
@@ -43,7 +23,6 @@ public class Main {
 //            lumMap.offset(-100);
 //            lumMap.changeRange(150, 230);
 //        }
-
 
 
         long endTime   = System.nanoTime();

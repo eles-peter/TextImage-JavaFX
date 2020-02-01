@@ -83,7 +83,7 @@ public class LumMap {
     //*********************** RESIZE *************************
 
     public LumMap resizeToNew(int outputWidth, int outputHeight) {
-        LumMap resultLumMap = new LumMap(outputWidth, outputHeight);
+        LumMapInitializer lumMapInitializer = new LumMapInitializer(outputWidth, outputHeight);
         double outputWidthRate = (double) this.getWidth() / outputWidth;
         double outputHeightRate = (double) this.getHeight() / outputHeight;
         double outputArea = outputWidthRate * outputHeightRate;
@@ -108,11 +108,10 @@ public class LumMap {
                     }
                 }
                 int actualLumValue = (int) Math.round(actualValue / outputArea);
-                Lum actualLum = new Lum(actualLumValue);
-                resultLumMap.addValuesToMap(w, h, actualLum);
+                lumMapInitializer.addLumValue(w, h, actualLumValue);
             }
         }
-        return resultLumMap;
+        return lumMapInitializer.finish();
     }
 
     //*********************** RESIZE BULLSHIT *************************
@@ -238,7 +237,7 @@ public class LumMap {
 
     // *********************** AUXILIARIES *************************
 
-    public static double round(double value, int places) {
+    private static double round(double value, int places) {
         if (places < 0) {
             throw new IllegalArgumentException();
         }
