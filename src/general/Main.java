@@ -2,15 +2,19 @@ package general;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
 
         ReadImageFile readImageFile = new ReadImageFile("C:\\Users\\Pepa\\Desktop\\TextImage\\1713238.jpg");
+
+        FontCharMap fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas.txt");
+
+        System.out.println(fontCharMap);
+
+        fontCharMap.writeToFile("C:\\Users\\Pepa\\Desktop\\TextImage\\test.txt");
 
         long startTime = System.nanoTime();
 

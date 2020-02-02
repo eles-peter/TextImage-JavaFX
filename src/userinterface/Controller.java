@@ -374,6 +374,7 @@ public class Controller {
         if (this.midTone != 50) {
             modifiedLumMap.changeMidTone(this.midTone);
         }
+        //TODO az összeomlást kezelni!!!!
         setRangeToActualValue();
         actualizeImageAndView();
     }

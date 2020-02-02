@@ -65,3 +65,5 @@ D
 src/general/Lum.java,a\5\a5a501ed18707edf74908ead103f7b67dcf84a5a
 G
 src/general/LumMap.java,1\8\18a6e39a9fbe0578349c25b1dbf549eeee3226ca
+R
+"src/general/LumMapInitializer.java,c\e\ceaf02efbb3404f0e016c838e8752e3e7eae0da8
