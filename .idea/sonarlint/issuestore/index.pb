@@ -67,3 +67,7 @@ G
 src/general/LumMap.java,1\8\18a6e39a9fbe0578349c25b1dbf549eeee3226ca
 R
 "src/general/LumMapInitializer.java,c\e\ceaf02efbb3404f0e016c838e8752e3e7eae0da8
+I
+src/general/FontChar.java,2\2\228c94c3516b7bb6a21273e3e0298706a3deaa46
+L
+src/general/FontCharMap.java,5\5\557181739f415a001606adda35edc7a6e9e8f72e

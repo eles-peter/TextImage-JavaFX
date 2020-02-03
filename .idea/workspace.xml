@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="módosítás a referencia listára kész">
-      <change afterPath="$PROJECT_DIR$/src/general/FontChar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/general/FontCharMap.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="FontChar and FontCharMap classes begun">
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/general/FontCharMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/FontCharMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/general/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/javafx.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +121,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+    <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -143,7 +143,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main (1)">
+  <component name="RunManager" selected="Application.Main (2)">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -301,8 +301,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main (2)" />
+        <item itemvalue="Application.Main (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -352,7 +352,10 @@
       <workItem from="1580455901431" duration="91000" />
       <workItem from="1580456175510" duration="1426000" />
       <workItem from="1580582661770" duration="10373000" />
-      <workItem from="1580636486385" duration="8301000" />
+      <workItem from="1580636486385" duration="10838000" />
+      <workItem from="1580663925195" duration="1256000" />
+      <workItem from="1580717097390" duration="8442000" />
+      <workItem from="1580760697116" duration="7324000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -459,7 +462,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580597906244</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="FontChar and FontCharMap classes begun">
+      <created>1580653612848</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1580653612848</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -506,6 +516,7 @@
     <MESSAGE value="mielőtt nekiálltam szétcseszni a referncia listával..." />
     <MESSAGE value="módosítás a referencia listára kész, de még nincs bekötve...&#10;-modify kb. 100-szor gyorsabb&#10;-map feltöltése kb 20%-al gyorsabb" />
     <MESSAGE value="módosítás a referencia listára kész" />
-    <option name="LAST_COMMIT_MESSAGE" value="módosítás a referencia listára kész" />
+    <MESSAGE value="FontChar and FontCharMap classes begun" />
+    <option name="LAST_COMMIT_MESSAGE" value="FontChar and FontCharMap classes begun" />
   </component>
 </project>

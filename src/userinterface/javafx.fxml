@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Rectangle?>
 
-<SplitPane id="mainPane" fx:id="mainPane" dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userinterface.Controller">
+<SplitPane id="mainPane" fx:id="mainPane" dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userinterface.Controller">
     <items>
         <GridPane maxWidth="200.0" minWidth="200.0" prefWidth="200.0">
             <columnConstraints>
@@ -44,66 +55,74 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                        </Group>
-                  <Group layoutY="120.0">
-                     <children>
-                              <Separator prefHeight="2.0" prefWidth="200.0" />
-                              <Group id="equalizeGroup" fx:id="equalizeGroup" layoutX="10.0" layoutY="10.0" onMouseClicked="#clickedEqualizeButton">
-                                  <children>
-                                      <Rectangle id="equalizeBackground" fx:id="equalizeBackground" arcHeight="5.0" fill="#d2d2d2" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="30.0" />
-                                      <Rectangle id="equalizeButton" fx:id="equalizeButton" arcHeight="5.0" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
-                                          <cursor>
-                                              <Cursor fx:constant="HAND" />
-                                          </cursor>
-                                      </Rectangle>
-                                  </children>
-                              </Group>
-                              <Label layoutX="10.0" layoutY="29.0" text="Equalize" />
-                              <Group id="midToneSlide" fx:id="midToneSlide" layoutX="10.0" layoutY="50.0">
-                                  <children>
-                                      <Rectangle id="midToneSlideRail" fx:id="midToneSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOnMidToneSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
-                                      <Rectangle id="midToneSlideButton" fx:id="midToneSliderButton" arcHeight="5.0" height="15.0" layoutX="82.5" onMouseDragged="#dragMidToneButton" onMousePressed="#pressOnMidToneButton" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
-                                          <cursor>
-                                               <Cursor fx:constant="HAND" />
-                                          </cursor>
-                                      </Rectangle>
-                                  </children>
-                              </Group>
-                              <Label id="midToneValue" fx:id="midToneValue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="166.8000030517578" layoutY="69.0" text="50%" textAlignment="RIGHT" />
-                              <Label layoutX="10.0" layoutY="69.0" text="Midtone" />
-                              <Group id="rangeSlide" fx:id="rangeSlide" layoutX="10.0" layoutY="90.0">
-                                  <children>
-                                      <Rectangle id="rangeSlideRail" fx:id="rangeSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOnRangeSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
-                                      <Rectangle id="rangeMinButton" fx:id="rangeMinButton" arcHeight="5.0" height="15.0" onMouseDragged="#dragRangeSliderMin" onMousePressed="#clickOnRangeButtons" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
-                                          <cursor>
-                                              <Cursor fx:constant="HAND" />
-                                          </cursor>
-                                      </Rectangle>
-                                      <Rectangle id="rangeMaxButton" fx:id="rangeMaxButton" arcHeight="5.0" height="15.0" layoutX="165.0" onMouseDragged="#dragRangeSliderMax" onMousePressed="#clickOnRangeButtons" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
-                                          <cursor>
-                                              <Cursor fx:constant="HAND" />
-                                          </cursor>
-                                      </Rectangle>
-                                      <Rectangle id="rangeSlideRange" fx:id="rangeSliderRange" arcHeight="5.0" fill="#d2d2d2" height="15.0" layoutX="15.0" onMouseClicked="#clickOnRangeSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="150.0" />
-                                  </children>
-                              </Group>
-                              <Label id="midToneValue" fx:id="midToneValue1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="162.8000030517578" layoutY="109.0" text="Light" textAlignment="RIGHT" />
-                              <Label layoutX="10.0" layoutY="109.0" text="Dark" />
-                        <Group id="midToneSlide" fx:id="midToneSlide1" layoutX="10.0" layoutY="130.0">
-                           <children>
-                              <Rectangle id="offsetSlideRail" fx:id="offsetSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOnOffsetSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
-                              <Rectangle id="offsetSlideButton" fx:id="offsetSliderButton" arcHeight="5.0" height="15.0" layoutX="82.5" onMouseDragged="#dragOffsetButton" onMousePressed="#pressOnOffsetButton" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Rectangle>
-                           </children>
+                        <Separator layoutY="120.0" prefHeight="2.0" prefWidth="200.0" />
+                        <Group id="equalizeGroup" fx:id="equalizeGroup" layoutX="10.0" layoutY="130.0" onMouseClicked="#clickedEqualizeButton">
+                            <children>
+                                <Rectangle id="equalizeBackground" fx:id="equalizeBackground" arcHeight="5.0" fill="#d2d2d2" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="30.0" />
+                                <Rectangle id="equalizeButton" fx:id="equalizeButton" arcHeight="5.0" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Rectangle>
+                            </children>
                         </Group>
-                        <Label id="offsetValue" fx:id="offsetValue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="182.8000030517578" layoutY="149.0" text="0" textAlignment="RIGHT" />
-                        <Label layoutX="10.0" layoutY="149.0" text="Offset" />
-                              <Button id="buttonOpenFile" fx:id="resetModifiersButton" layoutX="10.0" layoutY="175.0" mnemonicParsing="false" onAction="#resetModifiers" style="-fx-background-radius: 0;" text="Reset Modifiers" textAlignment="CENTER" />
-                        <Button id="undoButton" fx:id="undoButton" layoutX="144.39999389648438" layoutY="175.0" mnemonicParsing="false" onAction="#undoAnAction" style="-fx-background-radius: 0;" text="Undo" textAlignment="CENTER" />
+                        <Label layoutX="10.0" layoutY="149.0" text="Equalize" />
+                        <Group id="midToneSlide" fx:id="midToneSlide" layoutX="10.0" layoutY="170.0">
+                            <children>
+                                <Rectangle id="midToneSlideRail" fx:id="midToneSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOnMidToneSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
+                                <Rectangle id="midToneSlideButton" fx:id="midToneSliderButton" arcHeight="5.0" height="15.0" layoutX="82.5" onMouseDragged="#dragMidToneButton" onMousePressed="#pressOnMidToneButton" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                                    <cursor>
+                                         <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Rectangle>
+                            </children>
+                        </Group>
+                        <Label id="midToneValue" fx:id="midToneValue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="166.8000030517578" layoutY="189.0" text="50%" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" />
+                        <Label layoutX="10.0" layoutY="189.0" text="Midtone" />
+                        <Group id="rangeSlide" fx:id="rangeSlide" layoutX="10.0" layoutY="210.0">
+                            <children>
+                                <Rectangle id="rangeSlideRail" fx:id="rangeSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOnRangeSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
+                                <Rectangle id="rangeMinButton" fx:id="rangeMinButton" arcHeight="5.0" height="15.0" onMouseDragged="#dragRangeSliderMin" onMousePressed="#clickOnRangeButtons" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Rectangle>
+                                <Rectangle id="rangeMaxButton" fx:id="rangeMaxButton" arcHeight="5.0" height="15.0" layoutX="165.0" onMouseDragged="#dragRangeSliderMax" onMousePressed="#clickOnRangeButtons" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Rectangle>
+                                <Rectangle id="rangeSlideRange" fx:id="rangeSliderRange" arcHeight="5.0" fill="#d2d2d2" height="15.0" layoutX="15.0" onMouseClicked="#clickOnRangeSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="150.0" />
+                            </children>
+                        </Group>
+                        <Label id="midToneValue" fx:id="midToneValue1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="162.8000030517578" layoutY="229.0" text="Light" textAlignment="RIGHT" />
+                        <Label layoutX="10.0" layoutY="229.0" text="Dark" />
+                  <Group id="midToneSlide" fx:id="midToneSlide1" layoutX="10.0" layoutY="250.0">
+                     <children>
+                        <Rectangle id="offsetSlideRail" fx:id="offsetSliderRail" arcHeight="5.0" fill="#d2d2d2" height="15.0" onMouseClicked="#clickOnOffsetSlider" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="180.0" />
+                        <Rectangle id="offsetSlideButton" fx:id="offsetSliderButton" arcHeight="5.0" height="15.0" layoutX="82.5" onMouseDragged="#dragOffsetButton" onMousePressed="#pressOnOffsetButton" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
                      </children>
                   </Group>
+                  <Label id="offsetValue" fx:id="offsetValue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="182.8000030517578" layoutY="269.0" text="0" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" />
+                  <Label layoutX="10.0" layoutY="269.0" text="Offset" />
+                        <Button id="buttonOpenFile" fx:id="resetModifiersButton" layoutX="10.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetModifiers" style="-fx-background-radius: 0;" text="Reset Modifiers" textAlignment="CENTER" />
+                  <Button id="undoButton" fx:id="undoButton" layoutX="144.39999389648438" layoutY="295.0" mnemonicParsing="false" onAction="#undoAnAction" style="-fx-background-radius: 0;" text="Undo" textAlignment="CENTER" />
+                  <Button id="CharTableButton" fx:id="CharTableButton" layoutX="54.0" layoutY="387.0" mnemonicParsing="false" onAction="#clickedCharTableButton" text="Create CharTable" />
+                  <Group id="showImageGroup" fx:id="showImageGroup" layoutX="18.0" layoutY="332.0" onMouseClicked="#clickedShowImageButton">
+                     <children>
+                        <Rectangle id="showImageBackground" fx:id="showImageBackground" arcHeight="5.0" fill="#d2d2d2" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="30.0" />
+                        <Rectangle id="showImageButton" fx:id="showImageButton" arcHeight="5.0" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="15.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+                     </children>
+                  </Group>
+                  <Label layoutX="18.0" layoutY="351.0" text="Show Image" />
                     </children>
                 </AnchorPane>
             </children>
@@ -111,6 +130,7 @@
         <StackPane id="imagePane" prefHeight="150.0" prefWidth="200.0">
             <children>
                 <ImageView id="imageView" fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
+            <ScrollPane id="scrollPane" fx:id="scrollPane" pannable="true" prefHeight="200.0" prefWidth="200.0" />
             </children>
         </StackPane>
     </items>

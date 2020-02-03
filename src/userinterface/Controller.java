@@ -7,10 +7,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -23,6 +26,7 @@ public class Controller {
 
     private static final int MAXIMAGESIZE = 1000;
     private static final int UNDOLISTMAXSIZE = 20;
+    private static final int BASICFONTSIZE = 8;
 
     private String actualFileName;
     private LumMap sourceLumMap;
@@ -34,6 +38,8 @@ public class Controller {
     private IntRange range = new IntRange(0, 255);
     private int offset = 0;
     private Deque<ModiferValues> undoList = new LinkedList<>();
+    private boolean showImage;
+    private FontCharMap fontCharMap;
 
     private class ModiferValues {
         private boolean equalize;
@@ -138,6 +144,12 @@ public class Controller {
     private Button resetModifiersButton;
     @FXML
     private Button undoButton;
+    @FXML
+    private Rectangle showImageBackground;
+    @FXML
+    private Rectangle showImageButton;
+    @FXML
+    private ScrollPane scrollPane;
     //</editor-fold>
 
     private StaticRadioButton keepRatioButton;
@@ -145,11 +157,12 @@ public class Controller {
     private SingleSlider midToneSlider;
     private SingleSlider offsetSlider;
     private RangeSlider rangeSlider;
+    private RadioButton showImageRadioButton;
 
     @FXML
     private void openFile() {
         File selectedFile = null;
-        ReadImageFile rgbimage ;
+        ReadImageFile rgbimage;
         FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser);
         primaryStage = (Stage) mainPane.getScene().getWindow();
@@ -195,7 +208,7 @@ public class Controller {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All Images", formatNames));
     }
 
-//*******************KÉP ÁTMÉRETEZÉS************************************
+    //*******************KÉP ÁTMÉRETEZÉS************************************
     @FXML
     private void clickedKeepRatioButton() {
         this.keepRatio = keepRatioButton.changeRadioButton();
@@ -208,7 +221,8 @@ public class Controller {
             int actualHeight = Integer.parseInt(this.newHeight.getText());
             double baseRatio = (double) resizedLumMap.getWidth() / resizedLumMap.getHeight();
             try {
-                if (keepRatio) resizedLumMap = sourceLumMap.resizeToNewKeepRatioBaseWidth(actualNewWidth, baseRatio, MAXIMAGESIZE);
+                if (keepRatio)
+                    resizedLumMap = sourceLumMap.resizeToNewKeepRatioBaseWidth(actualNewWidth, baseRatio, MAXIMAGESIZE);
                 else resizedLumMap = sourceLumMap.resizeToNew(actualNewWidth, actualHeight, MAXIMAGESIZE);
                 resetSizeButton.setDisable(false);
             } catch (IllegalArgumentException e) {
@@ -229,7 +243,8 @@ public class Controller {
             int actualNewWidth = Integer.parseInt(this.newWidth.getText());
             double baseRatio = (double) resizedLumMap.getWidth() / resizedLumMap.getHeight();
             try {
-                if (keepRatio) resizedLumMap = sourceLumMap.resizeToNewKeepRatioBaseHeight(actualNewHeight, baseRatio, MAXIMAGESIZE);
+                if (keepRatio)
+                    resizedLumMap = sourceLumMap.resizeToNewKeepRatioBaseHeight(actualNewHeight, baseRatio, MAXIMAGESIZE);
                 else resizedLumMap = sourceLumMap.resizeToNew(actualNewWidth, actualNewHeight, MAXIMAGESIZE);
                 resetSizeButton.setDisable(false);
             } catch (IllegalArgumentException e) {
@@ -362,7 +377,7 @@ public class Controller {
         modifiedLumMap.setSortedItemsValuesTo(resizedLumMap.getSortedItems());
 
         if (equalize) {
-           modifiedLumMap.equalize();
+            modifiedLumMap.equalize();
         }
         if (this.offset != 0) {
             modifiedLumMap.offset(this.offset);
@@ -377,6 +392,7 @@ public class Controller {
         //TODO az összeomlást kezelni!!!!
         setRangeToActualValue();
         actualizeImageAndView();
+        addCharTable();
     }
 
     @FXML
@@ -386,6 +402,7 @@ public class Controller {
         setModifiersToInitialValue();
         setRangeToActualValue();
         actualizeImageAndView();
+        addCharTable();
         resetModifiersButton.setDisable(true);
     }
 
@@ -413,6 +430,49 @@ public class Controller {
         imageView.setImage(writeImage.getWritableImage());
     }
 
+    //************************ SHOW IMAGE **************************************
+    @FXML
+    private void clickedShowImageButton() {
+        this.showImage = showImageRadioButton.changeRadioButton(this.showImage);
+        if (showImage) scrollPane.setVisible(false);
+        else scrollPane.setVisible(true);
+    }
+
+//******************** CHARTABLE ******************
+
+    //TODO ezt is megcsinálni referenciákkal....
+    @FXML
+    private void addCharTable() {
+        int charHeight = BASICFONTSIZE;
+        int charWidth = BASICFONTSIZE;
+        Group charTableGroup = new Group();
+        int width = modifiedLumMap.getWidth();
+        int height = modifiedLumMap.getHeight();
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                Lum actualLum = modifiedLumMap.getLumArray()[h][w];
+                int luminosity = actualLum.getValue();
+                FontChar actualFontChar = fontCharMap.get(luminosity);
+                Text actualText = new Text();
+                actualText.setText(actualFontChar.getUnicodeValue()); //TODO átnevezni a FontChar osztályban a változó nevet
+                actualText.setFont(Font.font(actualFontChar.getFontType(), BASICFONTSIZE));
+                actualText.setLayoutX(charWidth * w); //TODO kiszámítani a koordinátákat
+                actualText.setLayoutY(charHeight * h);
+                charTableGroup.getChildren().add(actualText);
+            }
+        }
+        scrollPane.setContent(charTableGroup);
+    }
+    
+    @FXML
+    private void clickedCharTableButton() {
+        addCharTable();
+        scrollPane.setVisible(true);
+        this.showImage = showImageRadioButton.setRadioButton(false);
+
+    }
+
+
 //********************ERROR POPUP WINDOW******************
 
     private void alertMessage(String errorMessage) {
@@ -431,6 +491,15 @@ public class Controller {
         midToneSlider = new SingleSlider(0, 100, midToneSliderRail, midToneSliderButton, midToneValue, "%");
         offsetSlider = new SingleSlider(-255, 255, offsetSliderRail, offsetSliderButton, offsetValue, "");
         rangeSlider = new RangeSlider(0, 255, rangeMinButton, rangeMaxButton, rangeSliderRail, rangeSliderRange);
+        showImageRadioButton = new RadioButton(showImageBackground, showImageButton);
+        this.showImage = showImageRadioButton.setRadioButton(true);
+        scrollPane.setVisible(false);
+
+        try {
+            fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
 //        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {

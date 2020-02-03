@@ -35,8 +35,10 @@ public class FontCharMap {
                 if (!unicodeValue.matches("[0-9A-F]{4}")) {
                     throw new IllegalArgumentException();
                 }
+                int unicodeInt = Integer.parseInt(unicodeValue, 16);
+                String actualChar = String.valueOf((char)unicodeInt);
                 String fontType = lineArray[2];
-                this.add(value, new FontChar(unicodeValue, fontType));
+                this.add(value, new FontChar(actualChar, fontType));
             }
         }
         scanner.close();
@@ -44,6 +46,20 @@ public class FontCharMap {
 
     public void add(Integer value, FontChar fontChar) {
         this.fontCharMap.put(value, fontChar);
+    }
+
+    public FontChar get(Integer key) {
+        return this.fontCharMap.get(key);
+    }
+
+    public FontCharMap createInverse() {
+        FontCharMap result = new FontCharMap();
+        for (Map.Entry<Integer, FontChar> entry : this.fontCharMap.entrySet()) {
+            Integer newValue = 255 - entry.getKey();
+            FontChar newFontCahr = entry.getValue();
+            result.add(newValue, newFontCahr);
+        }
+        return result;
     }
 
     public void writeToFile(String fullPathAndFileName) throws IOException {

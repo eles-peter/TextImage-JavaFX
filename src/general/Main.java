@@ -7,14 +7,24 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-
-        ReadImageFile readImageFile = new ReadImageFile("C:\\Users\\Pepa\\Desktop\\TextImage\\1713238.jpg");
-
+//
+//        ReadImageFile readImageFile = new ReadImageFile("C:\\Users\\Pepa\\Desktop\\TextImage\\1713238.jpg");
+//
         FontCharMap fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas.txt");
 
-        System.out.println(fontCharMap);
 
-        fontCharMap.writeToFile("C:\\Users\\Pepa\\Desktop\\TextImage\\test.txt");
+//        fontCharMap.writeToFile("C:\\Users\\Pepa\\Desktop\\TextImage\\test.txt");
+
+//        FontCharMap fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\test.txt");
+//        System.out.println(fontCharMap);
+
+        FontCharMap inverse = fontCharMap.createInverse();
+        inverse.writeToFile("C:\\Users\\Pepa\\Desktop\\TextImage\\inverse.txt");
+
+
+
+
+
 
         long startTime = System.nanoTime();
 
