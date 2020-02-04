@@ -6,11 +6,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,7 +26,7 @@ import userinterface.utils.RadioButton;
 
 public class Controller {
 
-    private static final int MAXIMAGESIZE = 1000;
+    private static final int MAXIMAGESIZE = 200;
     private static final int UNDOLISTMAXSIZE = 20;
     private static final int BASICFONTSIZE = 8;
 
@@ -40,6 +42,7 @@ public class Controller {
     private Deque<ModiferValues> undoList = new LinkedList<>();
     private boolean showImage;
     private FontCharMap fontCharMap;
+    private List<SimpleStringProperty> charList;
 
     private class ModiferValues {
         private boolean equalize;
@@ -185,6 +188,7 @@ public class Controller {
         sourceLumMap = sourceLumMap.resizeToNewMaxSize(MAXIMAGESIZE);
         resizedLumMap = sourceLumMap.clone();
         modifiedLumMap = resizedLumMap.clone();
+        createCharList(modifiedLumMap.getSortedItems(), fontCharMap);
 
         modifiersPane.setDisable(false);
         modifiersPane.setOpacity(1);
@@ -232,6 +236,7 @@ public class Controller {
             alertMessage("Please gimme numbers!");
         }
         modifiedLumMap = resizedLumMap.clone();
+        createCharList(modifiedLumMap.getSortedItems(), fontCharMap);
         setSizeLabelsToActualValue();
         modifyImageAndView();
     }
@@ -254,6 +259,7 @@ public class Controller {
             alertMessage("Please gimme numbers!");
         }
         modifiedLumMap = resizedLumMap.clone();
+        createCharList(modifiedLumMap.getSortedItems(), fontCharMap);
         setSizeLabelsToActualValue();
         modifyImageAndView();
     }
@@ -392,7 +398,8 @@ public class Controller {
         //TODO az összeomlást kezelni!!!!
         setRangeToActualValue();
         actualizeImageAndView();
-        addCharTable();
+        actualizeCharList(modifiedLumMap.getSortedItems());
+
     }
 
     @FXML
@@ -402,7 +409,7 @@ public class Controller {
         setModifiersToInitialValue();
         setRangeToActualValue();
         actualizeImageAndView();
-        addCharTable();
+        actualizeCharList(modifiedLumMap.getSortedItems());
         resetModifiersButton.setDisable(true);
     }
 
@@ -444,10 +451,44 @@ public class Controller {
     @FXML
     private void addCharTable() {
         int charHeight = BASICFONTSIZE;
-        int charWidth = BASICFONTSIZE;
+        int charWidth =  BASICFONTSIZE; //TODO megszorozni az arányszámmal...
         Group charTableGroup = new Group();
         int width = modifiedLumMap.getWidth();
         int height = modifiedLumMap.getHeight();
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                Lum actualLum = modifiedLumMap.getLumArray()[h][w];
+                int actualIndex = modifiedLumMap.getSortedItems().indexOf(actualLum);
+                SimpleStringProperty actualChar = this.charList.get(actualIndex);
+                Text actualText = new Text();
+                actualText.textProperty().bind(actualChar);
+//                actualText.setFont(Font.font(actualFontChar.getFontType(), BASICFONTSIZE));
+                actualText.setFont(Font.font("consolas", BASICFONTSIZE));
+                actualText.setLayoutX(charWidth * w); //TODO kiszámítani a koordinátákat
+                actualText.setLayoutY(charHeight * h);
+                charTableGroup.getChildren().add(actualText);
+            }
+        }
+        scrollPane.setContent(charTableGroup);
+    }
+
+    @FXML
+    private void clickedCharTableButton() {
+        addCharTable();
+        scrollPane.setVisible(true);
+        this.showImage = showImageRadioButton.setRadioButton(false);
+
+    }
+
+    @FXML
+    private void addGridPane() {
+        int charHeight = BASICFONTSIZE;
+        int charWidth = BASICFONTSIZE;
+        GridPane gridPane = new GridPane();
+        int width = modifiedLumMap.getWidth();
+        int height = modifiedLumMap.getHeight();
+        gridPane.setPrefSize(width * BASICFONTSIZE, height * BASICFONTSIZE);
+        gridPane.setMinSize(width * BASICFONTSIZE, height * BASICFONTSIZE);
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 Lum actualLum = modifiedLumMap.getLumArray()[h][w];
@@ -456,21 +497,40 @@ public class Controller {
                 Text actualText = new Text();
                 actualText.setText(actualFontChar.getUnicodeValue()); //TODO átnevezni a FontChar osztályban a változó nevet
                 actualText.setFont(Font.font(actualFontChar.getFontType(), BASICFONTSIZE));
-                actualText.setLayoutX(charWidth * w); //TODO kiszámítani a koordinátákat
-                actualText.setLayoutY(charHeight * h);
-                charTableGroup.getChildren().add(actualText);
+                gridPane.add(actualText, w, h);
             }
         }
-        scrollPane.setContent(charTableGroup);
+        scrollPane.setContent(gridPane);
     }
-    
+
+
     @FXML
-    private void clickedCharTableButton() {
-        addCharTable();
+    private void clickedGridButton() {
+        addGridPane();
         scrollPane.setVisible(true);
         this.showImage = showImageRadioButton.setRadioButton(false);
 
     }
+//******************** CHAR LIST ******************
+    private void createCharList(List<Lum> lumList, FontCharMap fontCharMap) {
+        this.charList = new ArrayList<>();
+        for (Lum lum : lumList) {
+            int luminosityValue = lum.getValue();
+            FontChar actualFontChar = fontCharMap.get(luminosityValue);
+            String actualChar = actualFontChar.getUnicodeValue();
+            this.charList.add(new SimpleStringProperty(actualChar));
+        }
+    }
+
+    private void actualizeCharList(List<Lum> modifiedLumList) {
+        for (int i = 0; i < this.charList.size(); i++) {
+            int newLumValue = modifiedLumList.get(i).getValue();
+            FontChar actualFontChar = fontCharMap.get(newLumValue);
+            String actualChar = actualFontChar.getUnicodeValue();
+            this.charList.get(i).setValue(actualChar);
+        }
+    }
+
 
 
 //********************ERROR POPUP WINDOW******************
@@ -494,6 +554,8 @@ public class Controller {
         showImageRadioButton = new RadioButton(showImageBackground, showImageButton);
         this.showImage = showImageRadioButton.setRadioButton(true);
         scrollPane.setVisible(false);
+        scrollPane.setStyle("-fx-background: #FFFFFF; -fx-border-color: #FFFFFF;");
+
 
         try {
             fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas.txt");

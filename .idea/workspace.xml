@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="FontChar and FontCharMap classes begun">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="First TextImage ready">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/FontCharMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/FontCharMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/general/FontChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/FontChar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/javafx.fxml" afterDir="false" />
     </list>
@@ -115,7 +113,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="last.edited.regexp" value="" />
-    <property name="last_opened_file_path" value="C:/Program Files/ContolsFX/controlsfx-11.0.1.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../oop-preexam-second-beleriand" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
@@ -355,7 +353,9 @@
       <workItem from="1580636486385" duration="10838000" />
       <workItem from="1580663925195" duration="1256000" />
       <workItem from="1580717097390" duration="8442000" />
-      <workItem from="1580760697116" duration="7324000" />
+      <workItem from="1580760697116" duration="7590000" />
+      <workItem from="1580803582043" duration="9024000" />
+      <workItem from="1580837697762" duration="9149000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -469,7 +469,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580653612848</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="First TextImage ready">
+      <created>1580769007461</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1580769007461</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -517,6 +524,7 @@
     <MESSAGE value="módosítás a referencia listára kész, de még nincs bekötve...&#10;-modify kb. 100-szor gyorsabb&#10;-map feltöltése kb 20%-al gyorsabb" />
     <MESSAGE value="módosítás a referencia listára kész" />
     <MESSAGE value="FontChar and FontCharMap classes begun" />
-    <option name="LAST_COMMIT_MESSAGE" value="FontChar and FontCharMap classes begun" />
+    <MESSAGE value="First TextImage ready" />
+    <option name="LAST_COMMIT_MESSAGE" value="First TextImage ready" />
   </component>
 </project>
