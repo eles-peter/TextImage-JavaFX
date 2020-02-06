@@ -1,5 +1,8 @@
 package userinterface;
 
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -20,6 +23,7 @@ import java.io.IOException;
 import java.util.*;
 
 import general.*;
+import javafx.util.Callback;
 import userinterface.utils.*;
 import userinterface.utils.RadioButton;
 
@@ -447,11 +451,80 @@ public class Controller {
 
 //******************** CHARTABLE ******************
 
-    //TODO ezt is megcsinálni referenciákkal....
+    private String[][] createCharArray() {
+        int width = modifiedLumMap.getWidth();
+        int height = modifiedLumMap.getHeight();
+        String[][] result = new String[height][width];
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                Lum actualLum = modifiedLumMap.getLumArray()[h][w];
+                int luminosity = actualLum.getValue();
+                FontChar actualFontChar = fontCharMap.get(luminosity);
+                result[h][w] = actualFontChar.getUnicodeValue();
+            }
+        }
+        return result;
+    }
+
     @FXML
     private void addCharTable() {
+        String[][] charArray = createCharArray();
+        ObservableList<String[]> data = FXCollections.observableArrayList();
+        data.addAll(Arrays.asList(charArray));
+        TableView<String[]> table = new TableView<>();
+        for (int i = 0; i < charArray[0].length; i++) {
+            TableColumn tableColumn = new TableColumn(""+i);
+            final int colNo = i;
+            tableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
+                    return new SimpleStringProperty((p.getValue()[colNo]));
+                }
+            });
+            tableColumn.setPrefWidth(BASICFONTSIZE);
+            table.getColumns().add(tableColumn);
+        }
+        table.setItems(data);
+        scrollPane.setContent(table);
+    }
+
+    @FXML
+    private void clickedCharTableButton() {
+        addCharTable();
+        scrollPane.setVisible(true);
+        this.showImage = showImageRadioButton.setRadioButton(false);
+    }
+
+    private String createText() {
+        StringBuilder result = new StringBuilder("");
+        String[][] charArray = createCharArray();
+        int width = modifiedLumMap.getWidth();
+        int height = modifiedLumMap.getHeight();
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                result.append(charArray[h][w]);
+            }
+            result.append("\n");
+        }
+        return result.toString();
+    }
+
+    @FXML
+    private void clickedTextButton() {
+        Text text = new Text();
+        text.setText(createText());
+        scrollPane.setContent(text);
+        scrollPane.setVisible(true);
+        this.showImage = showImageRadioButton.setRadioButton(false);
+    }
+
+
+
+    //TODO ezt is megcsinálni referenciákkal....
+    @FXML
+    private void addCharRaster() {
         int charHeight = BASICFONTSIZE;
-        int charWidth =  BASICFONTSIZE; //TODO megszorozni az arányszámmal...
+        int charWidth = BASICFONTSIZE; //TODO megszorozni az arányszámmal...
         Group charTableGroup = new Group();
         int width = modifiedLumMap.getWidth();
         int height = modifiedLumMap.getHeight();
@@ -473,8 +546,8 @@ public class Controller {
     }
 
     @FXML
-    private void clickedCharTableButton() {
-        addCharTable();
+    private void clickedCharRasterButton() {
+        addCharRaster();
         scrollPane.setVisible(true);
         this.showImage = showImageRadioButton.setRadioButton(false);
 
@@ -511,7 +584,8 @@ public class Controller {
         this.showImage = showImageRadioButton.setRadioButton(false);
 
     }
-//******************** CHAR LIST ******************
+
+    //******************** CHAR LIST ******************
     private void createCharList(List<Lum> lumList, FontCharMap fontCharMap) {
         this.charList = new ArrayList<>();
         for (Lum lum : lumList) {
@@ -530,7 +604,6 @@ public class Controller {
             this.charList.get(i).setValue(actualChar);
         }
     }
-
 
 
 //********************ERROR POPUP WINDOW******************

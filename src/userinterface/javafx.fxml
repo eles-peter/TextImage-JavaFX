@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<SplitPane id="mainPane" fx:id="mainPane" dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userinterface.Controller">
+<SplitPane id="mainPane" fx:id="mainPane" dividerPositions="0.28762541806020064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userinterface.Controller">
     <items>
         <GridPane maxWidth="200.0" minWidth="200.0" prefWidth="200.0">
             <columnConstraints>
@@ -100,7 +100,7 @@
                   <Label layoutX="10.0" layoutY="269.0" text="Offset" />
                         <Button id="buttonOpenFile" fx:id="resetModifiersButton" layoutX="10.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetModifiers" style="-fx-background-radius: 0;" text="Reset Modifiers" textAlignment="CENTER" />
                   <Button id="undoButton" fx:id="undoButton" layoutX="144.39999389648438" layoutY="295.0" mnemonicParsing="false" onAction="#undoAnAction" style="-fx-background-radius: 0;" text="Undo" textAlignment="CENTER" />
-                  <Button id="CharTableButton" fx:id="CharTableButton" layoutX="54.0" layoutY="387.0" mnemonicParsing="false" onAction="#clickedCharTableButton" text="Create CharTable" />
+                  <Button id="CharTableButton" fx:id="CharTableButton" layoutX="55.0" layoutY="377.0" mnemonicParsing="false" onAction="#clickedCharRasterButton" text="Create CharRaster" />
                   <Group id="showImageGroup" fx:id="showImageGroup" layoutX="18.0" layoutY="332.0" onMouseClicked="#clickedShowImageButton">
                      <children>
                         <Rectangle id="showImageBackground" fx:id="showImageBackground" arcHeight="5.0" fill="#d2d2d2" height="15.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="30.0" />
@@ -112,7 +112,9 @@
                      </children>
                   </Group>
                   <Label layoutX="18.0" layoutY="351.0" text="Show Image" />
-                  <Button id="GridlButton" fx:id="GridButton" layoutX="57.0" layoutY="427.0" mnemonicParsing="false" onAction="#clickedGridButton" text="Create GridPane" />
+                  <Button id="GridlButton" fx:id="GridButton" layoutX="57.0" layoutY="411.0" mnemonicParsing="false" onAction="#clickedGridButton" text="Create GridPane" />
+                  <Button id="CharTableButton" fx:id="CharTableButton" layoutX="57.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickedCharTableButton" text="Create CharTable" />
+                  <Button id="CharTableButton" fx:id="CharTableButton1" layoutX="57.0" layoutY="474.0" mnemonicParsing="false" onAction="#clickedTextButton" text="Create Text" />
                     </children>
                 </AnchorPane>
             </children>
