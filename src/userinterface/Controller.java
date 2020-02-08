@@ -2,10 +2,13 @@ package userinterface;
 
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -28,6 +31,7 @@ public class Controller {
     private static final int MAXIMAGESIZE = 200;
     private static final int UNDOLISTMAXSIZE = 20;
     private static final int BASICFONTSIZE = 8;
+    private static final double ZOOMRATE = 1.25;
 
     private String actualFileName;
     private LumMap sourceLumMap;
@@ -109,7 +113,11 @@ public class Controller {
     @FXML
     private AnchorPane modifiersPane;
     @FXML
-    private AnchorPane imagePane;
+    private StackPane imagePane;
+    @FXML
+    private ScrollPane rasterScrollPane;
+    @FXML
+    private StackPane rasterPane;
     @FXML
     private Label fileName;
     @FXML
@@ -201,6 +209,7 @@ public class Controller {
         setModifiersToInitialValue();
         setRangeToActualValue();
         actualizeImageAndView();
+        addCharRaster();
     }
 
     private static void configureFileChooser(final FileChooser fileChooser) {
@@ -240,6 +249,7 @@ public class Controller {
         createCharList(modifiedLumMap.getSortedItems(), fontCharMap);
         setSizeLabelsToActualValue();
         modifyImageAndView();
+        addCharRaster();
     }
 
     @FXML
@@ -263,6 +273,7 @@ public class Controller {
         createCharList(modifiedLumMap.getSortedItems(), fontCharMap);
         setSizeLabelsToActualValue();
         modifyImageAndView();
+        addCharRaster();
     }
 
     @FXML
@@ -272,6 +283,7 @@ public class Controller {
         resetSizeButton.setDisable(true);
         setSizeLabelsToActualValue();
         modifyImageAndView();
+        addCharRaster();
     }
 
     //************************EQUALIZE**************************************
@@ -442,8 +454,13 @@ public class Controller {
     @FXML
     private void clickedShowImageButton() {
         this.showImage = showImageRadioButton.changeRadioButton(this.showImage);
-        if (showImage) imagePane.setVisible(false);
-        else imagePane.setVisible(true);
+        if (showImage) {
+            rasterScrollPane.setVisible(false);
+            imagePane.setVisible(true);
+        } else {
+            imagePane.setVisible(false);
+            rasterScrollPane.setVisible(true);
+        }
     }
 
 //******************** CHARTABLE ******************
@@ -468,6 +485,7 @@ public class Controller {
         int charHeight = BASICFONTSIZE;
         int charWidth = BASICFONTSIZE; //TODO megszorozni az arányszámmal...
         Group charTableGroup = new Group();
+        charTableGroup.setId("CharRasterGroup");
         int width = modifiedLumMap.getWidth();
         int height = modifiedLumMap.getHeight();
         for (int h = 0; h < height; h++) {
@@ -484,16 +502,47 @@ public class Controller {
                 charTableGroup.getChildren().add(actualText);
             }
         }
-        imagePane.getChildren().add(charTableGroup);
+        rasterPane.getChildren().clear();
+        rasterPane.getChildren().add(charTableGroup);
     }
 
     @FXML
-    private void clickedCharRasterButton() {
-        addCharRaster();
-        imagePane.setVisible(true);
-        this.showImage = showImageRadioButton.setRadioButton(false);
-
+    private void zoomIn() {
+        Node CharRasterGroup = rasterPane.getChildren().get(0);
+        double baseScaleX = CharRasterGroup.getScaleX();
+        double baseScaleY = CharRasterGroup.getScaleY();
+        double newScaleX = baseScaleX * ZOOMRATE;
+        double newScaleY = baseScaleY * ZOOMRATE;
+        CharRasterGroup.setScaleX(newScaleX);
+        CharRasterGroup.setScaleY(newScaleY);
+        rasterPane.setMinWidth(CharRasterGroup.getBoundsInLocal().getWidth()*newScaleX);
+        rasterPane.setMinHeight(CharRasterGroup.getBoundsInLocal().getHeight()*newScaleY);
     }
+
+    @FXML
+    private void zoomOut() {
+        Node CharRasterGroup = rasterPane.getChildren().get(0);
+        double baseScaleX = CharRasterGroup.getScaleX();
+        double baseScaleY = CharRasterGroup.getScaleY();
+        double newScaleX = baseScaleX / ZOOMRATE;
+        double newScaleY = baseScaleY / ZOOMRATE;
+        CharRasterGroup.setScaleX(newScaleX);
+        CharRasterGroup.setScaleY(newScaleY);
+        rasterPane.setMinWidth(CharRasterGroup.getBoundsInLocal().getWidth()*newScaleX);
+        rasterPane.setMinHeight(CharRasterGroup.getBoundsInLocal().getHeight()*newScaleY);
+    }
+
+    @FXML
+    private void zoomActualSize() {
+        Node CharRasterGroup = rasterPane.getChildren().get(0);
+        CharRasterGroup.setScaleX(1);
+        CharRasterGroup.setScaleY(1);
+        rasterPane.setMinWidth(CharRasterGroup.getBoundsInLocal().getWidth());
+        rasterPane.setMinHeight(CharRasterGroup.getBoundsInLocal().getHeight());
+    }
+
+
+
 
     //******************** CHAR LIST ******************
     private void createCharList(List<Lum> lumList, FontCharMap fontCharMap) {
@@ -535,16 +584,16 @@ public class Controller {
         offsetSlider = new SingleSlider(-255, 255, offsetSliderRail, offsetSliderButton, offsetValue, "");
         rangeSlider = new RangeSlider(0, 255, rangeMinButton, rangeMaxButton, rangeSliderRail, rangeSliderRange);
         showImageRadioButton = new RadioButton(showImageBackground, showImageButton);
-        this.showImage = showImageRadioButton.setRadioButton(true);
-        imagePane.setVisible(false);
-        imagePane.setStyle("-fx-background: #FFFFFF; -fx-border-color: #FFFFFF;");
-
+        this.showImage = showImageRadioButton.setRadioButton(false);
 
         try {
             fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+
+
 
 
 //        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {

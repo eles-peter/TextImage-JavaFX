@@ -14,6 +14,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 <AnchorPane id="mainPane" fx:id="mainPane" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userinterface.Controller">
    <children>
       <ScrollPane layoutX="133.0" layoutY="-11.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vbarPolicy="NEVER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -190,13 +191,22 @@
       </ScrollPane>
       <ScrollPane layoutX="199.0" layoutY="50.0" pannable="true" prefHeight="600.0" prefWidth="784.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <content>
-          <AnchorPane id="imagePane" minWidth="0.0">
+          <AnchorPane>
               <children>
-                  <ImageView id="imageView" fx:id="imageView" pickOnBounds="true" preserveRatio="true"/>
+                  <Pane id="imagePane" fx:id="imagePane" minWidth="0.0"
+                        style="-fx-background: #FFFFFF; -fx-border-color: #FFFFFF;">
+                      <children>
+                          <ImageView id="imageView" fx:id="imageView" pickOnBounds="true" preserveRatio="true"/>
+                      </children>
+                  </Pane>
+                  <Pane id="rasterPane" fx:id="rasterPane" minWidth="0.0"
+                        style="-fx-background: #FFFFFF; -fx-border-color: #FFFFFF;">
+                      <children>
 
+                      </children>
+                  </Pane>
               </children>
           </AnchorPane>
-        </content>
       </ScrollPane>
    </children>
 </AnchorPane>
