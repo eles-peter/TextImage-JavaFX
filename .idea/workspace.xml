@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="az utolsó próbálkozás a betű kiíratással...">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="az utolsó próbálkozás a betű kiíratással...&#10;chargridpane, charraster, tableview, planetext ready...">
+      <change afterPath="$PROJECT_DIR$/src/userinterface/mainStage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/userinterface/test.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/javafx.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/javafx.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -71,8 +76,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -110,7 +115,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="last.edited.regexp" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../oop-preexam-second-beleriand" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/userinterface" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
@@ -119,6 +124,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pepa\IdeaProjects\PROGmasters\textimage-JAVAFX\src\userinterface" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="general" />
     </key>
@@ -357,7 +365,9 @@
       <workItem from="1580973923106" duration="2580000" />
       <workItem from="1580998810942" duration="7000" />
       <workItem from="1580999231981" duration="1626000" />
-      <workItem from="1581063482543" duration="1141000" />
+      <workItem from="1581063482543" duration="1851000" />
+      <workItem from="1581109181576" duration="3700000" />
+      <workItem from="1581158484843" duration="5516000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -492,7 +502,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580994364943</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="az utolsó próbálkozás a betű kiíratással...&#10;chargridpane, charraster, tableview, planetext ready...">
+      <created>1581064760736</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1581064760736</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -543,6 +560,7 @@
     <MESSAGE value="First TextImage ready" />
     <MESSAGE value="TextImage with text in coord and in GridPane is ready&#10;and charList bind is ready..." />
     <MESSAGE value="az utolsó próbálkozás a betű kiíratással..." />
-    <option name="LAST_COMMIT_MESSAGE" value="az utolsó próbálkozás a betű kiíratással..." />
+    <MESSAGE value="az utolsó próbálkozás a betű kiíratással...&#10;chargridpane, charraster, tableview, planetext ready..." />
+    <option name="LAST_COMMIT_MESSAGE" value="az utolsó próbálkozás a betű kiíratással...&#10;chargridpane, charraster, tableview, planetext ready..." />
   </component>
 </project>

@@ -1,15 +1,11 @@
 package userinterface;
 
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -23,7 +19,6 @@ import java.io.IOException;
 import java.util.*;
 
 import general.*;
-import javafx.util.Callback;
 import userinterface.utils.*;
 import userinterface.utils.RadioButton;
 
@@ -108,9 +103,13 @@ public class Controller {
 
     private Stage primaryStage;
     @FXML
-    private SplitPane mainPane;
+    private AnchorPane mainPane;
+    @FXML
+    private AnchorPane menuPane;
     @FXML
     private AnchorPane modifiersPane;
+    @FXML
+    private AnchorPane imagePane;
     @FXML
     private Label fileName;
     @FXML
@@ -155,8 +154,6 @@ public class Controller {
     private Rectangle showImageBackground;
     @FXML
     private Rectangle showImageButton;
-    @FXML
-    private ScrollPane scrollPane;
     //</editor-fold>
 
     private StaticRadioButton keepRatioButton;
@@ -445,8 +442,8 @@ public class Controller {
     @FXML
     private void clickedShowImageButton() {
         this.showImage = showImageRadioButton.changeRadioButton(this.showImage);
-        if (showImage) scrollPane.setVisible(false);
-        else scrollPane.setVisible(true);
+        if (showImage) imagePane.setVisible(false);
+        else imagePane.setVisible(true);
     }
 
 //******************** CHARTABLE ******************
@@ -466,61 +463,6 @@ public class Controller {
         return result;
     }
 
-    @FXML
-    private void addCharTable() {
-        String[][] charArray = createCharArray();
-        ObservableList<String[]> data = FXCollections.observableArrayList();
-        data.addAll(Arrays.asList(charArray));
-        TableView<String[]> table = new TableView<>();
-        for (int i = 0; i < charArray[0].length; i++) {
-            TableColumn tableColumn = new TableColumn(""+i);
-            final int colNo = i;
-            tableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
-                    return new SimpleStringProperty((p.getValue()[colNo]));
-                }
-            });
-            tableColumn.setPrefWidth(BASICFONTSIZE);
-            table.getColumns().add(tableColumn);
-        }
-        table.setItems(data);
-        scrollPane.setContent(table);
-    }
-
-    @FXML
-    private void clickedCharTableButton() {
-        addCharTable();
-        scrollPane.setVisible(true);
-        this.showImage = showImageRadioButton.setRadioButton(false);
-    }
-
-    private String createText() {
-        StringBuilder result = new StringBuilder("");
-        String[][] charArray = createCharArray();
-        int width = modifiedLumMap.getWidth();
-        int height = modifiedLumMap.getHeight();
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
-                result.append(charArray[h][w]);
-            }
-            result.append("\n");
-        }
-        return result.toString();
-    }
-
-    @FXML
-    private void clickedTextButton() {
-        Text text = new Text();
-        text.setText(createText());
-        scrollPane.setContent(text);
-        scrollPane.setVisible(true);
-        this.showImage = showImageRadioButton.setRadioButton(false);
-    }
-
-
-
-    //TODO ezt is megcsinálni referenciákkal....
     @FXML
     private void addCharRaster() {
         int charHeight = BASICFONTSIZE;
@@ -542,45 +484,13 @@ public class Controller {
                 charTableGroup.getChildren().add(actualText);
             }
         }
-        scrollPane.setContent(charTableGroup);
+        imagePane.getChildren().add(charTableGroup);
     }
 
     @FXML
     private void clickedCharRasterButton() {
         addCharRaster();
-        scrollPane.setVisible(true);
-        this.showImage = showImageRadioButton.setRadioButton(false);
-
-    }
-
-    @FXML
-    private void addGridPane() {
-        int charHeight = BASICFONTSIZE;
-        int charWidth = BASICFONTSIZE;
-        GridPane gridPane = new GridPane();
-        int width = modifiedLumMap.getWidth();
-        int height = modifiedLumMap.getHeight();
-        gridPane.setPrefSize(width * BASICFONTSIZE, height * BASICFONTSIZE);
-        gridPane.setMinSize(width * BASICFONTSIZE, height * BASICFONTSIZE);
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
-                Lum actualLum = modifiedLumMap.getLumArray()[h][w];
-                int luminosity = actualLum.getValue();
-                FontChar actualFontChar = fontCharMap.get(luminosity);
-                Text actualText = new Text();
-                actualText.setText(actualFontChar.getUnicodeValue()); //TODO átnevezni a FontChar osztályban a változó nevet
-                actualText.setFont(Font.font(actualFontChar.getFontType(), BASICFONTSIZE));
-                gridPane.add(actualText, w, h);
-            }
-        }
-        scrollPane.setContent(gridPane);
-    }
-
-
-    @FXML
-    private void clickedGridButton() {
-        addGridPane();
-        scrollPane.setVisible(true);
+        imagePane.setVisible(true);
         this.showImage = showImageRadioButton.setRadioButton(false);
 
     }
@@ -626,8 +536,8 @@ public class Controller {
         rangeSlider = new RangeSlider(0, 255, rangeMinButton, rangeMaxButton, rangeSliderRail, rangeSliderRange);
         showImageRadioButton = new RadioButton(showImageBackground, showImageButton);
         this.showImage = showImageRadioButton.setRadioButton(true);
-        scrollPane.setVisible(false);
-        scrollPane.setStyle("-fx-background: #FFFFFF; -fx-border-color: #FFFFFF;");
+        imagePane.setVisible(false);
+        imagePane.setStyle("-fx-background: #FFFFFF; -fx-border-color: #FFFFFF;");
 
 
         try {
