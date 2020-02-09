@@ -71,3 +71,9 @@ I
 src/general/FontChar.java,2\2\228c94c3516b7bb6a21273e3e0298706a3deaa46
 L
 src/general/FontCharMap.java,5\5\557181739f415a001606adda35edc7a6e9e8f72e
+_
+/src/userinterface/utils/ZoomableScrollPane.java,c\3\c39e75bcd2df3069ed2b6f38a4ccad150324c7d6
+P
+ src/userinterface/mainStage.fxml,a\6\a652c68a53946485318db08d1d7aac8c3e86ab8d
+K
+src/userinterface/test.fxml,6\8\681d0665839b0ca18a4baf9db68062f3a9cdd0b2

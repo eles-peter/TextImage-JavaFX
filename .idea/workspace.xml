@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="new mainstage fxml (image, and char raster pane are not ready yet)">
-      <change afterPath="$PROJECT_DIR$/src/userinterface/utils/ZoomableScrollPane.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Zoom in charRaster is work somehow...">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/mainStage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/mainStage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/userinterface/test.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/test.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -366,7 +366,9 @@
       <workItem from="1580999231981" duration="1626000" />
       <workItem from="1581063482543" duration="1851000" />
       <workItem from="1581109181576" duration="3700000" />
-      <workItem from="1581158484843" duration="16438000" />
+      <workItem from="1581158484843" duration="16649000" />
+      <workItem from="1581191342210" duration="7515000" />
+      <workItem from="1581208440153" duration="2531000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -515,7 +517,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581171823797</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Zoom in charRaster is work somehow...">
+      <created>1581186371806</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1581186371806</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -568,6 +577,7 @@
     <MESSAGE value="az utolsó próbálkozás a betű kiíratással..." />
     <MESSAGE value="az utolsó próbálkozás a betű kiíratással...&#10;chargridpane, charraster, tableview, planetext ready..." />
     <MESSAGE value="new mainstage fxml (image, and char raster pane are not ready yet)" />
-    <option name="LAST_COMMIT_MESSAGE" value="new mainstage fxml (image, and char raster pane are not ready yet)" />
+    <MESSAGE value="Zoom in charRaster is work somehow..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Zoom in charRaster is work somehow..." />
   </component>
 </project>

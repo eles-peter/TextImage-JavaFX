@@ -1,5 +1,8 @@
 package userinterface;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -7,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -31,7 +33,7 @@ public class Controller {
     private static final int MAXIMAGESIZE = 200;
     private static final int UNDOLISTMAXSIZE = 20;
     private static final int BASICFONTSIZE = 8;
-    private static final double ZOOMRATE = 1.25;
+    private static final double ZOOMRATESTEP = 1.25;
 
     private String actualFileName;
     private LumMap sourceLumMap;
@@ -46,6 +48,7 @@ public class Controller {
     private boolean showImage;
     private FontCharMap fontCharMap;
     private List<SimpleStringProperty> charList;
+    private DoubleProperty zoomRate = new SimpleDoubleProperty();
 
     private class ModiferValues {
         private boolean equalize;
@@ -162,6 +165,8 @@ public class Controller {
     private Rectangle showImageBackground;
     @FXML
     private Rectangle showImageButton;
+    @FXML
+    private Group zoomGroup;
     //</editor-fold>
 
     private StaticRadioButton keepRatioButton;
@@ -204,6 +209,7 @@ public class Controller {
         resetSizeButton.setDisable(true);
         undoButton.setDisable(true);
         resetModifiersButton.setDisable(true);
+        zoomRate.setValue(1.0);
 
         setSizeLabelsToActualValue();
         setModifiersToInitialValue();
@@ -448,6 +454,10 @@ public class Controller {
     private void actualizeImageAndView() {
         WriteImage writeImage = new WriteImage(modifiedLumMap);
         imageView.setImage(writeImage.getWritableImage());
+
+        imageView.setPreserveRatio(true);
+        imageView.fitWidthProperty().bind(imagePane.widthProperty());
+        imageView.fitHeightProperty().bind(imagePane.heightProperty());
     }
 
     //************************ SHOW IMAGE **************************************
@@ -457,9 +467,11 @@ public class Controller {
         if (showImage) {
             rasterScrollPane.setVisible(false);
             imagePane.setVisible(true);
+            zoomGroup.setDisable(true);
         } else {
             imagePane.setVisible(false);
             rasterScrollPane.setVisible(true);
+            zoomGroup.setDisable(false);
         }
     }
 
@@ -503,46 +515,43 @@ public class Controller {
             }
         }
         rasterPane.getChildren().clear();
+        zoomRate.setValue(1.0);
+        charTableGroup.scaleXProperty().bind(zoomRate);
+        charTableGroup.scaleYProperty().bind(zoomRate);
         rasterPane.getChildren().add(charTableGroup);
+        rasterPane.minWidthProperty().bind(Bindings.max(Bindings.multiply(charTableGroup.getBoundsInLocal().getWidth(), zoomRate), rasterScrollPane.widthProperty()));
+        rasterPane.minHeightProperty().bind(Bindings.max(Bindings.multiply(charTableGroup.getBoundsInLocal().getHeight(), zoomRate), rasterScrollPane.heightProperty()));
     }
 
     @FXML
     private void zoomIn() {
-        Node CharRasterGroup = rasterPane.getChildren().get(0);
-        double baseScaleX = CharRasterGroup.getScaleX();
-        double baseScaleY = CharRasterGroup.getScaleY();
-        double newScaleX = baseScaleX * ZOOMRATE;
-        double newScaleY = baseScaleY * ZOOMRATE;
-        CharRasterGroup.setScaleX(newScaleX);
-        CharRasterGroup.setScaleY(newScaleY);
-        rasterPane.setMinWidth(CharRasterGroup.getBoundsInLocal().getWidth()*newScaleX);
-        rasterPane.setMinHeight(CharRasterGroup.getBoundsInLocal().getHeight()*newScaleY);
+        zoomRate.setValue(zoomRate.getValue() * ZOOMRATESTEP);
+        rasterPane.setLayoutX(0.0);
+        rasterPane.setLayoutY(0.0);
     }
 
     @FXML
     private void zoomOut() {
-        Node CharRasterGroup = rasterPane.getChildren().get(0);
-        double baseScaleX = CharRasterGroup.getScaleX();
-        double baseScaleY = CharRasterGroup.getScaleY();
-        double newScaleX = baseScaleX / ZOOMRATE;
-        double newScaleY = baseScaleY / ZOOMRATE;
-        CharRasterGroup.setScaleX(newScaleX);
-        CharRasterGroup.setScaleY(newScaleY);
-        rasterPane.setMinWidth(CharRasterGroup.getBoundsInLocal().getWidth()*newScaleX);
-        rasterPane.setMinHeight(CharRasterGroup.getBoundsInLocal().getHeight()*newScaleY);
+        zoomRate.setValue(zoomRate.getValue() / ZOOMRATESTEP);
+        rasterPane.setLayoutX(0.0);
+        rasterPane.setLayoutY(0.0);
     }
 
     @FXML
     private void zoomActualSize() {
-        Node CharRasterGroup = rasterPane.getChildren().get(0);
-        CharRasterGroup.setScaleX(1);
-        CharRasterGroup.setScaleY(1);
-        rasterPane.setMinWidth(CharRasterGroup.getBoundsInLocal().getWidth());
-        rasterPane.setMinHeight(CharRasterGroup.getBoundsInLocal().getHeight());
+        zoomRate.setValue(1.0);
     }
 
-
-
+    @FXML
+    private void zoomFitToWindow() {
+        double charTableGroupWidth = rasterPane.getChildren().get(0).getBoundsInLocal().getWidth();
+        double charTableGroupHeight = rasterPane.getChildren().get(0).getBoundsInLocal().getHeight();
+        double zoomRateFitWidth = rasterScrollPane.getWidth() / charTableGroupWidth;
+        double zoomRateFitHeight = rasterScrollPane.getHeight() / charTableGroupHeight;
+        zoomRate.setValue(Math.min(zoomRateFitHeight, zoomRateFitWidth));
+        rasterPane.setLayoutX(0.0);
+        rasterPane.setLayoutY(0.0);
+    }
 
     //******************** CHAR LIST ******************
     private void createCharList(List<Lum> lumList, FontCharMap fontCharMap) {
@@ -586,14 +595,12 @@ public class Controller {
         showImageRadioButton = new RadioButton(showImageBackground, showImageButton);
         this.showImage = showImageRadioButton.setRadioButton(false);
 
+
         try {
             fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
-
 
 
 //        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {

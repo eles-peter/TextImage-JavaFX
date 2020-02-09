@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -7,10 +8,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Arc?>
 <?import javafx.scene.shape.Rectangle?>
@@ -29,9 +28,18 @@
                         </Label>
                         <Button id="buttonOpenFile" layoutX="217.0" layoutY="12.0" mnemonicParsing="false" onAction="#openFile" style="-fx-background-radius: 0;" text="OpenFile" />
                         <Label id="fileName" fx:id="fileName" layoutX="295.0" layoutY="16.0" text="Actualfile: -" />
-                  <Button fx:id="zoomInButton" layoutX="500.0" layoutY="12.0" mnemonicParsing="false" onAction="#zoomIn" text="+" />
-                  <Button fx:id="zoomOutButton" layoutX="540.0" layoutY="12.0" mnemonicParsing="false" onAction="#zoomOut" text="-" />
-                  <Button fx:id="zoomActulSizeButton" layoutX="580.0" layoutY="12.0" mnemonicParsing="false" onAction="#zoomActualSize" text="Actual Size" />
+                  <Button id="buttonOpenFile" layoutX="500.0" layoutY="12.0" mnemonicParsing="false" onAction="#openFile" style="-fx-background-radius: 0;" text="Save to Txt" />
+                  <Button id="buttonOpenFile" layoutX="590.0" layoutY="12.0" mnemonicParsing="false" onAction="#openFile" style="-fx-background-radius: 0;" text="Save to Pdf" />
+                  <Separator layoutX="680.0" orientation="VERTICAL" prefHeight="48.0" prefWidth="2.0" AnchorPane.topAnchor="0.0" />
+                  <Group fx:id="zoomGroup" layoutX="690.0" layoutY="12.0">
+                     <children>
+                        <Button fx:id="zoomInButton" layoutX="40.0" mnemonicParsing="false" onAction="#zoomIn" text="+" />
+                        <Button fx:id="zoomOutButton" layoutX="80.0" mnemonicParsing="false" onAction="#zoomOut" text="-" />
+                        <Button fx:id="zoomActulSizeButton" layoutX="120.0" mnemonicParsing="false" onAction="#zoomActualSize" text="Actual Size" />
+                        <Button fx:id="zoomActulSizeButton1" layoutX="210.0" mnemonicParsing="false" onAction="#zoomFitToWindow" text="Fit to Window" />
+                        <Label id="fileName" fx:id="fileName1" layoutY="4.0" text="Zoom" />
+                     </children>
+                  </Group>
                     </children>
                 </AnchorPane>
             </content>
@@ -132,9 +140,12 @@
             </content>
         </ScrollPane>
         <StackPane id="imagePane" fx:id="imagePane" style="-fx-background: #FFFFFF; -fx-border-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-            <ImageView id="imageView" fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
+            <ImageView id="imageView" fx:id="imageView" pickOnBounds="true" preserveRatio="true">
+            <StackPane.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </StackPane.margin></ImageView>
         </StackPane>
-        <ScrollPane id="rasterScrollPane" fx:id="rasterScrollPane" layoutX="199.0" layoutY="50.0" pannable="true"  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+        <ScrollPane id="rasterScrollPane" fx:id="rasterScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="199.0" layoutY="50.0" pannable="true" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
             <content>
 <!--                <AnchorPane>-->
 <!--                    <children>-->
