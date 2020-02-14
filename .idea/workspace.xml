@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Zoom in charRaster is work somehow...">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Zoom in charRaster is work and imageview fit to window is OK!">
+      <change afterPath="$PROJECT_DIR$/src/userinterface/charSelectController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/userinterface/charSelectStage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/userinterface/utils/UnicodeRange.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/userinterface/utils/spinner.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/general/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/userinterface/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/javafx.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/mainStage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/mainStage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/test.fxml" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,6 +83,7 @@
       <list>
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -97,11 +104,14 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="1WTIx5FRHqqYCnqP6EcvcDzIW1d" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="GoToFile.includeJavaFiles" value="false" />
@@ -113,6 +123,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last.edited.regexp" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/userinterface" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -368,7 +379,19 @@
       <workItem from="1581109181576" duration="3700000" />
       <workItem from="1581158484843" duration="16649000" />
       <workItem from="1581191342210" duration="7515000" />
-      <workItem from="1581208440153" duration="2531000" />
+      <workItem from="1581208440153" duration="2815000" />
+      <workItem from="1581237809677" duration="5161000" />
+      <workItem from="1581262535198" duration="5599000" />
+      <workItem from="1581331073610" duration="1108000" />
+      <workItem from="1581371294295" duration="3230000" />
+      <workItem from="1581408535124" duration="2746000" />
+      <workItem from="1581417037322" duration="240000" />
+      <workItem from="1581421831061" duration="6056000" />
+      <workItem from="1581447004585" duration="5955000" />
+      <workItem from="1581491362588" duration="10301000" />
+      <workItem from="1581524394301" duration="7539000" />
+      <workItem from="1581582326069" duration="18627000" />
+      <workItem from="1581667975581" duration="2486000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -524,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581186371806</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Zoom in charRaster is work and imageview fit to window is OK!">
+      <created>1581211231503</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1581211231503</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,6 +585,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <MESSAGE value="Change Midtone slider is ready!!!" />
     <MESSAGE value="Draging Thumb(rectangle) in JAVAFX ok!" />
@@ -578,6 +609,7 @@
     <MESSAGE value="az utolsó próbálkozás a betű kiíratással...&#10;chargridpane, charraster, tableview, planetext ready..." />
     <MESSAGE value="new mainstage fxml (image, and char raster pane are not ready yet)" />
     <MESSAGE value="Zoom in charRaster is work somehow..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Zoom in charRaster is work somehow..." />
+    <MESSAGE value="Zoom in charRaster is work and imageview fit to window is OK!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Zoom in charRaster is work and imageview fit to window is OK!" />
   </component>
 </project>

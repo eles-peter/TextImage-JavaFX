@@ -1,25 +1,22 @@
 package general;
 
 
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
+
 import java.io.IOException;
+import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-//
-//        ReadImageFile readImageFile = new ReadImageFile("C:\\Users\\Pepa\\Desktop\\TextImage\\1713238.jpg");
-//
-        FontCharMap fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas.txt");
 
 
-//        fontCharMap.writeToFile("C:\\Users\\Pepa\\Desktop\\TextImage\\test.txt");
 
-//        FontCharMap fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\test.txt");
-//        System.out.println(fontCharMap);
 
-        FontCharMap inverse = fontCharMap.createInverse();
-        inverse.writeToFile("C:\\Users\\Pepa\\Desktop\\TextImage\\inverse.txt");
+
 
 
 

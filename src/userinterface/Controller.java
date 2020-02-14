@@ -1,11 +1,14 @@
 package userinterface;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,8 +16,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -167,6 +173,7 @@ public class Controller {
     private Rectangle showImageButton;
     @FXML
     private Group zoomGroup;
+
     //</editor-fold>
 
     private StaticRadioButton keepRatioButton;
@@ -508,7 +515,8 @@ public class Controller {
                 Text actualText = new Text();
                 actualText.textProperty().bind(actualChar);
 //                actualText.setFont(Font.font(actualFontChar.getFontType(), BASICFONTSIZE));
-                actualText.setFont(Font.font("consolas", BASICFONTSIZE));
+//                actualText.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, BASICFONTSIZE));
+                actualText.setFont(Font.font("Consolas", BASICFONTSIZE));
                 actualText.setLayoutX(charWidth * w); //TODO kiszámítani a koordinátákat
                 actualText.setLayoutY(charHeight * h);
                 charTableGroup.getChildren().add(actualText);
@@ -523,18 +531,16 @@ public class Controller {
         rasterPane.minHeightProperty().bind(Bindings.max(Bindings.multiply(charTableGroup.getBoundsInLocal().getHeight(), zoomRate), rasterScrollPane.heightProperty()));
     }
 
+    //******************** ZOOM ACTION ******************
+    //TODO try it with callback function!
     @FXML
     private void zoomIn() {
         zoomRate.setValue(zoomRate.getValue() * ZOOMRATESTEP);
-        rasterPane.setLayoutX(0.0);
-        rasterPane.setLayoutY(0.0);
     }
 
     @FXML
     private void zoomOut() {
         zoomRate.setValue(zoomRate.getValue() / ZOOMRATESTEP);
-        rasterPane.setLayoutX(0.0);
-        rasterPane.setLayoutY(0.0);
     }
 
     @FXML
@@ -549,8 +555,17 @@ public class Controller {
         double zoomRateFitWidth = rasterScrollPane.getWidth() / charTableGroupWidth;
         double zoomRateFitHeight = rasterScrollPane.getHeight() / charTableGroupHeight;
         zoomRate.setValue(Math.min(zoomRateFitHeight, zoomRateFitWidth));
-        rasterPane.setLayoutX(0.0);
-        rasterPane.setLayoutY(0.0);
+    }
+
+    @FXML
+    private void setScrollToCenter() {
+        rasterScrollPane.setVvalue(0.5);
+        rasterScrollPane.setHvalue(0.5);
+    }
+
+    @FXML
+    private void printScroll() {
+        System.out.println(rasterScrollPane.getHvalue() + ", " + rasterScrollPane.getVvalue());
     }
 
     //******************** CHAR LIST ******************
@@ -571,6 +586,18 @@ public class Controller {
             String actualChar = actualFontChar.getUnicodeValue();
             this.charList.get(i).setValue(actualChar);
         }
+    }
+
+    @FXML
+    private void newCharSet() throws IOException {
+        final Stage charSelectStage = new Stage();
+        charSelectStage.initModality(Modality.APPLICATION_MODAL);
+        charSelectStage.setTitle("Create new CharacterSet");
+        charSelectStage.setResizable(false);
+        Parent root = FXMLLoader.load(getClass().getResource("charSelectStage.fxml"));
+        charSelectStage.setScene(new Scene(root, 800, 480));
+        charSelectStage.show();
+
     }
 
 
@@ -601,6 +628,19 @@ public class Controller {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+//        rasterScrollPane.vvalueProperty().addListener((observable, oldValue, newValue) -> {
+//            scrollV.setText(newValue.toString());
+//        });
+//        rasterScrollPane.hvalueProperty().addListener((observable, oldValue, newValue) -> {
+//            scrollH.setText(newValue.toString());
+//        });
+//
+//        zoomRate.addListener((observable, oldValue, newValue) -> {
+//            zoomRateLabel.setText(newValue.toString());
+//            rasterScrollPane.setVvalue(rasterScrollPane.getVvalue() * (oldValue.doubleValue()/newValue.doubleValue()));
+//            rasterScrollPane.setHvalue(rasterScrollPane.getHvalue() * (oldValue.doubleValue()/newValue.doubleValue()));
+//        });
 
 
 //        midToneSlider.valueProperty().addListener((observable, oldValue, newValue) -> {

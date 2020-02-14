@@ -17,8 +17,6 @@ D
 textimage-JAVAFX.iml,4\8\48b52f682ffebf05bd218220d42d5f032150038a
 K
 src/UserInterface/Main.java,8\c\8c15c8c425048dbd5ff67ea46e05f1030960760b
-M
-src/UserInterface/javafx.fxml,7\4\74e67972242d1c3c201a4af7b6df2c97425ebe30
 Q
 !src/UserInterface/Controller.java,d\f\df60342331356d63adafd2470a0b838c17ae83e5
 U
@@ -27,8 +25,6 @@ Y
 )src/UserInterface/utils/SingleSlider.java,7\0\70a51d1be61c42122500feaec64d4ccd6b944fae
 U
 %src/UserInterface/TemporaryUtils.java,5\e\5e9970436e03099a4eac4db57bcea19947dc6e3c
-M
-src/userInterface/javafx.fxml,6\7\67705c60386032d462b02a7f054c766f11f82398
 U
 %src/userInterface/TemporaryUtils.java,6\e\6e9d3672f5aef271a7d6fd67b86f63ea0f2d8ce0
 U
@@ -43,8 +39,6 @@ Q
 !src/userInterface/Controller.java,3\f\3f9628009d6f45aeb55a760181732ca800e2046b
 K
 src/userinterface/Main.java,d\a\da00e69e8dfb4b129f1b1e73da2a58b287409bbc
-M
-src/userinterface/javafx.fxml,c\d\cd3b699eefb4a041820e8638143ebb82ded1db02
 U
 %src/userinterface/utils/intRange.java,0\6\0638c21ffdfc4fd409a9b7747653cfd32bafb216
 Y
@@ -75,5 +69,9 @@ _
 /src/userinterface/utils/ZoomableScrollPane.java,c\3\c39e75bcd2df3069ed2b6f38a4ccad150324c7d6
 P
  src/userinterface/mainStage.fxml,a\6\a652c68a53946485318db08d1d7aac8c3e86ab8d
-K
-src/userinterface/test.fxml,6\8\681d0665839b0ca18a4baf9db68062f3a9cdd0b2
+[
++src/userinterface/charSelectController.java,0\2\0214635fb7982707cb33a51eed0d15a860b9d2fa
+V
+&src/userinterface/charSelectStage.fxml,2\d\2d7babd3a63a90e915e395cd06427eafdeaba9fb
+Y
+)src/userinterface/utils/UnicodeRange.java,2\6\261164bc2138f856642eb3fda9df8ba4893386ea
