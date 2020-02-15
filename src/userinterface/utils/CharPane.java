@@ -38,7 +38,6 @@ public class CharPane extends StackPane {
                 this.select();
             }
         });
-
     }
 
     public void setIsSelectTrue() {
@@ -56,13 +55,32 @@ public class CharPane extends StackPane {
     public void select() {
         if (isSelected) {
             setIsSelectFalse();
+            ((SelectableFlowPane) this.getParent()).setLastSelected(this);
         } else {
             setIsSelectTrue();
+            ((SelectableFlowPane) this.getParent()).setLastSelected(this);
         }
     }
 
     private void multiselect() {
-//        this.getParent().g
+        SelectableFlowPane parentFlowPane = (SelectableFlowPane) this.getParent();
+        if (parentFlowPane.isLastSelected()) {
+            CharPane lastSelected = parentFlowPane.getLastSelected();
+            int indexA = parentFlowPane.getChildren().indexOf(this);
+            int indexB = parentFlowPane.getChildren().indexOf(lastSelected);
+            int start = Math.min(indexA, indexB + 1);
+            int end = Math.max(indexA, indexB - 1);
+            for (int i = start; i <= end; i++) {
+                CharPane actualCharPane = (CharPane) parentFlowPane.getChildren().get(i);
+                actualCharPane.select();
+            }
+        } else {
+            select();
+        }
+    }
+
+    public CharPane copy() {
+        return new CharPane(getUnicodeChar(), getFontFamily());
     }
 
     public String getUnicodeChar() {
@@ -77,6 +95,10 @@ public class CharPane extends StackPane {
         return this.fontChar;
     }
 
+    public FontChar copyFontChar() {
+        return new FontChar(getUnicodeChar(), getFontFamily());
+    }
+
     public boolean isSelected() {
         return isSelected;
     }
@@ -86,7 +108,7 @@ public class CharPane extends StackPane {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CharPane charPane = (CharPane) o;
-        return Objects.equals(fontChar, charPane.fontChar);
+        return fontChar.equals(charPane.fontChar);
     }
 
     @Override

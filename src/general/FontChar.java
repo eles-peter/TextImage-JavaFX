@@ -33,8 +33,8 @@ public class FontChar {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FontChar fontChar = (FontChar) o;
-        return unicodeChar.equals(fontChar.unicodeChar) &&
-                fontFamily.equals(fontChar.fontFamily);
+        return Objects.equals(unicodeChar, fontChar.unicodeChar) &&
+                Objects.equals(fontFamily, fontChar.fontFamily);
     }
 
     @Override
