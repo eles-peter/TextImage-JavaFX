@@ -9,12 +9,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import userinterface.utils.CharPane;
 import userinterface.utils.IntRange;
+import userinterface.utils.SelectableFlowPane;
 import userinterface.utils.UnicodeRange;
 
 public class charSelectController {
@@ -28,10 +29,8 @@ public class charSelectController {
     private IntRange unicodeCharacterRange = new IntRange(33, 127);
     private List<String> selectableList = new ArrayList<>();
     private List<String> selectedSelectableList = new ArrayList<>();
-
     private List<String> addedList = new ArrayList<>();
     private List<String> selectedAddedList = new ArrayList<>();
-
 
     @FXML
     private AnchorPane charSelectMainPane;
@@ -40,7 +39,7 @@ public class charSelectController {
     @FXML
     private ChoiceBox unicodeRangesSelector;
     @FXML
-    private FlowPane selectableFlowPane;
+    private SelectableFlowPane selectableFlowPane;
     @FXML
     private FlowPane addedFlowPane;
 
@@ -49,20 +48,30 @@ public class charSelectController {
         selectableFlowPane.getChildren().clear();
         selectedSelectableList.clear();
         for (String actualChar : selectableList) {
-            Text actualText = new Text();
-            actualText.setFont(Font.font(selectedFontFamily, FONTSIZE));
-            actualText.setText(actualChar);
-            StackPane charPane = new StackPane(actualText);
-            charPane.setStyle("-fx-background-color: #FFFFFF;");
-            charPane.setPrefSize(FONTPANELSIZE, FONTPANELSIZE);
+            CharPane charPane = new CharPane(actualChar, selectedFontFamily);
             charPane.setOnMouseClicked((event) -> {
                 if (event.isShiftDown()) {
                     multiSelectSelectablePane(charPane);
                 } else {
-                    selectSelectablePane(charPane);
+                    charPane.select();
                 }
             });
             selectableFlowPane.getChildren().add(charPane);
+
+//            Text actualText = new Text();
+//            actualText.setFont(Font.font(selectedFontFamily, FONTSIZE));
+//            actualText.setText(actualChar);
+//            StackPane charPane = new StackPane(actualText);
+//            charPane.setStyle("-fx-background-color: #FFFFFF;");
+//            charPane.setPrefSize(FONTPANELSIZE, FONTPANELSIZE);
+//            charPane.setOnMouseClicked((event) -> {
+//                if (event.isShiftDown()) {
+//                    multiSelectSelectablePane(charPane);
+//                } else {
+//                    selectSelectablePane(charPane);
+//                }
+//            });
+//            selectableFlowPane.getChildren().add(charPane);
         }
     }
 
@@ -71,24 +80,40 @@ public class charSelectController {
     private void deselectAllSelectablePane() {
         selectedSelectableList.clear();
         for (Node charPaneNode : selectableFlowPane.getChildren()) {
-            Pane selectedPane = (Pane) charPaneNode;
-            selectedPane.setStyle("-fx-background-color: #FFFFFF;");
-            selectedPane.getChildren().get(0).setStyle("-fx-fill: #000000;");
+            CharPane selectedPane = (CharPane) charPaneNode;
+            selectedPane.setIsSelectFalse();
         }
     }
 
+//    @FXML
+//    private void deselectAllSelectablePane() {
+//        selectedSelectableList.clear();
+//        for (Node charPaneNode : selectableFlowPane.getChildren()) {
+//            Pane selectedPane = (Pane) charPaneNode;
+//            selectedPane.setStyle("-fx-background-color: #FFFFFF;");
+//            selectedPane.getChildren().get(0).setStyle("-fx-fill: #000000;");
+//        }
+//    }
+
     @FXML
     private void selectAllSelectablePane() {
-        selectedSelectableList.clear();
         for (Node charPaneNode : selectableFlowPane.getChildren()) {
-            Pane selectedPane = (Pane) charPaneNode;
-            Text selectedText = (Text) selectedPane.getChildren().get(0);
-            String selectedChar = selectedText.getText();
-            selectedSelectableList.add(selectedChar);
-            selectedPane.setStyle("-fx-background-color: #00BFFF;");
-            selectedPane.getChildren().get(0).setStyle("-fx-fill: #FFFFFF");
-        }
+            CharPane selectedPane = (CharPane) charPaneNode;
+            selectedPane.setIsSelectTrue();
+           }
     }
+//    @FXML
+//    private void selectAllSelectablePane() {
+//        selectedSelectableList.clear();
+//        for (Node charPaneNode : selectableFlowPane.getChildren()) {
+//            Pane selectedPane = (Pane) charPaneNode;
+//            Text selectedText = (Text) selectedPane.getChildren().get(0);
+//            String selectedChar = selectedText.getText();
+//            selectedSelectableList.add(selectedChar);
+//            selectedPane.setStyle("-fx-background-color: #00BFFF;");
+//            selectedPane.getChildren().get(0).setStyle("-fx-fill: #FFFFFF");
+//        }
+//    }
 
     private void selectSelectablePane(Pane selectedPane) {
         Text selectedText = (Text) selectedPane.getChildren().get(0);
@@ -170,6 +195,7 @@ public class charSelectController {
 
     //******************** INICIALIZÁLÁS ***********************************
     public void initialize() {
+        SelectableFlowPane selectableFlowPane = new SelectableFlowPane();
         initializeFontFamilies();
         initializeUnicodeRange();
         fillSelectableListByUnicodeRange(unicodeCharacterRange);

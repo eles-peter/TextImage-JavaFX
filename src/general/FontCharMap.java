@@ -32,10 +32,12 @@ public class FontCharMap {
                     throw new IllegalArgumentException();
                 }
                 String unicodeValue = lineArray[1];
-                if (!unicodeValue.matches("[0-9A-F]{4}")) {
+                int unicodeInt = 0;
+                try {
+                    unicodeInt = Integer.parseInt(unicodeValue);
+                } catch (NumberFormatException e) {
                     throw new IllegalArgumentException();
                 }
-                int unicodeInt = Integer.parseInt(unicodeValue, 16);
                 String actualChar = String.valueOf((char)unicodeInt);
                 String fontType = lineArray[2];
                 this.add(value, new FontChar(actualChar, fontType));
@@ -68,9 +70,9 @@ public class FontCharMap {
             StringBuilder line = new StringBuilder("");
             line.append(entry.getKey());
             line.append(":");
-            line.append(entry.getValue().getUnicodeValue());
+            line.append(entry.getValue().getUnicodeChar());
             line.append(":");
-            line.append(entry.getValue().getFontType());
+            line.append(entry.getValue().getFontFamily());
             line.append("\n");
             writer.write(line.toString());
         }

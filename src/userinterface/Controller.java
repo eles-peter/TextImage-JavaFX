@@ -1,6 +1,5 @@
 package userinterface;
 
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -16,8 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -493,7 +490,7 @@ public class Controller {
                 Lum actualLum = modifiedLumMap.getLumArray()[h][w];
                 int luminosity = actualLum.getValue();
                 FontChar actualFontChar = fontCharMap.get(luminosity);
-                result[h][w] = actualFontChar.getUnicodeValue();
+                result[h][w] = actualFontChar.getUnicodeChar();
             }
         }
         return result;
@@ -574,7 +571,7 @@ public class Controller {
         for (Lum lum : lumList) {
             int luminosityValue = lum.getValue();
             FontChar actualFontChar = fontCharMap.get(luminosityValue);
-            String actualChar = actualFontChar.getUnicodeValue();
+            String actualChar = actualFontChar.getUnicodeChar();
             this.charList.add(new SimpleStringProperty(actualChar));
         }
     }
@@ -583,7 +580,7 @@ public class Controller {
         for (int i = 0; i < this.charList.size(); i++) {
             int newLumValue = modifiedLumList.get(i).getValue();
             FontChar actualFontChar = fontCharMap.get(newLumValue);
-            String actualChar = actualFontChar.getUnicodeValue();
+            String actualChar = actualFontChar.getUnicodeChar();
             this.charList.get(i).setValue(actualChar);
         }
     }
@@ -624,7 +621,7 @@ public class Controller {
 
 
         try {
-            fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas.txt");
+            fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas_DEC.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

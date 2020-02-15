@@ -4,27 +4,27 @@ import java.util.Objects;
 
 public class FontChar {
 
-    private String unicodeValue; //TODO átnevezni a FontChar osztályban a változó nevet
-    private String fontType;
+    private String unicodeChar; //TODO átnevezni a FontChar osztályban a változó nevet
+    private String fontFamily;
 
-    public FontChar(String unicodeValue, String fontType) {
-        this.unicodeValue = unicodeValue;
-        this.fontType = fontType;
+    public FontChar(String unicodeChar, String fontFamily) {
+        this.unicodeChar = unicodeChar;
+        this.fontFamily = fontFamily;
     }
 
-    public String getUnicodeValue() {
-        return unicodeValue;
+    public String getUnicodeChar() {
+        return unicodeChar;
     }
 
-    public String getFontType() {
-        return fontType;
+    public String getFontFamily() {
+        return fontFamily;
     }
 
     @Override
     public String toString() {
         return "FontChar{" +
-                "unicodeValue='" + unicodeValue + '\'' +
-                ", fontType='" + fontType + '\'' +
+                "unicodeCharacter='" + unicodeChar + '\'' +
+                ", fontType='" + fontFamily + '\'' +
                 '}';
     }
 
@@ -33,12 +33,12 @@ public class FontChar {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FontChar fontChar = (FontChar) o;
-        return unicodeValue.equals(fontChar.unicodeValue) &&
-                fontType.equals(fontChar.fontType);
+        return unicodeChar.equals(fontChar.unicodeChar) &&
+                fontFamily.equals(fontChar.fontFamily);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(unicodeValue, fontType);
+        return Objects.hash(unicodeChar, fontFamily);
     }
 }
