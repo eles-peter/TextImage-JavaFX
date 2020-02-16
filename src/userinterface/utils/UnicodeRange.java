@@ -1,7 +1,7 @@
 package userinterface.utils;
 
 public enum UnicodeRange {
-    BASICLATIN ( "Basic Latin", 32, 127),
+    BASICLATIN ( "Basic Latin", 33, 127), // THE 'SPACE' CHARACTER (UNICODE VALUE:32) WAS DELETED!!!
     LATIN1SUPPLEMENT ( "Latin-1 Supplement", 160, 255),
     LATINEXTENDEDA ( "Latin Extended-A", 256, 383),
     LATINEXTENDEDB ( "Latin Extended-B", 384, 591),

@@ -9,12 +9,22 @@ import java.util.Scanner;
 public class FontCharMap {
 
     private Map<Integer, FontChar> fontCharMap = new HashMap<>();
+    private String name;
+    private Double heightWidthRatio;
 
     public FontCharMap() {
     }
 
     public FontCharMap(String fullPathAndFileName) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(fullPathAndFileName));
+        String name = scanner.nextLine();
+        this.name = name;
+        String heightWidthRatioString = scanner.nextLine();
+        try {
+            this.heightWidthRatio = Double.valueOf(heightWidthRatioString);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException();
+        }
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (!line.isEmpty()) {
@@ -66,6 +76,8 @@ public class FontCharMap {
 
     public void writeToFile(String fullPathAndFileName) throws IOException {
         FileWriter writer = new FileWriter(fullPathAndFileName);
+        writer.write(this.name + "\n");
+        writer.write(this.heightWidthRatio.toString() + "\n");
         for (Map.Entry<Integer, FontChar> entry : this.fontCharMap.entrySet()) {
             StringBuilder line = new StringBuilder("");
             line.append(entry.getKey());
@@ -79,9 +91,27 @@ public class FontCharMap {
         writer.close();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getHeightWidthRatio() {
+        return heightWidthRatio;
+    }
+
+    public void setHeightWidthRatio(Double heightWidthRatio) {
+        this.heightWidthRatio = heightWidthRatio;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
+        result.append("Name: " + this.name + "\n");
+        result.append("Height/Width Ratio: " + this.heightWidthRatio + "\n");
         for (Map.Entry<Integer, FontChar> entry : this.fontCharMap.entrySet()) {
             result.append("Value: ");
             result.append(entry.getKey());

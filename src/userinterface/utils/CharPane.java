@@ -24,10 +24,14 @@ public class CharPane extends StackPane {
         this.fontChar = fontChar;
         this.text.setFont(Font.font(fontChar.getFontFamily(), FONTSIZE));
         this.text.setText(fontChar.getUnicodeChar());
-        this.getChildren().add(text);
+        double textWidth = this.text.getBoundsInLocal().getWidth();
         this.setPrefSize(FONTPANELSIZE, FONTPANELSIZE);
+        if (textWidth > 0.95 * FONTPANELSIZE) {
+            this.setPrefWidth(2 * FONTPANELSIZE + 1);
+        }
         this.setStyle("-fx-background-color: #FFFFFF;");
         this.setMouseEvents();
+        this.getChildren().add(text);
     }
 
     private void setMouseEvents() {
@@ -93,6 +97,10 @@ public class CharPane extends StackPane {
 
     public FontChar getFontChar() {
         return this.fontChar;
+    }
+
+    public Text getText() {
+        return text;
     }
 
     public FontChar copyFontChar() {

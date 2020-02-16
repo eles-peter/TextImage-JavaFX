@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane id="charSelectMainPane" fx:id="charSelectMainPane" prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userinterface.CharSelectController">
    <children>
@@ -16,18 +19,27 @@
          <content>
 <!--            <FlowPane fx:id="addedFlowPane" hgap="1.0" maxWidth="311.0" minWidth="311.0" prefHeight="342.0" prefWidth="311.0" prefWrapLength="312.0" rowValignment="TOP" style="-fx-background-color: #D3D3D3;" vgap="1.0" />-->
          </content></ScrollPane>
-      <Button layoutX="360.0" layoutY="155.0" mnemonicParsing="false" onAction="#add" text="    Add &gt;&gt;   " />
-      <Button layoutX="360.0" layoutY="202.0" mnemonicParsing="false" onAction="#remove" text="&lt;&lt; Remove " />
       <Label layoutX="25.0" layoutY="14.0" text="Selectable Characters" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="15.0" />
-      <Label layoutX="735.0" layoutY="15.0" text="Added Characters" textAlignment="JUSTIFY" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0" />
+      <Label fx:id="addedCharacters" layoutX="735.0" layoutY="15.0" text="Added Characters" textAlignment="JUSTIFY" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0" />
       <ChoiceBox fx:id="fontFamiliesSelector" layoutX="111.0" layoutY="400.0" prefHeight="26.0" prefWidth="221.0" />
       <Label layoutX="25.0" layoutY="405.0" text="Font families:" AnchorPane.leftAnchor="25.0" />
-      <Button layoutX="460.0" layoutY="413.0" mnemonicParsing="false" onAction="#resetClear" text="Reset / Clear" />
-      <Button layoutX="592.0" layoutY="413.0" mnemonicParsing="false" onAction="#closeWindow" text="Cancel" />
-      <Button layoutX="698.0" layoutY="412.0" mnemonicParsing="false" onAction="#createFontCharMap" text="OK / Create" />
-      <Button layoutX="361.0" layoutY="108.0" mnemonicParsing="false" onAction="#selectAllSelectablePane" text="  Select All  " />
-      <Button layoutX="361.0" layoutY="65.0" mnemonicParsing="false" onAction="#deselectAllSelectablePane" text="Deselect All" />
-      <ChoiceBox fx:id="unicodeRangesSelector" layoutX="111.0" layoutY="440.0" prefHeight="26.0" prefWidth="221.0" />
-      <Label layoutX="25.0" layoutY="445.0" text="Unicode range:" AnchorPane.leftAnchor="25.0" />
+      <Button layoutX="449.0" layoutY="439.0" mnemonicParsing="false" onAction="#closeWindow" text="   Cancel   " AnchorPane.bottomAnchor="15.399999999999977" />
+      <Button layoutX="698.0" layoutY="412.0" mnemonicParsing="false" onAction="#createOK" text="OK / Create" AnchorPane.bottomAnchor="15.000000000000021" />
+      <ChoiceBox fx:id="unicodeRangesSelector" layoutX="111.0" layoutY="440.0" prefHeight="26.0" prefWidth="221.0" AnchorPane.bottomAnchor="15.0" />
+      <Label layoutX="25.0" layoutY="445.0" text="Unicode range:" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="25.0" />
+      <VBox alignment="TOP_CENTER" layoutX="351.0" layoutY="40.0" prefHeight="342.0" prefWidth="100.0" spacing="20.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deselectAllSelectablePane" text="Deselect All" />
+            <Button mnemonicParsing="false" onAction="#selectAllSelectablePane" text="  Select All  " />
+            <Button mnemonicParsing="false" onAction="#add" text="    Add &gt;&gt;   " />
+            <Button mnemonicParsing="false" onAction="#remove" text="&lt;&lt; Remove " />
+            <Button mnemonicParsing="false" onAction="#resetClear" text="Reset / Clear" />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </VBox>
+      <Label layoutX="449.0" layoutY="405.0" text="New CharacterSet Name:" />
+      <TextField id="newName" fx:id="newName" layoutX="600.0" layoutY="400.0" prefWidth="185.0" AnchorPane.rightAnchor="25.0" />
    </children>
 </AnchorPane>

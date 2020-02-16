@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Before rewrite SelectableFlowPane class...">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="CharSelectStage is done except Create FontCharMap method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/FontChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/FontChar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/userinterface/charSelectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/CharSelectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/general/FontCharMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/FontCharMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/CharSelectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/CharSelectController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/charSelectStage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/charSelectStage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/utils/CharPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/utils/CharPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/userinterface/utils/SelectableFlowPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/utils/SelectableFlowPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/utils/IntRange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/utils/IntRange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/utils/UnicodeRange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/utils/UnicodeRange.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -388,7 +389,7 @@
       <workItem from="1581524394301" duration="7539000" />
       <workItem from="1581582326069" duration="18627000" />
       <workItem from="1581667975581" duration="3943000" />
-      <workItem from="1581683558188" duration="23945000" />
+      <workItem from="1581683558188" duration="45325000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -565,7 +566,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581760616369</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="CharSelectStage is done except Create FontCharMap method">
+      <created>1581768662617</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1581768662617</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -598,7 +606,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="Change Midtone slider is ready!!!" />
     <MESSAGE value="Draging Thumb(rectangle) in JAVAFX ok!" />
     <MESSAGE value="Before I deleted FXslider" />
     <MESSAGE value="Own Rangeslider is working" />
@@ -623,6 +630,7 @@
     <MESSAGE value="Zoom in charRaster is work and imageview fit to window is OK!" />
     <MESSAGE value="CharSelect stage almost done&#10;Before modify FontChar class fields (unicodeValue modify from String to int)" />
     <MESSAGE value="Before rewrite SelectableFlowPane class..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Before rewrite SelectableFlowPane class..." />
+    <MESSAGE value="CharSelectStage is done except Create FontCharMap method" />
+    <option name="LAST_COMMIT_MESSAGE" value="CharSelectStage is done except Create FontCharMap method" />
   </component>
 </project>

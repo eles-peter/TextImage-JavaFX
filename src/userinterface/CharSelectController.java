@@ -1,11 +1,27 @@
 package userinterface;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -13,6 +29,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import general.FontChar;
+import general.FontCharMap;
 import userinterface.utils.CharPane;
 import userinterface.utils.IntRange;
 import userinterface.utils.SelectableFlowPane;
@@ -20,13 +38,10 @@ import userinterface.utils.UnicodeRange;
 
 public class CharSelectController {
 
-    //TODO ALWAYS ADD SPACE TO THE LIST!!!!!!!!!
-
-
     private String selectedFontFamily;
-    private IntRange unicodeCharacterRange = new IntRange(33, 127);
+    private IntRange unicodeCharacterRange = new IntRange();
     private List<String> selectableList = new ArrayList<>();
-
+    private IntegerProperty timer = new SimpleIntegerProperty(0);
 
     @FXML
     private AnchorPane charSelectMainPane;
@@ -38,6 +53,12 @@ public class CharSelectController {
     private ScrollPane selectableScrollPane;
     @FXML
     private ScrollPane addedScrollPane;
+    @FXML
+    private Label addedCharacters;
+    @FXML
+    private TextField newName;
+
+
 
     private SelectableFlowPane selectableFlowPane = new SelectableFlowPane();
     private SelectableFlowPane addedFlowPane = new SelectableFlowPane();
@@ -78,6 +99,7 @@ public class CharSelectController {
             }
         }
         deselectAllSelectablePane();
+        actualizeAddedCharactersLabel();
     }
 
     @FXML
@@ -89,11 +111,18 @@ public class CharSelectController {
                 i--;
             }
         }
+        actualizeAddedCharactersLabel();
     }
 
     @FXML
     private void resetClear() {
         addedFlowPane.getChildren().clear();
+    }
+
+    @FXML
+    private void actualizeAddedCharactersLabel() {
+        int newValue = addedFlowPane.getChildren().size();
+        addedCharacters.setText("Added Characters (" + newValue + " added)");
     }
 
     //******************** GENERAL WINDOW FUNCTIONS***********************************
@@ -104,10 +133,68 @@ public class CharSelectController {
     }
 
     @FXML
-    private void createFontCharMap() {
+    private void createOK() {
+        int evaluatorboxsize = 120;
+        StackPane evaluatorPane = new StackPane();
+        evaluatorPane.setStyle(" -fx-pref-height: evaluatorboxsize; -fx-pref-width: evaluatorboxsize; -fx-background-color: #FFFFFF; -fx-effect: dropshadow(three-pass-box, darkgray, 20, 0, 0, 0);");
+        AnchorPane.setTopAnchor(evaluatorPane, 150.0);
+        AnchorPane.setRightAnchor(evaluatorPane, 138.0);
+        charSelectMainPane.getChildren().add(evaluatorPane);
+
+        Canvas canvas = new Canvas(evaluatorboxsize, evaluatorboxsize);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.BLACK);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+
+        evaluatorPane.getChildren().add(canvas);
+
+        FontCharMap fontCharMap = new FontCharMap();
+        //TODO check the newName is not only whitespace...(possible to make a filename from it...)
+        fontCharMap.setName(newName.getText());
+        final double[] maxWidth = {0};
+
+        timer.setValue(addedFlowPane.getChildren().size() - 1);
+        Timeline animatedEvaluator = new Timeline(new KeyFrame(Duration.millis(200), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                gc.clearRect(0, 0, evaluatorboxsize, evaluatorboxsize);
+                int index = timer.getValue();
+                CharPane charPane = (CharPane) addedFlowPane.getChildren().remove(index);
+                FontChar actualFontChar = charPane.getFontChar();
+                Font actualFont = Font.font(actualFontChar.getFontFamily(), 60);
+                gc.setFont(actualFont);
+                gc.fillText(actualFontChar.getUnicodeChar(), evaluatorboxsize/2, evaluatorboxsize/2);
+
+                double actualCharWidth = charPane.getText().getBoundsInLocal().getWidth();
+                maxWidth[0] = Math.max(maxWidth[0], actualCharWidth);
 
 
-        closeWindow();
+
+
+                timer.setValue(index - 1);
+            }
+        }));
+
+        animatedEvaluator.setCycleCount(Timeline.INDEFINITE);
+        timer.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                if (newValue.intValue() < 0) {
+                    animatedEvaluator.stop();
+
+
+                    //TODO ALWAYS ADD SPACE TO THE LIST!!!!!!!!!
+
+                    closeWindow();
+                }
+            }
+        });
+        animatedEvaluator.play();
+
+
+
+
     }
 
 
@@ -148,7 +235,10 @@ public class CharSelectController {
                 .map(Enum -> Enum.longName)
                 .collect(Collectors.toList());
         unicodeRangesSelector.getItems().addAll(unicodeRangeNames);
-        unicodeRangesSelector.setValue(unicodeRangeNames.get(0));
+        String baseValue = unicodeRangeNames.get(0);
+        unicodeRangesSelector.setValue(baseValue);
+        this.unicodeCharacterRange = rangeFromUnicodeEnum(baseValue);
+
         unicodeRangesSelector.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue)) {
                 this.unicodeCharacterRange = rangeFromUnicodeEnum((String) newValue);

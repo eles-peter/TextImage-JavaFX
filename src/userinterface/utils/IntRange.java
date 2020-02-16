@@ -6,6 +6,9 @@ public class IntRange {
     private int minValue;
     private int maxValue;
 
+    public IntRange() {
+    }
+
     public IntRange(int minValue, int maxValue) {
         this.minValue = minValue;
         this.maxValue = maxValue;
