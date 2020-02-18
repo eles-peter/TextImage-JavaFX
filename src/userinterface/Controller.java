@@ -49,6 +49,7 @@ public class Controller {
     private int offset = 0;
     private Deque<ModiferValues> undoList = new LinkedList<>();
     private boolean showImage;
+    private FontCharMapService fontCharMapService;
     private FontCharMap fontCharMap;
     private List<SimpleStringProperty> charList;
     private DoubleProperty zoomRate = new SimpleDoubleProperty();
@@ -168,6 +169,8 @@ public class Controller {
     private Rectangle showImageBackground;
     @FXML
     private Rectangle showImageButton;
+    @FXML
+    private ChoiceBox fontCharMapSelector;
     @FXML
     private Group zoomGroup;
 
@@ -496,6 +499,9 @@ public class Controller {
         return result;
     }
 
+
+    //TODO fontfamily bekötése
+    //TODO oldalszélesség bekötésse???? de az inkább később....(újragenerálás)
     @FXML
     private void addCharRaster() {
         int charHeight = BASICFONTSIZE;
@@ -570,6 +576,8 @@ public class Controller {
         this.charList = new ArrayList<>();
         for (Lum lum : lumList) {
             int luminosityValue = lum.getValue();
+            //TODO ha nem létezeik az az érték akkor a legközelebbit hozzáadni
+            //TODO nem biztos, hogy ez a leggyorsabb eljárás, lehet, hogy a char settet kell kiegészíteni...
             FontChar actualFontChar = fontCharMap.get(luminosityValue);
             String actualChar = actualFontChar.getUnicodeChar();
             this.charList.add(new SimpleStringProperty(actualChar));
@@ -580,6 +588,16 @@ public class Controller {
         for (int i = 0; i < this.charList.size(); i++) {
             int newLumValue = modifiedLumList.get(i).getValue();
             FontChar actualFontChar = fontCharMap.get(newLumValue);
+            String actualChar = actualFontChar.getUnicodeChar();
+            this.charList.get(i).setValue(actualChar);
+        }
+    }
+
+    private void actualizeCharList() {
+        List<Lum> actualLumList = modifiedLumMap.getSortedItems();
+        for (int i = 0; i < this.charList.size(); i++) {
+            int actualLumValue = actualLumList.get(i).getValue();
+            FontChar actualFontChar = fontCharMap.get(actualLumValue);
             String actualChar = actualFontChar.getUnicodeChar();
             this.charList.get(i).setValue(actualChar);
         }
@@ -619,12 +637,33 @@ public class Controller {
         showImageRadioButton = new RadioButton(showImageBackground, showImageButton);
         this.showImage = showImageRadioButton.setRadioButton(false);
 
+        fontCharMapService = FontCharMapService.getInstance();
+        fontCharMapService.initialize();
+        List<String> FCMNameList = fontCharMapService.getFCMNameList();
+        fontCharMapSelector.getItems().addAll(FCMNameList);
+        fontCharMapSelector.setValue(fontCharMapService.getActualFCMName());
+        this.fontCharMap = fontCharMapService.getActualFontCharMap();
+        fontCharMapSelector.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equals(newValue)) {
+                fontCharMapService.setActualFCMName((String) newValue);
+                this.fontCharMap = fontCharMapService.getActualFontCharMap();
+                actualizeCharList();
+            }
+        });
+        fontCharMapService.isChangedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equals(newValue) && newValue) {
+                String newFCMName = fontCharMapService.getActualFCMName();
+                List<String> oldFCMNameList = fontCharMapSelector.getItems();
+                if (!oldFCMNameList.contains(newFCMName)) {
+                    fontCharMapSelector.getItems().add(newFCMName);
+                }
+                fontCharMapSelector.setValue(newFCMName);
+                this.fontCharMap = fontCharMapService.getActualFontCharMap(); // lehet, hogy nem kell az előbbi listener miatt...
+                actualizeCharList();
+                fontCharMapService.setIsChanged(false);
+            }
+        });
 
-        try {
-            fontCharMap = new FontCharMap("C:\\Users\\Pepa\\Desktop\\TextImage\\ASCII_consolas_DEC.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
 //        rasterScrollPane.vvalueProperty().addListener((observable, oldValue, newValue) -> {
 //            scrollV.setText(newValue.toString());

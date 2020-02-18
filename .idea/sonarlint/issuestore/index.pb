@@ -73,5 +73,13 @@ P
 +src/userinterface/charSelectController.java,0\2\0214635fb7982707cb33a51eed0d15a860b9d2fa
 V
 &src/userinterface/charSelectStage.fxml,2\d\2d7babd3a63a90e915e395cd06427eafdeaba9fb
-Y
-)src/userinterface/utils/UnicodeRange.java,2\6\261164bc2138f856642eb3fda9df8ba4893386ea
+U
+%src/userinterface/utils/CharPane.java,c\3\c3795eee134da48995b1fad8ffeb423215b8f9b7
+[
++src/userinterface/CharSelectController.java,5\2\527e23c54ff31813f9f9f79cacf08b33cb521e1e
+]
+-src/userinterface/resources/UnicodeRange.java,d\9\d9da87d227cca87f502730a7b654e7426b67339d
+_
+/src/userinterface/utils/FontCharMapService.java,1\f\1f768bbc4efcfefa75ca3537af81cb476baf61bb
+S
+#src/userinterface/resources/CJK.fcm,b\8\b878dec7c009c2014baa86b52cdb15691ed70679

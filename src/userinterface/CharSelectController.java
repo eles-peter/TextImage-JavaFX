@@ -2,46 +2,47 @@ package userinterface;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.*;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import general.FontChar;
 import general.FontCharMap;
 import userinterface.utils.CharPane;
+import userinterface.utils.FontCharMapService;
 import userinterface.utils.IntRange;
 import userinterface.utils.SelectableFlowPane;
-import userinterface.utils.UnicodeRange;
+import userinterface.resources.UnicodeRange;
 
 public class CharSelectController {
 
     private String selectedFontFamily;
     private IntRange unicodeCharacterRange = new IntRange();
     private List<String> selectableList = new ArrayList<>();
-    private IntegerProperty timer = new SimpleIntegerProperty(0);
+    private Timeline animatedEvaluator;
+    private Set<String> fontFamilySet = new HashSet<>();
+    private FontCharMap fontCharMap;
+    private FontCharMapService fontCharMapService;
+    private double fontMaxWidth;
 
     @FXML
     private AnchorPane charSelectMainPane;
@@ -58,10 +59,9 @@ public class CharSelectController {
     @FXML
     private TextField newName;
 
-
-
     private SelectableFlowPane selectableFlowPane = new SelectableFlowPane();
     private SelectableFlowPane addedFlowPane = new SelectableFlowPane();
+
 
     private void actualizeSelectablePane() {
         selectableFlowPane.getChildren().clear();
@@ -132,64 +132,92 @@ public class CharSelectController {
         stage.close();
     }
 
+
+    private void finish(Timeline timeline) {
+        timeline.stop();
+        closeWindow();
+    }
+
     @FXML
     private void createOK() {
-        int evaluatorboxsize = 120;
         StackPane evaluatorPane = new StackPane();
-        evaluatorPane.setStyle(" -fx-pref-height: evaluatorboxsize; -fx-pref-width: evaluatorboxsize; -fx-background-color: #FFFFFF; -fx-effect: dropshadow(three-pass-box, darkgray, 20, 0, 0, 0);");
+        evaluatorPane.setStyle(" -fx-min-height: 120; -fx-min-width: 120; -fx-background-color: #FFFFFF; -fx-effect: dropshadow(three-pass-box, darkgray, 20, 0, 0, 0);");
         AnchorPane.setTopAnchor(evaluatorPane, 150.0);
         AnchorPane.setRightAnchor(evaluatorPane, 138.0);
         charSelectMainPane.getChildren().add(evaluatorPane);
 
-        Canvas canvas = new Canvas(evaluatorboxsize, evaluatorboxsize);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
+        fontCharMap = new FontCharMap();
+        String fontCharMapName = newName.getText();
+        if (!fontCharMapName.matches("[\\w,-]{3,}")) {
+            alertMessage("Please gimme correct FileName! \n (no whitespace please!)");
+            return;
+        }
+        fontCharMap.setName(fontCharMapName);
 
-        evaluatorPane.getChildren().add(canvas);
-
-        FontCharMap fontCharMap = new FontCharMap();
-        //TODO check the newName is not only whitespace...(possible to make a filename from it...)
-        fontCharMap.setName(newName.getText());
-        final double[] maxWidth = {0};
-
-        timer.setValue(addedFlowPane.getChildren().size() - 1);
-        Timeline animatedEvaluator = new Timeline(new KeyFrame(Duration.millis(200), new EventHandler<ActionEvent>() {
+        //TODO refractor kiemelni metódusba
+        animatedEvaluator = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                gc.clearRect(0, 0, evaluatorboxsize, evaluatorboxsize);
-                int index = timer.getValue();
-                CharPane charPane = (CharPane) addedFlowPane.getChildren().remove(index);
-                FontChar actualFontChar = charPane.getFontChar();
-                Font actualFont = Font.font(actualFontChar.getFontFamily(), 60);
-                gc.setFont(actualFont);
-                gc.fillText(actualFontChar.getUnicodeChar(), evaluatorboxsize/2, evaluatorboxsize/2);
 
-                double actualCharWidth = charPane.getText().getBoundsInLocal().getWidth();
-                maxWidth[0] = Math.max(maxWidth[0], actualCharWidth);
+                if (addedFlowPane.getChildren().size() > 0) {
+                    evaluatorPane.getChildren().clear();
+                     CharPane charPane = (CharPane) addedFlowPane.getChildren().remove(0);
+                    FontChar actualFontChar = charPane.getFontChar();
+                    fontFamilySet.add(actualFontChar.getFontFamily());
+                    Font actualFont = Font.font(actualFontChar.getFontFamily(), 60);
+                    Text actualText = new Text(actualFontChar.getUnicodeChar());
+                    actualText.setFont(actualFont);
+                    evaluatorPane.getChildren().add(actualText);
 
+                    double actualCharWidth = actualText.getBoundsInLocal().getWidth();
+                    fontMaxWidth = Math.max(fontMaxWidth, actualCharWidth);
 
+                    WritableImage snapshot = actualText.snapshot(new SnapshotParameters(), null);
+                    int width = (int) snapshot.getWidth();
+                    int height = (int) snapshot.getHeight();
+                    PixelReader pixelReader = snapshot.getPixelReader();
+                    double inversePixelValue = 0.0;
+                    for (int h = 0; h < height; h++) {
+                        for (int w = 0; w < width; w++) {
+                            Color pixelColor = pixelReader.getColor(w, h);
+                            double red = pixelColor.getRed();
+                            double green = pixelColor.getGreen();
+                            double blue = pixelColor.getBlue();
+                            inversePixelValue+= (1 - red) + (1 - green) + (1 - blue);
+                        }
+                    }
+                    fontCharMap.add((int)inversePixelValue, actualFontChar);
 
-
-                timer.setValue(index - 1);
-            }
-        }));
-
-        animatedEvaluator.setCycleCount(Timeline.INDEFINITE);
-        timer.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                if (newValue.intValue() < 0) {
+                } else {
                     animatedEvaluator.stop();
+                    fontCharMap.add(0, " ", fontFamilySet.iterator().next());
 
+                    double maxHeight = 0.0;
+                    for (String fontFamily : fontFamilySet) {
+                        Text actualText = new Text(Character.toString((char)2588));
+                        actualText.setFont(Font.font(fontFamily, 60));
+                        double actualHeight = actualText.getBoundsInLocal().getHeight();
+                        maxHeight = Math.max(maxHeight, actualHeight);
+                    }
+                    fontCharMap.setMaxHeight(maxHeight);
+                    fontCharMap.setMaxWidth(fontMaxWidth);
+                    fontCharMap.changeRange(255,0);
+                    fontCharMap.fillTheGap();
 
-                    //TODO ALWAYS ADD SPACE TO THE LIST!!!!!!!!!
+                    fontCharMapService.addFontCharMapAndSetActual(fontCharMap);
+
+                    try {
+                        fontCharMap.writeToFile("src\\userinterface\\resources\\" + fontCharMap.getName() + ".fcm");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     closeWindow();
                 }
             }
-        });
+        }, new javafx.animation.KeyValue[]{}));
+
+        animatedEvaluator.setCycleCount(Timeline.INDEFINITE);
         animatedEvaluator.play();
 
 
@@ -206,6 +234,7 @@ public class CharSelectController {
         initializeUnicodeRange();
         fillSelectableListByUnicodeRange(unicodeCharacterRange);
         actualizeSelectablePane();
+        fontCharMapService = FontCharMapService.getInstance();
     }
 
     private void initializeSelectableFlowPane() {
@@ -222,6 +251,7 @@ public class CharSelectController {
         List<String> fontFamilies = Font.getFamilies();
         fontFamiliesSelector.getItems().addAll(fontFamilies);
         fontFamiliesSelector.setValue(fontFamilies.get(0));
+        this.selectedFontFamily = fontFamilies.get(0);
         fontFamiliesSelector.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue)) {
                 this.selectedFontFamily = (String) newValue;
@@ -232,7 +262,7 @@ public class CharSelectController {
 
     private void initializeUnicodeRange() {
         List<String> unicodeRangeNames = Stream.of(UnicodeRange.values())
-                .map(Enum -> Enum.longName)
+                .map(e -> e.longName)
                 .collect(Collectors.toList());
         unicodeRangesSelector.getItems().addAll(unicodeRangeNames);
         String baseValue = unicodeRangeNames.get(0);
@@ -261,6 +291,14 @@ public class CharSelectController {
             String actualChar = Character.toString((char) unicodeValue);
             selectableList.add(actualChar);
         }
+    }
+
+    private void alertMessage(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ErrorMessage");
+        alert.setHeaderText(null);
+        alert.setContentText(errorMessage);
+        alert.show();
     }
 
 
