@@ -1,8 +1,7 @@
 package userinterface;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -13,23 +12,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
 import general.*;
 import userinterface.utils.*;
 import userinterface.utils.RadioButton;
-
 
 public class Controller {
 
@@ -44,6 +41,7 @@ public class Controller {
     private LumMap modifiedLumMap;
     private boolean keepRatio;
     private boolean equalize;
+    private boolean inverse;
     private int midTone = 50;
     private IntRange range = new IntRange(0, 255);
     private int offset = 0;
@@ -52,6 +50,7 @@ public class Controller {
     private FontCharMapService fontCharMapService;
     private FontCharMap fontCharMap;
     private List<SimpleStringProperty> charList;
+    private ObjectProperty<Color> fontColor = new SimpleObjectProperty<>(Color.BLACK);
     private DoubleProperty zoomRate = new SimpleDoubleProperty();
 
     private class ModiferValues {
@@ -111,7 +110,6 @@ public class Controller {
     }
 
     //<editor-fold defaultstate="collapsed" desc="FXML declarations">
-
     private Stage primaryStage;
     @FXML
     private AnchorPane mainPane;
@@ -130,6 +128,8 @@ public class Controller {
     @FXML
     private ImageView imageView;
     @FXML
+    private ImageView imagePreview;
+    @FXML
     private TextField newWidth;
     @FXML
     private TextField newHeight;
@@ -141,6 +141,10 @@ public class Controller {
     private Rectangle equalizeBackground;
     @FXML
     private Rectangle equalizeButton;
+    @FXML
+    private Rectangle inverseBackground;
+    @FXML
+    private Rectangle inverseButton;
     @FXML
     private Rectangle rangeSliderRail;
     @FXML
@@ -173,15 +177,16 @@ public class Controller {
     private ChoiceBox fontCharMapSelector;
     @FXML
     private Group zoomGroup;
-
     //</editor-fold>
 
     private StaticRadioButton keepRatioButton;
     private RadioButton equalizeRadioButton;
+    private RadioButton inverseRadioButton;
     private SingleSlider midToneSlider;
     private SingleSlider offsetSlider;
     private RangeSlider rangeSlider;
     private RadioButton showImageRadioButton;
+
 
     @FXML
     private void openFile() {
@@ -312,6 +317,20 @@ public class Controller {
         modifyImageAndView();
     }
 
+    //************************INVERSE**************************************
+    @FXML
+    private void clickedInverseButton() {
+        this.inverse = inverseRadioButton.changeRadioButton(this.inverse);
+        if (inverse) {
+            this.rasterPane.setStyle("-fx-background-color: #000000;");
+            this.fontColor.setValue(Color.WHITE);
+        } else {
+            this.rasterPane.setStyle("-fx-background-color: #FFFFFF;");
+            this.fontColor.setValue(Color.BLACK);
+        }
+        actualizeCharList();
+    }
+
     // ****************RANGE MŰVELETEK**************************
     @FXML
     private void dragRangeSliderMin(MouseEvent action) {
@@ -424,7 +443,7 @@ public class Controller {
         //TODO az összeomlást kezelni!!!!
         setRangeToActualValue();
         actualizeImageAndView();
-        actualizeCharList(modifiedLumMap.getSortedItems());
+        actualizeCharList();
 
     }
 
@@ -435,7 +454,7 @@ public class Controller {
         setModifiersToInitialValue();
         setRangeToActualValue();
         actualizeImageAndView();
-        actualizeCharList(modifiedLumMap.getSortedItems());
+        actualizeCharList();
         resetModifiersButton.setDisable(true);
     }
 
@@ -461,6 +480,7 @@ public class Controller {
     private void actualizeImageAndView() {
         WriteImage writeImage = new WriteImage(modifiedLumMap);
         imageView.setImage(writeImage.getWritableImage());
+        imagePreview.setImage(writeImage.getWritableImage());
 
         imageView.setPreserveRatio(true);
         imageView.fitWidthProperty().bind(imagePane.widthProperty());
@@ -484,21 +504,6 @@ public class Controller {
 
 //******************** CHARTABLE ******************
 
-    private String[][] createCharArray() {
-        int width = modifiedLumMap.getWidth();
-        int height = modifiedLumMap.getHeight();
-        String[][] result = new String[height][width];
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
-                Lum actualLum = modifiedLumMap.getLumArray()[h][w];
-                int luminosity = actualLum.getValue();
-                FontChar actualFontChar = fontCharMap.get(luminosity);
-                result[h][w] = actualFontChar.getUnicodeChar();
-            }
-        }
-        return result;
-    }
-
 
     //TODO fontfamily bekötése
     //TODO oldalszélesség bekötésse???? de az inkább később....(újragenerálás)
@@ -517,8 +522,7 @@ public class Controller {
                 SimpleStringProperty actualChar = this.charList.get(actualIndex);
                 Text actualText = new Text();
                 actualText.textProperty().bind(actualChar);
-//                actualText.setFont(Font.font(actualFontChar.getFontType(), BASICFONTSIZE));
-//                actualText.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, BASICFONTSIZE));
+                actualText.fillProperty().bind(fontColor);
                 actualText.setFont(Font.font("Consolas", BASICFONTSIZE));
                 actualText.setLayoutX(charWidth * w); //TODO kiszámítani a koordinátákat
                 actualText.setLayoutY(charHeight * h);
@@ -566,11 +570,6 @@ public class Controller {
         rasterScrollPane.setHvalue(0.5);
     }
 
-    @FXML
-    private void printScroll() {
-        System.out.println(rasterScrollPane.getHvalue() + ", " + rasterScrollPane.getVvalue());
-    }
-
     //******************** CHAR LIST ******************
     private void createCharList(List<Lum> lumList, FontCharMap fontCharMap) {
         this.charList = new ArrayList<>();
@@ -584,19 +583,13 @@ public class Controller {
         }
     }
 
-    private void actualizeCharList(List<Lum> modifiedLumList) {
-        for (int i = 0; i < this.charList.size(); i++) {
-            int newLumValue = modifiedLumList.get(i).getValue();
-            FontChar actualFontChar = fontCharMap.get(newLumValue);
-            String actualChar = actualFontChar.getUnicodeChar();
-            this.charList.get(i).setValue(actualChar);
-        }
-    }
-
     private void actualizeCharList() {
         List<Lum> actualLumList = modifiedLumMap.getSortedItems();
         for (int i = 0; i < this.charList.size(); i++) {
             int actualLumValue = actualLumList.get(i).getValue();
+            if (inverse) {
+                actualLumValue = 255 - actualLumValue;
+            }
             FontChar actualFontChar = fontCharMap.get(actualLumValue);
             String actualChar = actualFontChar.getUnicodeChar();
             this.charList.get(i).setValue(actualChar);
@@ -612,6 +605,13 @@ public class Controller {
         Parent root = FXMLLoader.load(getClass().getResource("charSelectStage.fxml"));
         charSelectStage.setScene(new Scene(root, 800, 480));
         charSelectStage.show();
+
+    }
+
+    @FXML
+    private void modifyCharSet() throws IOException {
+        fontCharMapService.setIsModify(true);
+        newCharSet();
 
     }
 
@@ -631,6 +631,7 @@ public class Controller {
         modifiersPane.setDisable(true);
         keepRatioButton = new StaticRadioButton(keepRatioButtonGroup);
         equalizeRadioButton = new RadioButton(equalizeBackground, equalizeButton);
+        inverseRadioButton = new RadioButton(inverseBackground, inverseButton);
         midToneSlider = new SingleSlider(0, 100, midToneSliderRail, midToneSliderButton, midToneValue, "%");
         offsetSlider = new SingleSlider(-255, 255, offsetSliderRail, offsetSliderButton, offsetValue, "");
         rangeSlider = new RangeSlider(0, 255, rangeMinButton, rangeMaxButton, rangeSliderRail, rangeSliderRange);
@@ -661,6 +662,12 @@ public class Controller {
                 this.fontCharMap = fontCharMapService.getActualFontCharMap(); // lehet, hogy nem kell az előbbi listener miatt...
                 actualizeCharList();
                 fontCharMapService.setIsChanged(false);
+            }
+        });
+
+        rasterPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.equals(oldValue)) {
+                setScrollToCenter();
             }
         });
 

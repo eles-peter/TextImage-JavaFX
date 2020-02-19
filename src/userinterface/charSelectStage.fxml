@@ -41,5 +41,6 @@
       </VBox>
       <Label layoutX="449.0" layoutY="405.0" text="New CharacterSet Name:" />
       <TextField id="newName" fx:id="newName" layoutX="600.0" layoutY="400.0" prefWidth="185.0" AnchorPane.rightAnchor="25.0" />
+      <Button layoutX="536.0" layoutY="439.0" mnemonicParsing="false" onAction="#createOKAndSave" text="OK / Create / SaveToFile" />
    </children>
 </AnchorPane>

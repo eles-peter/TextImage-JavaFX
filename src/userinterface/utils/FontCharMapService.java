@@ -13,6 +13,7 @@ public class FontCharMapService {
 
     private static final String FILEDIRECTORY = "src\\userinterface\\resources";
     private BooleanProperty isChanged = new SimpleBooleanProperty(false);
+    private Boolean isModify = false;
     private String actualFCMName;
     private List<FontCharMap> fontCharMapList = new ArrayList<>();
     private static final FontCharMapService INSTANCE = new FontCharMapService();
@@ -90,5 +91,13 @@ public class FontCharMapService {
 
     public void setActualFCMName(String actualFCMName) {
         this.actualFCMName = actualFCMName;
+    }
+
+    public Boolean getIsModify() {
+        return isModify;
+    }
+
+    public void setIsModify(Boolean modify) {
+        isModify = modify;
     }
 }

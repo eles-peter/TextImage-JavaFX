@@ -18,10 +18,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -132,10 +129,14 @@ public class CharSelectController {
         stage.close();
     }
 
-
-    private void finish(Timeline timeline) {
-        timeline.stop();
-        closeWindow();
+    @FXML
+    private void createOKAndSave() {
+        createOK();
+        try {
+            fontCharMap.writeToFile("src\\userinterface\\resources\\" + fontCharMap.getName() + ".fcm");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -206,12 +207,6 @@ public class CharSelectController {
 
                     fontCharMapService.addFontCharMapAndSetActual(fontCharMap);
 
-                    try {
-                        fontCharMap.writeToFile("src\\userinterface\\resources\\" + fontCharMap.getName() + ".fcm");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
                     closeWindow();
                 }
             }
@@ -219,9 +214,6 @@ public class CharSelectController {
 
         animatedEvaluator.setCycleCount(Timeline.INDEFINITE);
         animatedEvaluator.play();
-
-
-
 
     }
 
@@ -235,6 +227,10 @@ public class CharSelectController {
         fillSelectableListByUnicodeRange(unicodeCharacterRange);
         actualizeSelectablePane();
         fontCharMapService = FontCharMapService.getInstance();
+        if (fontCharMapService.getIsModify()) {
+            loadActualFontCharMap();
+            fontCharMapService.setIsModify(false);
+        }
     }
 
     private void initializeSelectableFlowPane() {
@@ -290,6 +286,20 @@ public class CharSelectController {
         for (int unicodeValue = unicodeRange.getMinValue(); unicodeValue <= unicodeRange.getMaxValue(); unicodeValue++) {
             String actualChar = Character.toString((char) unicodeValue);
             selectableList.add(actualChar);
+        }
+    }
+
+    private void loadActualFontCharMap() {
+        newName.setText(fontCharMapService.getActualFCMName());
+        FontCharMap fontCharMapToEdit = fontCharMapService.getActualFontCharMap();
+        for(Map.Entry<Integer, FontChar> entry : fontCharMapToEdit.getFontChars().entrySet()) {
+            FontChar fontChar = entry.getValue();
+            String unicodeChar = fontChar.getUnicodeChar();
+            String fontFamily = fontChar.getFontFamily();
+            CharPane charPane = new CharPane(unicodeChar, fontFamily);
+            if (!addedFlowPane.getChildren().contains(charPane)) {
+                addedFlowPane.getChildren().add(charPane);
+            }
         }
     }
 

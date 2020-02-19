@@ -83,3 +83,13 @@ _
 /src/userinterface/utils/FontCharMapService.java,1\f\1f768bbc4efcfefa75ca3537af81cb476baf61bb
 S
 #src/userinterface/resources/CJK.fcm,b\8\b878dec7c009c2014baa86b52cdb15691ed70679
+b
+2src/userinterface/resources/ASCII_consolas_DEC.fcm,0\d\0d5b7764f3584e463311acf9278c14e3a53d9c1c
+W
+'src/userinterface/resources/Binaric.fcm,8\e\8e56c53c8670f5e499157a81228ceed77489e89c
+X
+(src/userinterface/resources/Hiragana.fcm,d\1\d156bca676c32d08be2e9dd2ac88650381eacde7
+T
+$src/userinterface/resources/Math.fcm,7\2\72365f910642812613ed51cc8617276a2af4ec3c
+T
+$src/userinterface/resources/test.fcm,2\7\27c92443f6004c76d826ce2acdcf0818f7a4588b
