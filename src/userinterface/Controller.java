@@ -32,7 +32,7 @@ public class Controller {
 
     private static final int MAXIMAGESIZE = 200;
     private static final int UNDOLISTMAXSIZE = 20;
-    private static final int BASICFONTSIZE = 8;
+    private static final DoubleProperty BASICFONTSIZE = new SimpleDoubleProperty(8);
     private static final double ZOOMRATESTEP = 1.25;
 
     private String actualFileName;
@@ -45,21 +45,22 @@ public class Controller {
     private int midTone = 50;
     private IntRange range = new IntRange(0, 255);
     private int offset = 0;
-    private Deque<ModiferValues> undoList = new LinkedList<>();
+    private Deque<ModifierValues> undoList = new LinkedList<>();
     private boolean showImage;
     private FontCharMapService fontCharMapService;
     private FontCharMap fontCharMap;
-    private List<SimpleStringProperty> charList;
+    private List<FontCharProperty> charList;
     private ObjectProperty<Color> fontColor = new SimpleObjectProperty<>(Color.BLACK);
     private DoubleProperty zoomRate = new SimpleDoubleProperty();
 
-    private class ModiferValues {
+    //<editor-fold defaultstate="collapsed" desc="ModifierValues class declarations">
+    private class ModifierValues {
         private boolean equalize;
         private int midTone;
         private IntRange range;
         private int offset;
 
-        ModiferValues(boolean equalize, int midTone, IntRange range, int offset) {
+        ModifierValues(boolean equalize, int midTone, IntRange range, int offset) {
             this.equalize = equalize;
             this.midTone = midTone;
             this.range = range;
@@ -86,7 +87,7 @@ public class Controller {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            ModiferValues that = (ModiferValues) o;
+            ModifierValues that = (ModifierValues) o;
             return equalize == that.equalize &&
                     midTone == that.midTone &&
                     offset == that.offset &&
@@ -108,6 +109,7 @@ public class Controller {
                     '}';
         }
     }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="FXML declarations">
     private Stage primaryStage;
@@ -398,7 +400,7 @@ public class Controller {
     //**************************** UNDO ****************************
     private void addActionToUndoList() {
         if (undoList.size() > UNDOLISTMAXSIZE - 1) undoList.removeLast();
-        ModiferValues actualValues = new ModiferValues(equalize, midTone, range, offset);
+        ModifierValues actualValues = new ModifierValues(equalize, midTone, range, offset);
         if (undoList.isEmpty() || !actualValues.equals(undoList.getFirst())) undoList.addFirst(actualValues);
         undoButton.setDisable(false);
         resetModifiersButton.setDisable(false);
@@ -406,7 +408,7 @@ public class Controller {
 
     @FXML
     private void undoAnAction() {
-        ModiferValues lastValues = undoList.removeFirst();
+        ModifierValues lastValues = undoList.removeFirst();
         this.equalize = equalizeRadioButton.setRadioButton(lastValues.isEqualize());
         this.midTone = midToneSlider.setSliderValue(lastValues.getMidTone());
         this.range = rangeSlider.setRangeSlider(lastValues.getRange());
@@ -509,8 +511,8 @@ public class Controller {
     //TODO oldalszélesség bekötésse???? de az inkább később....(újragenerálás)
     @FXML
     private void addCharRaster() {
-        int charHeight = BASICFONTSIZE;
-        int charWidth = BASICFONTSIZE; //TODO megszorozni az arányszámmal...
+        double charHeight = BASICFONTSIZE.getValue();
+        double charWidth = BASICFONTSIZE.getValue(); //TODO megszorozni az arányszámmal...
         Group charTableGroup = new Group();
         charTableGroup.setId("CharRasterGroup");
         int width = modifiedLumMap.getWidth();
@@ -519,11 +521,14 @@ public class Controller {
             for (int w = 0; w < width; w++) {
                 Lum actualLum = modifiedLumMap.getLumArray()[h][w];
                 int actualIndex = modifiedLumMap.getSortedItems().indexOf(actualLum);
-                SimpleStringProperty actualChar = this.charList.get(actualIndex);
+                FontCharProperty actualFontChar = this.charList.get(actualIndex);
+                SimpleStringProperty actualChar = actualFontChar.unicodeCharProperty();
+                SimpleStringProperty actualFontFamily = actualFontChar.fontFamilyProperty();
                 Text actualText = new Text();
                 actualText.textProperty().bind(actualChar);
                 actualText.fillProperty().bind(fontColor);
-                actualText.setFont(Font.font("Consolas", BASICFONTSIZE));
+                actualText.fontProperty().bind(Bindings.createObjectBinding(() -> Font.font(actualFontFamily.getValue(), BASICFONTSIZE.getValue()), actualFontFamily, BASICFONTSIZE));
+//                actualText.setFont(Font.font("Consolas", BASICFONTSIZE.getValue()));
                 actualText.setLayoutX(charWidth * w); //TODO kiszámítani a koordinátákat
                 actualText.setLayoutY(charHeight * h);
                 charTableGroup.getChildren().add(actualText);
@@ -571,15 +576,14 @@ public class Controller {
     }
 
     //******************** CHAR LIST ******************
+    //TODO kivenni a constructorból a fieldeket!!!
     private void createCharList(List<Lum> lumList, FontCharMap fontCharMap) {
         this.charList = new ArrayList<>();
         for (Lum lum : lumList) {
             int luminosityValue = lum.getValue();
-            //TODO ha nem létezeik az az érték akkor a legközelebbit hozzáadni
-            //TODO nem biztos, hogy ez a leggyorsabb eljárás, lehet, hogy a char settet kell kiegészíteni...
             FontChar actualFontChar = fontCharMap.get(luminosityValue);
-            String actualChar = actualFontChar.getUnicodeChar();
-            this.charList.add(new SimpleStringProperty(actualChar));
+            FontCharProperty fontCharProperty = new FontCharProperty(actualFontChar);
+            this.charList.add(fontCharProperty);
         }
     }
 
@@ -591,10 +595,11 @@ public class Controller {
                 actualLumValue = 255 - actualLumValue;
             }
             FontChar actualFontChar = fontCharMap.get(actualLumValue);
-            String actualChar = actualFontChar.getUnicodeChar();
-            this.charList.get(i).setValue(actualChar);
+            this.charList.get(i).setFontChar(actualFontChar);
         }
     }
+
+    //******************** CREATE NEW CHARACTER SET ******************
 
     @FXML
     private void newCharSet() throws IOException {
@@ -612,9 +617,7 @@ public class Controller {
     private void modifyCharSet() throws IOException {
         fontCharMapService.setIsModify(true);
         newCharSet();
-
     }
-
 
 //********************ERROR POPUP WINDOW******************
 

@@ -23,24 +23,24 @@
       <Label fx:id="addedCharacters" layoutX="735.0" layoutY="15.0" text="Added Characters" textAlignment="JUSTIFY" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0" />
       <ChoiceBox fx:id="fontFamiliesSelector" layoutX="111.0" layoutY="400.0" prefHeight="26.0" prefWidth="221.0" />
       <Label layoutX="25.0" layoutY="405.0" text="Font families:" AnchorPane.leftAnchor="25.0" />
-      <Button layoutX="449.0" layoutY="439.0" mnemonicParsing="false" onAction="#closeWindow" text="   Cancel   " AnchorPane.bottomAnchor="15.399999999999977" />
-      <Button layoutX="698.0" layoutY="412.0" mnemonicParsing="false" onAction="#createOK" text="OK / Create" AnchorPane.bottomAnchor="15.000000000000021" />
       <ChoiceBox fx:id="unicodeRangesSelector" layoutX="111.0" layoutY="440.0" prefHeight="26.0" prefWidth="221.0" AnchorPane.bottomAnchor="15.0" />
-      <Label layoutX="25.0" layoutY="445.0" text="Unicode range:" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="25.0" />
-      <VBox alignment="TOP_CENTER" layoutX="351.0" layoutY="40.0" prefHeight="342.0" prefWidth="100.0" spacing="20.0">
-         <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deselectAllSelectablePane" text="Deselect All" />
-            <Button mnemonicParsing="false" onAction="#selectAllSelectablePane" text="  Select All  " />
-            <Button mnemonicParsing="false" onAction="#add" text="    Add &gt;&gt;   " />
-            <Button mnemonicParsing="false" onAction="#remove" text="&lt;&lt; Remove " />
-            <Button mnemonicParsing="false" onAction="#resetClear" text="Reset / Clear" />
-         </children>
-         <padding>
-            <Insets top="20.0" />
-         </padding>
-      </VBox>
-      <Label layoutX="449.0" layoutY="405.0" text="New CharacterSet Name:" />
-      <TextField id="newName" fx:id="newName" layoutX="600.0" layoutY="400.0" prefWidth="185.0" AnchorPane.rightAnchor="25.0" />
-      <Button layoutX="536.0" layoutY="439.0" mnemonicParsing="false" onAction="#createOKAndSave" text="OK / Create / SaveToFile" />
+       <Label layoutX="25.0" layoutY="445.0" text="Unicode range:" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="25.0" />
+       <VBox alignment="TOP_CENTER" layoutX="351.0" layoutY="40.0" prefHeight="342.0" prefWidth="100.0" spacing="20.0">
+           <children>
+               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deselectAllSelectablePane" text="Deselect All" />
+               <Button mnemonicParsing="false" onAction="#selectAllSelectablePane" text="  Select All  " />
+               <Button mnemonicParsing="false" onAction="#add" text="    Add &gt;&gt;   " />
+               <Button mnemonicParsing="false" onAction="#remove" text="&lt;&lt; Remove " />
+               <Button mnemonicParsing="false" onAction="#resetClear" text="Reset / Clear" />
+           </children>
+           <padding>
+               <Insets top="20.0" />
+           </padding>
+       </VBox>
+       <Label layoutX="449.0" layoutY="405.0" text="New CharacterSet Name:" />
+       <TextField id="newName" fx:id="newName" layoutX="600.0" layoutY="400.0" prefWidth="185.0" AnchorPane.rightAnchor="25.0" />
+       <Button layoutX="449.0" layoutY="439.0" mnemonicParsing="false" onAction="#closeWindow" text="   Cancel   " AnchorPane.bottomAnchor="15.0" />
+       <Button layoutX="698.0" layoutY="412.0" mnemonicParsing="false" onAction="#createAndOK" text="OK / Create" AnchorPane.bottomAnchor="15.0" />
+       <Button layoutX="536.0" layoutY="439.0" mnemonicParsing="false" onAction="#createOKAndSave" text="OK / Create / SaveToFile" />
    </children>
 </AnchorPane>

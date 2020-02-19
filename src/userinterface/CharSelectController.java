@@ -131,29 +131,33 @@ public class CharSelectController {
 
     @FXML
     private void createOKAndSave() {
-        createOK();
-        try {
-            fontCharMap.writeToFile("src\\userinterface\\resources\\" + fontCharMap.getName() + ".fcm");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        create(true);
     }
 
     @FXML
-    private void createOK() {
+    private void createAndOK() {
+        create(false);
+    }
+
+    private void create(Boolean isSaved) {
         StackPane evaluatorPane = new StackPane();
         evaluatorPane.setStyle(" -fx-min-height: 120; -fx-min-width: 120; -fx-background-color: #FFFFFF; -fx-effect: dropshadow(three-pass-box, darkgray, 20, 0, 0, 0);");
         AnchorPane.setTopAnchor(evaluatorPane, 150.0);
         AnchorPane.setRightAnchor(evaluatorPane, 138.0);
         charSelectMainPane.getChildren().add(evaluatorPane);
 
-        fontCharMap = new FontCharMap();
         String fontCharMapName = newName.getText();
         if (!fontCharMapName.matches("[\\w,-]{3,}")) {
             alertMessage("Please gimme correct FileName! \n (no whitespace please!)");
             return;
         }
-        fontCharMap.setName(fontCharMapName);
+        if (fontCharMapService.getFCMbyName(fontCharMapName) != null) {
+            fontCharMap = fontCharMapService.getFCMbyName(fontCharMapName);
+            fontCharMap.clearFontChars();
+        } else {
+            fontCharMap = new FontCharMap();
+            fontCharMap.setName(fontCharMapName);
+        }
 
         //TODO refractor kiemelni metódusba
         animatedEvaluator = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
@@ -172,7 +176,7 @@ public class CharSelectController {
 
                     double actualCharWidth = actualText.getBoundsInLocal().getWidth();
                     fontMaxWidth = Math.max(fontMaxWidth, actualCharWidth);
-
+                    //TODO kiértékelésen gondolkodni, megnézni, mi volt Python-ban!!!
                     WritableImage snapshot = actualText.snapshot(new SnapshotParameters(), null);
                     int width = (int) snapshot.getWidth();
                     int height = (int) snapshot.getHeight();
@@ -206,6 +210,15 @@ public class CharSelectController {
                     fontCharMap.fillTheGap();
 
                     fontCharMapService.addFontCharMapAndSetActual(fontCharMap);
+                    fontCharMapService.setIsChanged(true);
+
+                    if (isSaved) {
+                        try {
+                            fontCharMap.writeToFile("src\\userinterface\\resources\\" + fontCharMap.getName() + ".fcm");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                     closeWindow();
                 }

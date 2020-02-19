@@ -61,18 +61,6 @@ public class FontCharMap {
         scanner.close();
     }
 
-    public void add(Integer value, FontChar fontChar) {
-        this.fontChars.put(value, fontChar);
-    }
-
-    public void add(Integer value, String unicodeChar, String fontFamily) {
-        this.fontChars.put(value, new FontChar(unicodeChar, fontFamily));
-    }
-
-    public FontChar get(Integer key) {
-        return this.fontChars.get(key);
-    }
-
     public void changeRange(int newMinKey, int newMaxKey) {
         SortedMap<Integer, FontChar> resultFontChars = new TreeMap<>();
         int oldMinKey = this.fontChars.firstKey();
@@ -150,6 +138,22 @@ public class FontCharMap {
             writer.write(line.toString());
         }
         writer.close();
+    }
+
+    public void clearFontChars() {
+        this.fontChars = new TreeMap<>();
+    }
+
+    public void add(Integer value, FontChar fontChar) {
+        this.fontChars.put(value, fontChar);
+    }
+
+    public void add(Integer value, String unicodeChar, String fontFamily) {
+        this.fontChars.put(value, new FontChar(unicodeChar, fontFamily));
+    }
+
+    public FontChar get(Integer key) {
+        return this.fontChars.get(key);
     }
 
     public String getName() {

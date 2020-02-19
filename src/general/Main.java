@@ -14,7 +14,11 @@ public class Main {
 
 
 
+        List<String> fontNames = Font.getFontNames();
+        System.out.println(fontNames);
 
+        List<String> fontFamilies = Font.getFamilies();
+        System.out.println(fontFamilies);
 
 
 

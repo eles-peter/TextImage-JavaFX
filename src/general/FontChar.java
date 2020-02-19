@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class FontChar {
 
-    private String unicodeChar; //TODO átnevezni a FontChar osztályban a változó nevet
+    private String unicodeChar;
     private String fontFamily;
 
     public FontChar(String unicodeChar, String fontFamily) {
