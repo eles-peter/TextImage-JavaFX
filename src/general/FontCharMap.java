@@ -7,8 +7,8 @@ import java.util.*;
 public class FontCharMap {
 
     private String name;
-    private Double maxHeight;
-    private Double maxWidth;
+    private Double maxHeightRatio;
+    private Double maxWidthRatio;
     private SortedMap<Integer, FontChar> fontChars = new TreeMap<>();
 
     public FontCharMap() {
@@ -22,8 +22,8 @@ public class FontCharMap {
         String[] heightAndWidthArray = heightAndWidthString.split(":");
         if (heightAndWidthArray.length == 2) {
             try {
-                this.maxHeight = Double.valueOf(heightAndWidthArray[0]);
-                this.maxWidth = Double.valueOf(heightAndWidthArray[1]);
+                this.maxHeightRatio = Double.valueOf(heightAndWidthArray[0]);
+                this.maxWidthRatio = Double.valueOf(heightAndWidthArray[1]);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException();
             }
@@ -97,8 +97,8 @@ public class FontCharMap {
             FontChar newFontCahr = entry.getValue();
             result.add(newValue, newFontCahr);
         }
-        result.setMaxWidth(this.maxWidth);
-        result.setMaxHeight(this.maxHeight);
+        result.setMaxWidthRatio(this.maxWidthRatio);
+        result.setMaxHeightRatio(this.maxHeightRatio);
         result.setName(this.name + "inverse");
         return result;
     }
@@ -125,7 +125,7 @@ public class FontCharMap {
     public void writeToFile(String fullPathAndFileName) throws IOException {
         FileWriter writer = new FileWriter(fullPathAndFileName);
         writer.write(this.name + "\n");
-        writer.write(this.maxHeight.toString() + ":" + this.maxWidth.toString() + "\n");
+        writer.write(this.maxHeightRatio.toString() + ":" + this.maxWidthRatio.toString() + "\n");
         for (Map.Entry<Integer, FontChar> entry : this.fontChars.entrySet()) {
             StringBuilder line = new StringBuilder("");
             line.append(entry.getKey());
@@ -164,20 +164,20 @@ public class FontCharMap {
         this.name = name;
     }
 
-    public Double getMaxWidth() {
-        return maxWidth;
+    public Double getMaxWidthRatio() {
+        return maxWidthRatio;
     }
 
-    public void setMaxWidth(Double maxWidth) {
-        this.maxWidth = maxWidth;
+    public void setMaxWidthRatio(Double maxWidthRatio) {
+        this.maxWidthRatio = maxWidthRatio;
     }
 
-    public Double getMaxHeight() {
-        return maxHeight;
+    public Double getMaxHeightRatio() {
+        return maxHeightRatio;
     }
 
-    public void setMaxHeight(Double maxHeight) {
-        this.maxHeight = maxHeight;
+    public void setMaxHeightRatio(Double maxHeightRatio) {
+        this.maxHeightRatio = maxHeightRatio;
     }
 
     public SortedMap<Integer, FontChar> getFontChars() {
@@ -196,7 +196,7 @@ public class FontCharMap {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("Name: " + this.name + "\n");
-        result.append("Max-Height: " + this.maxHeight + ", Max-Width: " + this.maxWidth + "\n");
+        result.append("Max-Height: " + this.maxHeightRatio + ", Max-Width: " + this.maxWidthRatio + "\n");
         for (Map.Entry<Integer, FontChar> entry : this.fontChars.entrySet()) {
             result.append("Value: ");
             result.append(entry.getKey());

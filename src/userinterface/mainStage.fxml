@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -42,7 +43,7 @@
                         <Label id="fileName" fx:id="fileName1" layoutY="4.0" text="Zoom" />
                      </children>
                   </Group>
-                  <Button layoutX="1037.0" layoutY="14.0" mnemonicParsing="false" onAction="#setScrollToCenter" text="Button" />
+<!--                  <Button layoutX="1037.0" layoutY="14.0" mnemonicParsing="false" onAction="#setScrollToCenter" text="Button" />-->
                     </children>
                 </AnchorPane>
             </content>
@@ -51,7 +52,7 @@
             <content>
                 <AnchorPane fx:id="modifiersPane" maxWidth="200.0" minWidth="200.0" prefHeight="650.0" prefWidth="200.0">
                     <children>
-                  <VBox alignment="TOP_CENTER" layoutX="11.0" layoutY="19.0" prefHeight="618.0" prefWidth="200.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="TOP_CENTER" layoutX="11.0" layoutY="19.0" prefHeight="632.0" prefWidth="200.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="25.0" prefWidth="179.0">
                            <children>
@@ -150,7 +151,7 @@
                            </children>
                         </AnchorPane>
                         <Separator layoutX="20.0" layoutY="364.0" prefHeight="2.0" prefWidth="200.0" />
-                        <AnchorPane prefHeight="206.0" prefWidth="179.0">
+                        <AnchorPane prefHeight="214.0" prefWidth="179.0">
                            <children>
                               <Group>
                                  <children>
@@ -174,7 +175,11 @@
                                             <Cursor fx:constant="HAND" />
                                         </cursor>
                                     </Group>
-                                    <Button id="resetSizeButton" fx:id="resetSizeButton" layoutY="79.0" mnemonicParsing="false" onAction="#resetImageSize" style="-fx-background-radius: 0;" text="Reset Size" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" />
+                                    <Button id="resetSizeButton" fx:id="resetSizeButton" layoutX="55.0" layoutY="150.0" mnemonicParsing="false" onAction="#resetImageSize" style="-fx-background-radius: 0;" text="Reset Size" textAlignment="CENTER" AnchorPane.leftAnchor="55.0" />
+                              <Spinner fx:id="hGapSpinner" editable="true" layoutX="57.0" layoutY="70.0" prefHeight="26.0" prefWidth="65.0" />
+                              <Spinner fx:id="vGapSpinner" editable="true" layoutX="57.0" layoutY="105.0" prefHeight="26.0" prefWidth="65.0" AnchorPane.rightAnchor="56.599999999999994" />
+                              <Label layoutX="7.0" layoutY="75.0" text="HGap" AnchorPane.leftAnchor="0.0" />
+                              <Label layoutX="10.0" layoutY="105.0" text="VGap" AnchorPane.leftAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>

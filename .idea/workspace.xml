@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="MainWindow Stage is changed, inverse method is ready, before CharList change to 'fontCharList'">
-      <change afterPath="$PROJECT_DIR$/src/general/FontCharProperty.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/userinterface/resources/ASCII_consolas_test.fcm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="CharList change to 'fontCharList' and FontCharMapProperty is ready,&#10;unicodechar and fontFamily binding is working">
+      <change afterPath="$PROJECT_DIR$/readme-image/characterSet_screenshot.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/marilyn_numbers.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/marilyn_signs.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/monroe_dark.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/monroe_inverse.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/monroe_light.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/screenshot_Lenin.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/screenshot_Marilyn.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/screenshot_Monroe.PNG" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/FontChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/FontChar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/general/FontCharMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/FontCharMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/general/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/CharSelectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/CharSelectController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userinterface/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/userinterface/charSelectStage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/charSelectStage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/mainStage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/mainStage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/resources/ASCII_consolas_DEC.fcm" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/resources/ASCII_consolas_DEC.fcm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/resources/ASCII_consolas_test.fcm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/resources/ASCII_consolas_test2.fcm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/resources/Binaric.fcm" beforeDir="false" afterPath="$PROJECT_DIR$/src/userinterface/resources/Binaric.fcm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userinterface/resources/ciril.fcm" beforeDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,9 +83,6 @@
     <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="JavaFxApplication" />
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -109,6 +115,9 @@
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
@@ -134,29 +143,23 @@
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Pepa\IdeaProjects\PROGmasters\textimage-JAVAFX\src\userinterface" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="general" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="general" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="general" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pepa\IdeaProjects\PROGmasters\textimage-JAVAFX\src\userinterface" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager" selected="Application.Main (2)">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -168,12 +171,6 @@
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
-    </configuration>
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="general.Main" />
@@ -417,7 +414,23 @@
       <workItem from="1582050849020" duration="8864000" />
       <workItem from="1582100408183" duration="9000" />
       <workItem from="1582109988094" duration="9122000" />
-      <workItem from="1582133653842" duration="8861000" />
+      <workItem from="1582133653842" duration="9072000" />
+      <workItem from="1582186216449" duration="1465000" />
+      <workItem from="1582190068035" duration="3123000" />
+      <workItem from="1582200585611" duration="7722000" />
+      <workItem from="1582232320448" duration="6422000" />
+      <workItem from="1582273079892" duration="616000" />
+      <workItem from="1582379038592" duration="8703000" />
+      <workItem from="1582449662101" duration="2448000" />
+      <workItem from="1587503293859" duration="1903000" />
+      <workItem from="1587545459624" duration="3523000" />
+      <workItem from="1587717577889" duration="3659000" />
+      <workItem from="1587994458333" duration="1948000" />
+      <workItem from="1596539824792" duration="2518000" />
+      <workItem from="1597316283027" duration="4006000" />
+      <workItem from="1597410288699" duration="3519000" />
+      <workItem from="1597651533443" duration="5997000" />
+      <workItem from="1600861228133" duration="5192000" />
     </task>
     <task id="LOCAL-00001" summary="Change Midtone slider is ready!!!">
       <created>1579276600154</created>
@@ -622,11 +635,18 @@
       <option name="project" value="LOCAL" />
       <updated>1582128164064</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="CharList change to 'fontCharList' and FontCharMapProperty is ready,&#10;unicodechar and fontFamily binding is working">
+      <created>1582144176925</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1582144176925</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -643,19 +663,17 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="equalize radiobutton, reset modifier is working" />
     <MESSAGE value="keepratio linkbutton is ready" />
     <MESSAGE value="alert DialogPane ready" />
     <MESSAGE value="offset method and UI ready" />
@@ -680,7 +698,34 @@
     <MESSAGE value="befor Create FontCharMap method Canvas change to pane (and writableImage)" />
     <MESSAGE value="FontCharMapService Singletone is ready, new character set is working (before change the MainWindow positions)" />
     <MESSAGE value="MainWindow Stage is changed, inverse method is ready, before CharList change to 'fontCharList'" />
-    <option name="LAST_COMMIT_MESSAGE" value="MainWindow Stage is changed, inverse method is ready, before CharList change to 'fontCharList'" />
+    <MESSAGE value="CharList change to 'fontCharList' and FontCharMapProperty is ready,&#10;unicodechar and fontFamily binding is working" />
+    <option name="LAST_COMMIT_MESSAGE" value="CharList change to 'fontCharList' and FontCharMapProperty is ready,&#10;unicodechar and fontFamily binding is working" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1877" height="194" key="GridCell.Tab.0.bottom" timestamp="1600950104530">
+      <screen x="0" y="-1080" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="194" key="GridCell.Tab.0.bottom/0.0.1536.864/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1600950104530" />
+    <state width="1493" height="194" key="GridCell.Tab.0.bottom/0.0.1536.864/0.-1080.1920.1080@0.0.1536.864" timestamp="1600946356084" />
+    <state width="1877" height="194" key="GridCell.Tab.0.center" timestamp="1600950104530">
+      <screen x="0" y="-1080" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="194" key="GridCell.Tab.0.center/0.0.1536.864/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1600950104530" />
+    <state width="1493" height="194" key="GridCell.Tab.0.center/0.0.1536.864/0.-1080.1920.1080@0.0.1536.864" timestamp="1600946356084" />
+    <state width="1877" height="194" key="GridCell.Tab.0.left" timestamp="1600950104529">
+      <screen x="0" y="-1080" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="194" key="GridCell.Tab.0.left/0.0.1536.864/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1600950104529" />
+    <state width="1493" height="194" key="GridCell.Tab.0.left/0.0.1536.864/0.-1080.1920.1080@0.0.1536.864" timestamp="1600946356084" />
+    <state width="1877" height="194" key="GridCell.Tab.0.right" timestamp="1600950104530">
+      <screen x="0" y="-1080" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="194" key="GridCell.Tab.0.right/0.0.1536.864/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1600950104530" />
+    <state width="1493" height="194" key="GridCell.Tab.0.right/0.0.1536.864/0.-1080.1920.1080@0.0.1536.864" timestamp="1600946356084" />
+    <state x="520" y="334" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1600884622018">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="520" y="334" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1536.864/0.-1080.1920.1080@0.0.1536.864" timestamp="1600884622018" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

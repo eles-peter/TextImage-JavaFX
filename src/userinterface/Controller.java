@@ -2,6 +2,7 @@ package userinterface;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableNumberValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -28,6 +29,8 @@ import general.*;
 import userinterface.utils.*;
 import userinterface.utils.RadioButton;
 
+import javax.naming.Binding;
+
 public class Controller {
 
     private static final int MAXIMAGESIZE = 200;
@@ -51,6 +54,11 @@ public class Controller {
     private FontCharMap fontCharMap;
     private List<FontCharProperty> charList;
     private ObjectProperty<Color> fontColor = new SimpleObjectProperty<>(Color.BLACK);
+    private DoubleProperty fontMaxHeightRate = new SimpleDoubleProperty(1.0);
+    private DoubleProperty fontMaxWidthRate = new SimpleDoubleProperty(1.0);
+    private DoubleProperty hGap = new SimpleDoubleProperty(0.0);
+    private DoubleProperty vGap = new SimpleDoubleProperty(0.0);
+
     private DoubleProperty zoomRate = new SimpleDoubleProperty();
 
     //<editor-fold defaultstate="collapsed" desc="ModifierValues class declarations">
@@ -179,6 +187,11 @@ public class Controller {
     private ChoiceBox fontCharMapSelector;
     @FXML
     private Group zoomGroup;
+    @FXML
+    private Spinner hGapSpinner;
+    @FXML
+    private Spinner vGapSpinner;
+
     //</editor-fold>
 
     private StaticRadioButton keepRatioButton;
@@ -301,6 +314,8 @@ public class Controller {
         resizedLumMap = sourceLumMap.clone();
         modifiedLumMap = resizedLumMap.clone();
         resetSizeButton.setDisable(true);
+        hGapSpinner.getValueFactory().setValue(0.0);
+        vGapSpinner.getValueFactory().setValue(0.0);
         setSizeLabelsToActualValue();
         modifyImageAndView();
         addCharRaster();
@@ -511,8 +526,11 @@ public class Controller {
     //TODO oldalszélesség bekötésse???? de az inkább később....(újragenerálás)
     @FXML
     private void addCharRaster() {
-        double charHeight = BASICFONTSIZE.getValue();
-        double charWidth = BASICFONTSIZE.getValue(); //TODO megszorozni az arányszámmal...
+
+        DoubleProperty charHeight = new SimpleDoubleProperty(BASICFONTSIZE.getValue());
+        charHeight.bind(Bindings.max(Bindings.multiply(BASICFONTSIZE, fontMaxHeightRate), Bindings.multiply(BASICFONTSIZE, fontMaxWidthRate)));
+        DoubleProperty charWidth = new SimpleDoubleProperty(BASICFONTSIZE.getValue());
+        charWidth.bind(Bindings.max(Bindings.multiply(BASICFONTSIZE, fontMaxHeightRate), Bindings.multiply(BASICFONTSIZE, fontMaxWidthRate)));
         Group charTableGroup = new Group();
         charTableGroup.setId("CharRasterGroup");
         int width = modifiedLumMap.getWidth();
@@ -528,9 +546,8 @@ public class Controller {
                 actualText.textProperty().bind(actualChar);
                 actualText.fillProperty().bind(fontColor);
                 actualText.fontProperty().bind(Bindings.createObjectBinding(() -> Font.font(actualFontFamily.getValue(), BASICFONTSIZE.getValue()), actualFontFamily, BASICFONTSIZE));
-//                actualText.setFont(Font.font("Consolas", BASICFONTSIZE.getValue()));
-                actualText.setLayoutX(charWidth * w); //TODO kiszámítani a koordinátákat
-                actualText.setLayoutY(charHeight * h);
+                actualText.layoutXProperty().bind(Bindings.multiply(Bindings.add(charWidth, hGap), w));
+                actualText.layoutYProperty().bind(Bindings.multiply(Bindings.add(charWidth, vGap), h));
                 charTableGroup.getChildren().add(actualText);
             }
         }
@@ -640,20 +657,51 @@ public class Controller {
         rangeSlider = new RangeSlider(0, 255, rangeMinButton, rangeMaxButton, rangeSliderRail, rangeSliderRange);
         showImageRadioButton = new RadioButton(showImageBackground, showImageButton);
         this.showImage = showImageRadioButton.setRadioButton(false);
+        SpinnerValueFactory<Double> hGapSpinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10.0, 10.0, 0.0, 0.1);
+        SpinnerValueFactory<Double> vGapSpinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10.0, 10.0, 0.0, 0.1);
+        this.hGapSpinner.setValueFactory(hGapSpinnerValueFactory);
+        this.vGapSpinner.setValueFactory(vGapSpinnerValueFactory);
+        hGapSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equals(newValue)) {
+                this.hGap.setValue((Number) hGapSpinner.getValue());
+                if (hGap.getValue() != 0.0) {
+                    resetSizeButton.setDisable(false);
+                }
+            }
+        });
+        vGapSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equals(newValue)) {
+                this.vGap.setValue((Number) vGapSpinner.getValue());
+                if (vGap.getValue() != 0.0) {
+                    resetSizeButton.setDisable(false);
+                }
+            }
+        });
+
+
+
 
         fontCharMapService = FontCharMapService.getInstance();
         fontCharMapService.initialize();
+
         List<String> FCMNameList = fontCharMapService.getFCMNameList();
         fontCharMapSelector.getItems().addAll(FCMNameList);
         fontCharMapSelector.setValue(fontCharMapService.getActualFCMName());
         this.fontCharMap = fontCharMapService.getActualFontCharMap();
+        this.fontMaxHeightRate.setValue(fontCharMap.getMaxHeightRatio());
+        this.fontMaxWidthRate.setValue(fontCharMap.getMaxWidthRatio());
+
+
         fontCharMapSelector.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue)) {
                 fontCharMapService.setActualFCMName((String) newValue);
                 this.fontCharMap = fontCharMapService.getActualFontCharMap();
+                this.fontMaxHeightRate.setValue(fontCharMap.getMaxHeightRatio());
+                this.fontMaxWidthRate.setValue(fontCharMap.getMaxWidthRatio());
                 actualizeCharList();
             }
         });
+
         fontCharMapService.isChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue) && newValue) {
                 String newFCMName = fontCharMapService.getActualFCMName();
@@ -663,6 +711,8 @@ public class Controller {
                 }
                 fontCharMapSelector.setValue(newFCMName);
                 this.fontCharMap = fontCharMapService.getActualFontCharMap(); // lehet, hogy nem kell az előbbi listener miatt...
+                this.fontMaxHeightRate.setValue(fontCharMap.getMaxHeightRatio());
+                this.fontMaxWidthRate.setValue(fontCharMap.getMaxWidthRatio());
                 actualizeCharList();
                 fontCharMapService.setIsChanged(false);
             }

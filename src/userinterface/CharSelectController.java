@@ -131,15 +131,15 @@ public class CharSelectController {
 
     @FXML
     private void createOKAndSave() {
-        create(true);
+        createWithAnimation(true);
     }
 
     @FXML
     private void createAndOK() {
-        create(false);
+        createWithAnimation(false);
     }
 
-    private void create(Boolean isSaved) {
+    private void createWithAnimation(Boolean isSaved) {
         StackPane evaluatorPane = new StackPane();
         evaluatorPane.setStyle(" -fx-min-height: 120; -fx-min-width: 120; -fx-background-color: #FFFFFF; -fx-effect: dropshadow(three-pass-box, darkgray, 20, 0, 0, 0);");
         AnchorPane.setTopAnchor(evaluatorPane, 150.0);
@@ -166,7 +166,7 @@ public class CharSelectController {
 
                 if (addedFlowPane.getChildren().size() > 0) {
                     evaluatorPane.getChildren().clear();
-                     CharPane charPane = (CharPane) addedFlowPane.getChildren().remove(0);
+                    CharPane charPane = (CharPane) addedFlowPane.getChildren().remove(0);
                     FontChar actualFontChar = charPane.getFontChar();
                     fontFamilySet.add(actualFontChar.getFontFamily());
                     Font actualFont = Font.font(actualFontChar.getFontFamily(), 60);
@@ -188,10 +188,10 @@ public class CharSelectController {
                             double red = pixelColor.getRed();
                             double green = pixelColor.getGreen();
                             double blue = pixelColor.getBlue();
-                            inversePixelValue+= (1 - red) + (1 - green) + (1 - blue);
+                            inversePixelValue += (1 - red) + (1 - green) + (1 - blue);
                         }
                     }
-                    fontCharMap.add((int)inversePixelValue, actualFontChar);
+                    fontCharMap.add((int) inversePixelValue, actualFontChar);
 
                 } else {
                     animatedEvaluator.stop();
@@ -199,14 +199,14 @@ public class CharSelectController {
 
                     double maxHeight = 0.0;
                     for (String fontFamily : fontFamilySet) {
-                        Text actualText = new Text(Character.toString((char)2588));
+                        Text actualText = new Text(Character.toString((char) 2588));
                         actualText.setFont(Font.font(fontFamily, 60));
                         double actualHeight = actualText.getBoundsInLocal().getHeight();
                         maxHeight = Math.max(maxHeight, actualHeight);
                     }
-                    fontCharMap.setMaxHeight(maxHeight);
-                    fontCharMap.setMaxWidth(fontMaxWidth);
-                    fontCharMap.changeRange(255,0);
+                    fontCharMap.setMaxHeightRatio(maxHeight/60); //A Text Font méretével osztva!
+                    fontCharMap.setMaxWidthRatio(fontMaxWidth/60); //A Text Font méretével osztva!
+                    fontCharMap.changeRange(255, 0);
                     fontCharMap.fillTheGap();
 
                     fontCharMapService.addFontCharMapAndSetActual(fontCharMap);
@@ -305,7 +305,7 @@ public class CharSelectController {
     private void loadActualFontCharMap() {
         newName.setText(fontCharMapService.getActualFCMName());
         FontCharMap fontCharMapToEdit = fontCharMapService.getActualFontCharMap();
-        for(Map.Entry<Integer, FontChar> entry : fontCharMapToEdit.getFontChars().entrySet()) {
+        for (Map.Entry<Integer, FontChar> entry : fontCharMapToEdit.getFontChars().entrySet()) {
             FontChar fontChar = entry.getValue();
             String unicodeChar = fontChar.getUnicodeChar();
             String fontFamily = fontChar.getFontFamily();
