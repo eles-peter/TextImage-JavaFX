@@ -25,3 +25,7 @@ You can use one of the predefined character sets. But you can also make one of t
 <p align="center">
 <img src="readme-image/marilyn_signs.PNG" width="49%"> <img src="readme-image/marilyn_numbers.PNG" width="49%">
 <p>
+
+**Note**
+- Depending on the performance of your computer, the program may crash above a certain number of characters due to too many object binding.
+- Features `Save to Txt` and `Save to Pdf` are under construction.
